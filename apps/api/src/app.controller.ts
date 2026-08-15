@@ -13,7 +13,7 @@ export class AppController {
   @Get('hello')
   getHelloFromApi() {
     return {
-      message: 'Hola desde NestJS',
+      message: ' Hola desde NestJS',
     };
   }
 }
