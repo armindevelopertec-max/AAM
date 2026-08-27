@@ -16,6 +16,8 @@ export default function ClientManager({ initialClients }: { initialClients: Clie
   const [phone, setPhone] = useState("");
   const [ci, setCi] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const [showModal, setShowModal] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const [editingId, setEditingId] = useState<number | null>(null);
   const [editName, setEditName] = useState("");
   const [editEmail, setEditEmail] = useState("");
@@ -26,9 +28,19 @@ export default function ClientManager({ initialClients }: { initialClients: Clie
     setClients(await getClients());
   }
 
+  function openModal() {
+    setError(null);
+    setName("");
+    setEmail("");
+    setPhone("");
+    setCi("");
+    setShowModal(true);
+  }
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError(null);
+    setSubmitting(true);
     try {
       await createClient({
         name,
@@ -36,13 +48,12 @@ export default function ClientManager({ initialClients }: { initialClients: Clie
         phone: phone.trim() || undefined,
         ci: ci.trim() || undefined,
       });
-      setName("");
-      setEmail("");
-      setPhone("");
-      setCi("");
+      setShowModal(false);
       await refresh();
     } catch (err) {
       setError(err instanceof Error ? err.message : "Error desconocido");
+    } finally {
+      setSubmitting(false);
     }
   }
 
@@ -86,45 +97,71 @@ export default function ClientManager({ initialClients }: { initialClients: Clie
 
   return (
     <div className="flex w-full flex-col gap-8">
-      <section className="rounded-lg border border-neutral-200 bg-white p-6 dark:border-neutral-800 dark:bg-neutral-900">
-        <h2 className="mb-4 text-lg font-semibold">Agregar cliente</h2>
-        <form onSubmit={handleSubmit} className="grid gap-4 sm:grid-cols-2">
-          <div className="flex flex-col gap-1">
-            <label htmlFor="name" className={labelClass}>
-              Nombre *
-            </label>
-            <input id="name" type="text" value={name} onChange={(e) => setName(e.target.value)} required className={inputClass} />
-          </div>
-          <div className="flex flex-col gap-1">
-            <label htmlFor="email" className={labelClass}>
-              Email
-            </label>
-            <input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} className={inputClass} />
-          </div>
-          <div className="flex flex-col gap-1">
-            <label htmlFor="phone" className={labelClass}>
-              Teléfono
-            </label>
-            <input id="phone" type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} className={inputClass} />
-          </div>
-          <div className="flex flex-col gap-1">
-            <label htmlFor="ci" className={labelClass}>
-              CI
-            </label>
-            <input id="ci" type="text" value={ci} onChange={(e) => setCi(e.target.value)} className={inputClass} />
-          </div>
-          <button
-            type="submit"
-            className="rounded-md bg-neutral-900 px-4 py-2 text-white transition hover:bg-neutral-700 sm:col-span-2 dark:bg-white dark:text-neutral-900 dark:hover:bg-neutral-200"
+      <div className="flex items-center justify-between">
+        <h2 className="text-lg font-semibold">Clientes</h2>
+        <button
+          onClick={openModal}
+          className="rounded-md bg-neutral-900 px-4 py-2 text-white transition hover:bg-neutral-700 dark:bg-white dark:text-neutral-900 dark:hover:bg-neutral-200"
+        >
+          Agregar cliente
+        </button>
+      </div>
+
+      {showModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4" onClick={() => setShowModal(false)}>
+          <div
+            className="w-full max-w-lg rounded-lg border border-neutral-200 bg-white p-6 shadow-xl dark:border-neutral-800 dark:bg-neutral-900"
+            onClick={(e) => e.stopPropagation()}
           >
-            Agregar
-          </button>
-        </form>
-        {error && <p className="mt-4 text-sm text-red-600 dark:text-red-400">{error}</p>}
-      </section>
+            <h2 className="mb-4 text-lg font-semibold">Agregar cliente</h2>
+            <form onSubmit={handleSubmit} className="grid gap-4 sm:grid-cols-2">
+              <div className="flex flex-col gap-1">
+                <label htmlFor="name" className={labelClass}>
+                  Nombre *
+                </label>
+                <input id="name" type="text" value={name} onChange={(e) => setName(e.target.value)} required className={inputClass} />
+              </div>
+              <div className="flex flex-col gap-1">
+                <label htmlFor="email" className={labelClass}>
+                  Email
+                </label>
+                <input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} className={inputClass} />
+              </div>
+              <div className="flex flex-col gap-1">
+                <label htmlFor="phone" className={labelClass}>
+                  Teléfono
+                </label>
+                <input id="phone" type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} className={inputClass} />
+              </div>
+              <div className="flex flex-col gap-1">
+                <label htmlFor="ci" className={labelClass}>
+                  CI
+                </label>
+                <input id="ci" type="text" value={ci} onChange={(e) => setCi(e.target.value)} className={inputClass} />
+              </div>
+              {error && <p className="text-sm text-red-600 dark:text-red-400 sm:col-span-2">{error}</p>}
+              <div className="flex justify-end gap-3 sm:col-span-2">
+                <button
+                  type="button"
+                  onClick={() => setShowModal(false)}
+                  className="rounded-md border border-neutral-300 px-4 py-2 text-neutral-700 transition hover:bg-neutral-100 dark:border-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-800"
+                >
+                  Cancelar
+                </button>
+                <button
+                  type="submit"
+                  disabled={submitting}
+                  className="rounded-md bg-neutral-900 px-4 py-2 text-white transition hover:bg-neutral-700 disabled:opacity-50 dark:bg-white dark:text-neutral-900 dark:hover:bg-neutral-200"
+                >
+                  {submitting ? "Guardando…" : "Agregar"}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
 
       <section className="rounded-lg border border-neutral-200 bg-white p-6 dark:border-neutral-800 dark:bg-neutral-900">
-        <h2 className="mb-4 text-lg font-semibold">Clientes</h2>
         {clients.length === 0 ? (
           <p className="text-sm text-neutral-500 dark:text-neutral-400">No hay clientes.</p>
         ) : (

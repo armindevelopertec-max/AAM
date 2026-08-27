@@ -71,6 +71,8 @@ export class AuthService {
     name: string;
     email: string;
     storeId: number;
+    alias: string | null;
+    phone: string | null;
   }) {
     const payload: JwtPayload = { sub: user.id };
     const token = await this.jwtService.signAsync(payload);
@@ -82,10 +84,14 @@ export class AuthService {
     name: string;
     email: string;
     storeId: number;
+    alias: string | null;
+    phone: string | null;
   }) {
     return {
       id: user.id,
       name: user.name,
+      alias: user.alias ?? null,
+      phone: user.phone ?? null,
       email: user.email,
       storeId: user.storeId,
     };

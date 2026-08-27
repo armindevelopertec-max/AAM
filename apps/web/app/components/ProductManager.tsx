@@ -10,6 +10,7 @@ import {
   updateProduct,
   uploadProductImage,
   formatMoney,
+  getProductImageUrl,
   type Product,
 } from "../lib/api";
 
@@ -197,7 +198,7 @@ export default function ProductManager({ initialProducts }: { initialProducts: P
                   <td className="py-3 pr-4">
                     {product.imageUrl ? (
                       <Image
-                        src={product.imageUrl}
+                        src={getProductImageUrl(product.imageUrl)!}
                         alt={product.name}
                         width={40}
                         height={40}

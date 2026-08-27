@@ -4,6 +4,7 @@ import { useState } from "react";
 import {
   formatMoney,
   generateQuotePdf,
+  downloadQuotePdf,
   updateQuoteStatus,
   convertQuoteToSale,
   type Client,
@@ -56,8 +57,10 @@ export default function SeguimientoManager({
   async function handleGeneratePdf(quoteId: number) {
     setError(null);
     try {
-      const result = await generateQuotePdf(quoteId);
-      window.open(result.url, "_blank");
+      await generateQuotePdf(quoteId);
+      const blobUrl = await downloadQuotePdf(quoteId);
+      window.open(blobUrl, "_blank");
+      setTimeout(() => URL.revokeObjectURL(blobUrl), 60000);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Error al generar PDF");
     }

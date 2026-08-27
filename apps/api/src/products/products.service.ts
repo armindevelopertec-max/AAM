@@ -180,15 +180,13 @@ export class ProductsService {
     return this.findOne(id, storeId);
   }
 
+  async getImageKey(id: number): Promise<string | null> {
+    const product = await this.prisma.product.findUnique({ where: { id } });
+    return product?.imageKey ?? null;
+  }
+
   private async toDto(product: Product): Promise<ProductWithImage> {
-    let imageUrl: string | null = null;
-    if (product.imageKey) {
-      try {
-        imageUrl = await this.files.getSignedUrl(product.imageKey);
-      } catch {
-        imageUrl = null;
-      }
-    }
+    const imageUrl = product.imageKey ? `/products/${product.id}/image` : null;
     return { ...product, imageUrl };
   }
 }

@@ -36,6 +36,8 @@ model User {
   storeId      Int
   store        Store    @relation(fields: [storeId], references: [id])
   name         String
+  alias        String?
+  phone        String?
   email        String   @unique
   passwordHash String
   role         String   @default("admin")

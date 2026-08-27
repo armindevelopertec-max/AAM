@@ -1,0 +1,24 @@
+# Logs de desarrollo
+.logs/
+*.log
+
+# Backups (dumps de BD, imágenes, PDFs) - no se versionan
+backups/
+
+# Scripts temporales puntuales (a menudo contienen credenciales)
+apps/api/prisma/create-admin.ts
+create-admin.ts
+
+# Dependencias (a nivel monorepo, por si acaso)
+node_modules/
+
+# Variables de entorno (conteniendo credenciales)
+.env
+.env.*
+!.env.example
+
+# Sistema / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

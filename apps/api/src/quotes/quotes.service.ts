@@ -203,9 +203,17 @@ export class QuotesService {
     });
 
     const key = await this.pdfService.uploadQuotePdf(quote.number, pdfBuffer);
-    const url = await this.pdfService.getQuotePdfUrl(key);
 
-    return { key, url, quoteNumber: quote.number };
+    return { key, quoteNumber: quote.number };
+  }
+
+  async getQuotePdf(
+    id: number,
+    storeId: number,
+  ): Promise<{ buffer: Buffer; contentType: string }> {
+    const quote = await this.findOne(id, storeId);
+    const key = `pdfs/quotes/${quote.number}.pdf`;
+    return this.pdfService.getQuotePdfBuffer(key);
   }
 
   private withEffectiveStatus<

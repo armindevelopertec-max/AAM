@@ -5,6 +5,7 @@ import ClientPicker from "./ClientPicker";
 import {
   createSale,
   formatMoney,
+  getProductImageUrl,
   type Client,
   type Product,
 } from "../lib/api";
@@ -208,7 +209,7 @@ export default function PosManager({
               >
                 {product.imageUrl ? (
                   <img
-                    src={product.imageUrl}
+                    src={getProductImageUrl(product.imageUrl)!}
                     alt={product.name}
                     className="aspect-square w-full object-cover"
                     loading="lazy"
@@ -288,7 +289,7 @@ export default function PosManager({
                   >
                     {line.imageUrl ? (
                       <img
-                        src={line.imageUrl}
+                        src={getProductImageUrl(line.imageUrl)!}
                         alt=""
                         className="h-[42px] w-[42px] rounded-md object-cover"
                       />

@@ -6,7 +6,9 @@ import {
   Patch,
   Param,
   UseGuards,
+  Res,
 } from '@nestjs/common';
+import type { Response } from 'express';
 import type { User } from '@prisma/client';
 import { QuotesService } from './quotes.service';
 import { CreateQuoteDto } from './dto/create-quote.dto';
@@ -55,5 +57,27 @@ export class QuotesController {
   @Post(':id/pdf')
   generatePdf(@Param('id') id: string, @CurrentUser() user: User) {
     return this.quotesService.generatePdf(+id, user.storeId);
+  }
+
+  @Get(':id/pdf')
+  async downloadPdf(
+    @Param('id') id: string,
+    @CurrentUser() user: User,
+    @Res() res: Response,
+  ) {
+    try {
+      const { buffer, contentType } = await this.quotesService.getQuotePdf(
+        +id,
+        user.storeId,
+      );
+      res.set({
+        'Content-Type': contentType,
+        'Content-Disposition': 'inline',
+        'Cache-Control': 'public, max-age=86400',
+      });
+      res.end(buffer);
+    } catch (err) {
+      res.status(404).json({ error: 'PDF no encontrado' });
+    }
   }
 }

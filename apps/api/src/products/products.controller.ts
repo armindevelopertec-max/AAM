@@ -11,21 +11,47 @@ import {
   UseInterceptors,
   UseGuards,
   BadRequestException,
+  Res,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { memoryStorage } from 'multer';
+import type { Response } from 'express';
 import type { User } from '@prisma/client';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { AdjustStockDto } from './dto/adjust-stock.dto';
-import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { JwtAuthGuard, Public } from '../auth/jwt-auth.guard';
 import { CurrentUser } from '../auth/current-user.decorator';
+import { FilesService } from '../files/files.service';
 
 @Controller('products')
 @UseGuards(JwtAuthGuard)
 export class ProductsController {
-  constructor(private readonly productsService: ProductsService) {}
+  constructor(
+    private readonly productsService: ProductsService,
+    private readonly files: FilesService,
+  ) {}
+
+  @Public()
+  @Get(':id/image')
+  async serveImage(@Param('id') id: string, @Res() res: Response) {
+    const key = await this.productsService.getImageKey(+id);
+    if (!key) {
+      res.status(404).json({ error: 'Imagen no encontrada' });
+      return;
+    }
+    try {
+      const data = await this.files.getObject(key);
+      res.set({
+        'Content-Type': data.contentType,
+        'Cache-Control': 'public, max-age=86400',
+      });
+      res.end(data.body);
+    } catch {
+      res.status(404).json({ error: 'Imagen no encontrada' });
+    }
+  }
 
   @Post()
   create(

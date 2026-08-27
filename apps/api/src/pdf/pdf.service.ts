@@ -339,6 +339,13 @@ export class PdfService {
     return this.files.getSignedUrl(key, 3600);
   }
 
+  async getQuotePdfBuffer(
+    key: string,
+  ): Promise<{ buffer: Buffer; contentType: string }> {
+    const data = await this.files.getObject(key);
+    return { buffer: data.body, contentType: data.contentType };
+  }
+
   private formatMoney(value: number): string {
     return new Intl.NumberFormat('es-BO', {
       style: 'currency',

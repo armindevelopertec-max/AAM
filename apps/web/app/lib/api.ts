@@ -359,8 +359,20 @@ export async function convertQuoteToSale(
 
 export async function generateQuotePdf(
   id: number,
-): Promise<{ key: string; url: string; quoteNumber: string }> {
+): Promise<{ key: string; quoteNumber: string }> {
   return request(`/quotes/${id}/pdf`, { method: "POST" });
+}
+
+export async function downloadQuotePdf(id: number): Promise<string> {
+  const token = getToken();
+  const res = await fetch(`${API_URL}/quotes/${id}/pdf`, {
+    headers: token ? { Authorization: `Bearer ${token}` } : {},
+  });
+  if (!res.ok) {
+    throw new Error("No se pudo descargar el PDF");
+  }
+  const blob = await res.blob();
+  return URL.createObjectURL(blob);
 }
 
 export async function getDashboard(): Promise<DashboardSummary> {
@@ -568,6 +580,14 @@ export async function getScrapingRuns(): Promise<ScrapingRun[]> {
 
 export function getScrapedImageUrl(key: string): string {
   return `${API_URL}/scraping/images/${encodeURIComponent(key)}`;
+}
+
+export function getProductImageUrl(
+  imageUrl: string | null,
+): string | null {
+  if (!imageUrl) return null;
+  if (imageUrl.startsWith("http")) return imageUrl;
+  return `${API_URL}${imageUrl}`;
 }
 
 export function formatMoney(value: number, currency = "MXN"): string {

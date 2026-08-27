@@ -11,6 +11,7 @@ API_PASSWORD = os.environ.get("API_PASSWORD", "")
 
 CATEGORY_MAP = {
     "productos": {"fuente": "dicabolivia", "categoria": "xvr"},
+    "camaras_dahua": {"fuente": "dicabolivia", "categoria": "camaras_dahua"},
     "camaras_hikvision": {"fuente": "dicabolivia", "categoria": "camaras_hikvision"},
     "cables_redes": {"fuente": "dicabolivia", "categoria": "cables_redes"},
     "accesorios_camaras": {"fuente": "dicabolivia", "categoria": "accesorios_camaras"},
