@@ -1,0 +1,5 @@
+-- AlterTable
+ALTER TABLE "Product" ADD COLUMN     "regularPrice" DOUBLE PRECISION NOT NULL DEFAULT 0;
+
+-- AlterTable
+ALTER TABLE "QuoteItem" ADD COLUMN     "originalPrice" DOUBLE PRECISION NOT NULL DEFAULT 0;

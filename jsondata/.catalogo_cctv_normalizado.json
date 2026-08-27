@@ -1,0 +1,3612 @@
+{
+  "catalogo": {
+    "nombre": "Catálogo CCTV",
+    "fecha_fuente": "2026-08-21",
+    "paginas": 50,
+    "productos": 171,
+    "moneda_predeterminada": "BOB",
+    "nota": "Los campos corregidos estructuralmente se normalizan; los datos dudosos del OCR se conservan en ocr.texto_original y no se inventan."
+  },
+  "productos": [
+    {
+      "id": 2,
+      "nombre": "GRABADOR COOPER 4CH WIZSENSE",
+      "descripcion": "GRABADOR COOPER 4CH WIZSENSE 4CH AUDIO BIDIRECCIONAL MAX 6CH IP HASTA 6MP 1HDD HASTA 6TB",
+      "marca": "Dahua",
+      "modelo": "DH-XVR1B04-I/T",
+      "categoria": "Grabadores",
+      "canales": 4,
+      "precio": 330,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 1,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.46 PM.jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.46 PM.json",
+        "indice_en_pagina": 2
+      },
+      "ocr": {
+        "texto_original": "GRABADOR COOPER 4CH WIZSENSE *4CH ra. N\nPP DIRNTDEPFPIMMA. DAD DAME CAAYV ECU",
+        "fila_original": 1
+      },
+      "precioVentaTipo": "porcentaje",
+      "precioVentaValor": 80,
+      "imagenes": [
+        {
+          "key": "catalogo/2/c1189cbe-1a51-42a0-a2cc-039182e6a4d4.jpeg",
+          "url": "minio://pos-productos/catalogo/2/c1189cbe-1a51-42a0-a2cc-039182e6a4d4.jpeg",
+          "originalName": "WhatsApp Image 2026-08-21 at 11.56.59 PM (6).jpeg"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "nombre": "GRABADOR PENTAHÍBRIDO 4CH WIZSENSE MASENSE",
+      "descripcion": "GRABADOR PENTAHÍBRIDO DE 4CH WIZSENSE 4M-N/1080P 1 15 FPS H. 265+/H. 265",
+      "marca": "Dahua",
+      "modelo": "DH-XVR1R04H-I/T",
+      "categoria": "Grabadores",
+      "canales": 4,
+      "precio": 550,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 1,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.46 PM.jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.46 PM.json",
+        "indice_en_pagina": 3
+      },
+      "ocr": {
+        "texto_original": "GRABADOR PENTAHÍBRIDO DE 4CH \"WIZSENSE MAsense\nN/1080P 1 15 FPS H. 265+/H. 265",
+        "fila_original": 5
+      }
+    },
+    {
+      "id": 4,
+      "nombre": "GRABADOR PENTAHÍBRIDO 4CH",
+      "descripcion": "GRABADOR PENTAHIBRIDO TWO WAY TALK DH XVR5104HS 13",
+      "marca": "Dahua",
+      "modelo": "DH-XVR5104HS-13",
+      "categoria": "Grabadores",
+      "canales": 4,
+      "precio": 770,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 1,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.46 PM.jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.46 PM.json",
+        "indice_en_pagina": 4
+      },
+      "ocr": {
+        "texto_original": "HDMI, VGA, 2USB*RS485 \"DDNS =P2P =2CH IP\n2/1. 5A DH XVR5104HS 13",
+        "fila_original": 6
+      }
+    },
+    {
+      "id": 5,
+      "nombre": "GRABADOR PENTAHÍBRIDO 4CH TALK",
+      "descripcion": "GRABADOR PENTAHÍBRIDO 4CH TWO WAY TALK\nFACIAL *PROTEC. PERIMETRAL *ACUPICK\nPLUS *1 HDD HASTA 16TB \"AUDIO 11/10\n3485 *1 HOMI, 1 VGA, 1 RJ45 DH XVR5104HS 13/T",
+      "marca": "Dahua",
+      "modelo": "DH-XVR5104HS-13/T",
+      "categoria": "Grabadores",
+      "canales": 4,
+      "precio": 770,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 1,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.46 PM.jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.46 PM.json",
+        "indice_en_pagina": 5
+      },
+      "ocr": {
+        "texto_original": "GRABADOR PENTAHÍBRIDO 4CH TWO WAY TALK\nFACIAL *PROTEC. PERIMETRAL *ACUPICK\nPLUS *1 HDD HASTA 16TB \"AUDIO 11/10\n3485 *1 HOMI, 1 VGA, 1 RJ45 DH XVR5104HS 13/T",
+        "fila_original": 7
+      }
+    },
+    {
+      "id": 6,
+      "nombre": "GRABADOR PENTAHÍBRIDO 4CH 4K",
+      "descripcion": "GRABADOR PENTAHÍBRIDO DE 4CH 4K CON AUDIO BIDIRECCIONAL SOPORTA 8CH IP HASTA 8MP REC. FACIAL MAX 16TB",
+      "marca": "Dahua",
+      "modelo": "DH-XVR5104HS-4KL-I3",
+      "categoria": "Grabadores",
+      "canales": 8,
+      "precio": 1210,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 1,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.46 PM.jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.46 PM.json",
+        "indice_en_pagina": 6
+      },
+      "ocr": {
+        "texto_original": "GRABADOR PENTAHÍBRIDO DE 4CH 4K \"CON Pp\nCINIPECCIANAL *CADAPTA OCU ID UACTA _ á mu",
+        "fila_original": 8
+      }
+    },
+    {
+      "id": 8,
+      "nombre": "CÁMARA HDCVI COOPER DOMO 2MP PLÁSTICA",
+      "descripcion": "CÁMARA HDCVI COOPER DOMO 2MP PLÁSTICA SN\n25 MTS \"LENTE 2. 8MM \"MÁXIMO 30 FPS\nOP *CVI/CVBS/AHD/TVI \"BLC, DWDR, 2D NR\nDH HAC T1A21N U 0280€",
+      "marca": "Dahua",
+      "modelo": "DH-HAC-T1A21N-U-0280",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 130,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 2,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.47 PM (1).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.47 PM (1).json",
+        "indice_en_pagina": 1
+      },
+      "ocr": {
+        "texto_original": "CÁMARA HDCVI COOPER DOMO 2MP PLÁSTICA SN\n25 MTS \"LENTE 2. 8MM \"MÁXIMO 30 FPS\nOP *CVI/CVBS/AHD/TVI \"BLC, DWDR, 2D NR\nDH HAC T1A21N U 0280€",
+        "fila_original": 0
+      }
+    },
+    {
+      "id": 9,
+      "nombre": "CÁMARA HDCVI COOPER DOMO 2MP PLÁSTICA CON AUDIO",
+      "descripcion": "CÁMARA HDCVI COOPER DOMO 2MP PLÁSTICA Q 2\nAUDIO \"IR25 MTS \"LENTE 2. 8MM \"MÁXIMO\nPS 1080P \"CVI/CVBS/AHD/TVI \"BLC, DWDR\nDH HAC T1A21N U A 0280",
+      "marca": "Dahua",
+      "modelo": "DH-HAC-T1A21N-U-A-0280",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 190,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 2,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.47 PM (1).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.47 PM (1).json",
+        "indice_en_pagina": 2
+      },
+      "ocr": {
+        "texto_original": "CÁMARA HDCVI COOPER DOMO 2MP PLÁSTICA Q 2\nAUDIO \"IR25 MTS \"LENTE 2. 8MM \"MÁXIMO\nPS 1080P \"CVI/CVBS/AHD/TVI \"BLC, DWDR\nDH HAC T1A21N U A 0280",
+        "fila_original": 1
+      }
+    },
+    {
+      "id": 10,
+      "nombre": "CÁMARA HDCVI COOPER DOMO 2MP METÁLICA",
+      "descripcion": "CÁMARA HDCVI COOPER DOMO 2MP METÁLICA\nST. ILUMINACIÓN 30M \"LENTE FIJO 2. 8MM\n1/CVBS/AHD/TVI *IP67\nOH HAC T2A21N U 0280E",
+      "marca": "Dahua",
+      "modelo": "OH-HAC-T2A21N-U-0280E",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 220,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 2,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.47 PM (1).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.47 PM (1).json",
+        "indice_en_pagina": 3
+      },
+      "ocr": {
+        "texto_original": "CÁMARA HDCVI COOPER DOMO 2MP METÁLICA\nST. ILUMINACIÓN 30M \"LENTE FIJO 2. 8MM\n1/CVBS/AHD/TVI *IP67\nOH HAC T2A21N U 0280E",
+        "fila_original": 2
+      }
+    },
+    {
+      "id": 11,
+      "nombre": "CÁMARA HDCVI COOPER DOMO 2MP METÁLICA CON AUDIO",
+      "descripcion": "CÁMARA HDCVI COOPER DOMO 2MP METÁLICA\n1 AUDIO \"DIST. ILUMINACIÓN 30M \"LENTE OS\n2. 8MM *CVI/CVBS/AHD/TVI *IP67\nDH HAC T2A21N U A 0280",
+      "marca": "Dahua",
+      "modelo": "DH-HAC-T2A21N-U-A-0280",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 235,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 2,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.47 PM (1).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.47 PM (1).json",
+        "indice_en_pagina": 4
+      },
+      "ocr": {
+        "texto_original": "CÁMARA HDCVI COOPER DOMO 2MP METÁLICA\n1 AUDIO \"DIST. ILUMINACIÓN 30M \"LENTE OS\n2. 8MM *CVI/CVBS/AHD/TVI *IP67\nDH HAC T2A21N U A 0280",
+        "fila_original": 3
+      }
+    },
+    {
+      "id": 12,
+      "nombre": "CÁMARA HDCVI DOMO 2MP AUDIO",
+      "descripcion": "CÁMARA HDCVI DOMO 2MP \"CON AUDIO\nORPORADO \"SMART IR Q rr\n*IP67*DC12V\"LENTE 2. 8MM*DWDR*12VOC 00\nOM COAXIAL/230M UTP CAT5E MEDIANTE o?\nUN* 12VDC#25%\nHAC HDW 1200EMN A 0280",
+      "marca": "Dahua",
+      "modelo": null,
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 270,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 2,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.47 PM (1).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.47 PM (1).json",
+        "indice_en_pagina": 5
+      },
+      "ocr": {
+        "texto_original": "CÁMARA HDCVI DOMO 2MP \"CON AUDIO\nORPORADO \"SMART IR Q rr\n*IP67*DC12V\"LENTE 2. 8MM*DWDR*12VOC 00\nOM COAXIAL/230M UTP CAT5E MEDIANTE o?\nUN* 12VDC#25%\nHAC HDW 1200EMN A 0280",
+        "fila_original": 4
+      }
+    },
+    {
+      "id": 13,
+      "nombre": "CÁMARA HDCVI DOMO 2MP FULL COLOR AUDIO DUAL LIGHT",
+      "descripcion": "CÁMARA HDCVI DOMO 2MP FULL COLOR AUDIO \"TM** Dualit)\nASTICA \"DOBLE ILUMINACIÓN \"MAX. 30 0 on\n1080p \"3D NR \"DIST. ILUMINACIÓN 20M UU) as\nFUENTE 2. 8MM *IP67 \"CVI/CVBS/AHD/TVI\nHAC HDW1200CLQ IL A 28",
+      "marca": "Dahua",
+      "modelo": "HAC-HDW1200CLQ-IL-A-28",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 210,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 2,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.47 PM (1).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.47 PM (1).json",
+        "indice_en_pagina": 6
+      },
+      "ocr": {
+        "texto_original": "CÁMARA HDCVI DOMO 2MP FULL COLOR AUDIO \"TM** Dualit)\nASTICA \"DOBLE ILUMINACIÓN \"MAX. 30 0 on\n1080p \"3D NR \"DIST. ILUMINACIÓN 20M UU) as\nFUENTE 2. 8MM *IP67 \"CVI/CVBS/AHD/TVI\nHAC HDW1200CLQ IL A 28",
+        "fila_original": 5
+      }
+    },
+    {
+      "id": 14,
+      "nombre": "CÁMARA HDCVI DOMO 2MP WIZCOLOR 30",
+      "descripcion": "CÁMARA HDCVI DOMO 2MP WIZCOLOR \"MAX. 30 Q po\n21080p \"LENTE 2. 8MM \"AI ISP \"DIST. ILUM\n3D NR \"MIC DUAL INTEGRADO 0\n1/CVBS/AHD/TVI *IP67 CF Cotor\nHAC HDW 1249xX IL A PRO C",
+      "marca": null,
+      "modelo": "IL-A-PRO-C",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 420,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 2,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.47 PM (1).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.47 PM (1).json",
+        "indice_en_pagina": 7
+      },
+      "ocr": {
+        "texto_original": "CÁMARA HDCVI DOMO 2MP WIZCOLOR \"MAX. 30 Q po\n21080p \"LENTE 2. 8MM \"AI ISP \"DIST. ILUM\n3D NR \"MIC DUAL INTEGRADO 0\n1/CVBS/AHD/TVI *IP67 CF Cotor\nHAC HDW 1249xX IL A PRO C",
+        "fila_original": 6
+      }
+    },
+    {
+      "id": 15,
+      "nombre": "GRABADOR PENTAHÍBRIDO ACUPICK 16CH",
+      "descripcion": "SECCIONAL \"REC. FACIAL. DETEC\nMETRAL \"ACUPICK *SMD PLUS =1 HDD\n16T8 ~1 RS485 ~1 HDMI, 1VGA DH XVR5116HS 13/T",
+      "marca": "Dahua",
+      "modelo": "DH-XVR5116HS-13/T",
+      "categoria": "Grabadores",
+      "canales": 16,
+      "precio": 2120,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 3,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.47 PM.jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.47 PM.json",
+        "indice_en_pagina": 1
+      },
+      "ocr": {
+        "texto_original": "SECCIONAL \"REC. FACIAL. DETEC\nMETRAL \"ACUPICK *SMD PLUS =1 HDD\n16T8 ~1 RS485 ~1 HDMI, 1VGA DH XVR5116HS 13/T",
+        "fila_original": 5
+      }
+    },
+    {
+      "id": 16,
+      "nombre": "GRABADOR PENTAHÍBRIDO 16 WIZSENSE EASENSE",
+      "descripcion": "GRABADOR PENTAHÍBRIDO DE 16 CH WIZSENSE EASense\n55+/H. 265 \"SOPORTA CODIFICACIÓN Al\n24CH IP HASTA 6MP \"REC. FACIAL \"PROT. ap\nMETRAL \"SMD PLUS *2 HDD HASTA 16TB\nDH XVR5216AN 13",
+      "marca": "Dahua",
+      "modelo": "DH-XVR5216AN-13",
+      "categoria": "Grabadores",
+      "canales": 16,
+      "precio": 2200,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 3,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.47 PM.jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.47 PM.json",
+        "indice_en_pagina": 2
+      },
+      "ocr": {
+        "texto_original": "GRABADOR PENTAHÍBRIDO DE 16 CH WIZSENSE EASense\n55+/H. 265 \"SOPORTA CODIFICACIÓN Al\n24CH IP HASTA 6MP \"REC. FACIAL \"PROT. ap\nMETRAL \"SMD PLUS *2 HDD HASTA 16TB\nDH XVR5216AN 13",
+        "fila_original": 6
+      }
+    },
+    {
+      "id": 17,
+      "nombre": "GRABADOR PENTAHÍBRIDO 16CH",
+      "descripcion": "FACIAL, DETEC. PERIMETRAL \"SMD PLUS xñÉxXx\ni TA 4\nORTA 2 HDD HASTA 16TB *1 RS485 DH XVR5216AN 13/T",
+      "marca": "Dahua",
+      "modelo": "DH-XVR5216AN-13/T",
+      "categoria": "Grabadores",
+      "canales": 16,
+      "precio": 2200,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 3,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.47 PM.jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.47 PM.json",
+        "indice_en_pagina": 3
+      },
+      "ocr": {
+        "texto_original": "FACIAL, DETEC. PERIMETRAL \"SMD PLUS xñÉxXx\ni TA 4\nORTA 2 HDD HASTA 16TB *1 RS485 DH XVR5216AN 13/T",
+        "fila_original": 8
+      }
+    },
+    {
+      "id": 19,
+      "nombre": "GRABADOR PENTAHÍBRIDO ACUPICK 16CH 4K",
+      "descripcion": "FACIAL \"PROTEC. PERIMETRAL *ACUPICK\nPLUS \"SOPORTA HDD HASTA 16TB\nDH XVR5216AN 4KL 13/1",
+      "marca": "Dahua",
+      "modelo": "DH-XVR5216AN-4KL-13/1",
+      "categoria": "Grabadores",
+      "canales": 16,
+      "precio": 4570,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 3,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.47 PM.jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.47 PM.json",
+        "indice_en_pagina": 5
+      },
+      "ocr": {
+        "texto_original": "FACIAL \"PROTEC. PERIMETRAL *ACUPICK\nPLUS \"SOPORTA HDD HASTA 16TB\nDH XVR5216AN 4KL 13/1",
+        "fila_original": 10
+      }
+    },
+    {
+      "id": 20,
+      "nombre": "CÁMARA HDCVI DOMO 2MP SMART DUAL LIGHT",
+      "descripcion": "CÁMARA HDCVI DOMO 2MP SMART DUAL LIGHT\nTAL/PLÁSTICO \"Max. 30 fps@1080p \"DIST\n4. 40M \"LENTE 2. 8MM \"CVI/CVBS/AHD/TVI\n37 \"AUDIO BIDIRECCIONAL APP Smat Oust LG)\nHAC HDW1200TQ IL T 28 D",
+      "marca": "Dahua",
+      "modelo": "HAC-HDW1200TQ-IL-T-28-D",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 315,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 4,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.48 PM.jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.48 PM.json",
+        "indice_en_pagina": 1
+      },
+      "ocr": {
+        "texto_original": "CÁMARA HDCVI DOMO 2MP SMART DUAL LIGHT\nTAL/PLÁSTICO \"Max. 30 fps@1080p \"DIST\n4. 40M \"LENTE 2. 8MM \"CVI/CVBS/AHD/TVI\n37 \"AUDIO BIDIRECCIONAL APP Smat Oust LG)\nHAC HDW1200TQ IL T 28 D",
+        "fila_original": 0
+      }
+    },
+    {
+      "id": 21,
+      "nombre": "CÁMARA HDCVI DOMO 2MP METÁLICA DOBLE",
+      "descripcion": "CÁMARA HDCVI DOMO 2MP \"METÁLICA \"DOBLE _~\nMINADOR INTELIGENTE \"LENTE 2. 8MM \"MAX. Q\np$@1080P \"DIST. ILUM 40M \"SUPER ADAPT Full\nC INTEGRADO *IP67\nHAC HDW 1239TN IL A 028",
+      "marca": "Dahua",
+      "modelo": "IL-A-028",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 350,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 4,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.48 PM.jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.48 PM.json",
+        "indice_en_pagina": 2
+      },
+      "ocr": {
+        "texto_original": "CÁMARA HDCVI DOMO 2MP \"METÁLICA \"DOBLE _~\nMINADOR INTELIGENTE \"LENTE 2. 8MM \"MAX. Q\np$@1080P \"DIST. ILUM 40M \"SUPER ADAPT Full\nC INTEGRADO *IP67\nHAC HDW 1239TN IL A 028",
+        "fila_original": 1
+      }
+    },
+    {
+      "id": 22,
+      "nombre": "CÁMARA DOMO COOPER HDCVI 2MP VARIFOCAL",
+      "descripcion": "CÁMARA DOMO COOPER HDCVI 2MP VARIFOCAL\nTE 2. 7 12MM \"4 EN 1 \"SENSOR 1/2. 7 CMOS\nART IR MAX 40M *IP67 *METAL*PLÁSTICA\nDH HAC T3A21N VF 2712",
+      "marca": "Dahua",
+      "modelo": "DH-HAC-T3A21N-VF-2712",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 290,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 4,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.48 PM.jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.48 PM.json",
+        "indice_en_pagina": 3
+      },
+      "ocr": {
+        "texto_original": "CÁMARA DOMO COOPER HDCVI 2MP VARIFOCAL\nTE 2. 7 12MM \"4 EN 1 \"SENSOR 1/2. 7 CMOS\nART IR MAX 40M *IP67 *METAL*PLÁSTICA\nDH HAC T3A21N VF 2712",
+        "fila_original": 2
+      }
+    },
+    {
+      "id": 23,
+      "nombre": "CÁMARA HDCVI TIPO 2MP FULL COLOR",
+      "descripcion": "SMART Dual\nCÁMARA HDCVI TIPO PT 2MP FULL COLOR. ug)\nASTICA *MAX. 30 fpsQ 1080p \"ILUMINACIÓN 0\nL INTELIGENTE \"DIST. IR 40M \"MIC\n=GRADO \"LENTE 2. 8MM *IP66\nHAC PT1200AN IL A 0280 5",
+      "marca": null,
+      "modelo": "HAC-PT1200AN-IL-A-0280-5",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 500,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 4,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.48 PM.jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.48 PM.json",
+        "indice_en_pagina": 4
+      },
+      "ocr": {
+        "texto_original": "SMART Dual\nCÁMARA HDCVI TIPO PT 2MP FULL COLOR. ug)\nASTICA *MAX. 30 fpsQ 1080p \"ILUMINACIÓN 0\nL INTELIGENTE \"DIST. IR 40M \"MIC\n=GRADO \"LENTE 2. 8MM *IP66\nHAC PT1200AN IL A 0280 5",
+        "fila_original": 3
+      }
+    },
+    {
+      "id": 24,
+      "nombre": "CÁMARA HDCVI MINI DOMO 2MP AUDIO",
+      "descripcion": "CÁMARA HDCVI MINI DOMO 2MP CON AUDIO\nLOR NEGRO \"METÁLICA \"LENTE 2. 8MM\n/CVBS/AHD/TVI \"MIC INTEGRADO \"IR 20M\n57 \"WDR\nDH HAC HDW1231GN A 028",
+      "marca": "Dahua",
+      "modelo": "DH-HAC-HDW1231GN-A-028",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 400,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 4,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.48 PM.jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.48 PM.json",
+        "indice_en_pagina": 5
+      },
+      "ocr": {
+        "texto_original": "CÁMARA HDCVI MINI DOMO 2MP CON AUDIO\nLOR NEGRO \"METÁLICA \"LENTE 2. 8MM\n/CVBS/AHD/TVI \"MIC INTEGRADO \"IR 20M\n57 \"WDR\nDH HAC HDW1231GN A 028",
+        "fila_original": 4
+      }
+    },
+    {
+      "id": 25,
+      "nombre": "CÁMARA PINHOLE STARLIGHT DUAL",
+      "descripcion": "CÁMARA PINHOLE STARLIGHT DUAL (HDCVI/TVL)\nMETÁLICA \"LENTE 2, 8MM \"MENU OSD\n008 TRUE WOR \"BLC HLC 3DNR*HASTA\nM COAXIAL/250M UTP \"AUDIO 1RCA\nDH HAC HUM3201BN 0280",
+      "marca": "Dahua",
+      "modelo": "DH-HAC-HUM3201BN-0280",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 600,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 4,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.48 PM.jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.48 PM.json",
+        "indice_en_pagina": 6
+      },
+      "ocr": {
+        "texto_original": "CÁMARA PINHOLE STARLIGHT DUAL (HDCVI/TVL)\nMETÁLICA \"LENTE 2, 8MM \"MENU OSD\n008 TRUE WOR \"BLC HLC 3DNR*HASTA\nM COAXIAL/250M UTP \"AUDIO 1RCA\nDH HAC HUM3201BN 0280",
+        "fila_original": 5
+      }
+    },
+    {
+      "id": 26,
+      "nombre": "CÁMARA HDCVI BALA 2MP FULL COLOR",
+      "descripcion": "SMART Dual Light)\nCÁMARA HDCVI BALA 2MP FULL COLOR CON\nIO \"MAX. 30 fps@1080P *3D NR 0\nIST. ILUM. 20M *LENTE 2. 8MM *IP67\nHAC HFW1200CL IL A 028",
+      "marca": null,
+      "modelo": "HAC-HFW1200CL-IL-A-028",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 295,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 5,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.49 PM (1).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.49 PM (1).json",
+        "indice_en_pagina": 1
+      },
+      "ocr": {
+        "texto_original": "SMART Dual Light)\nCÁMARA HDCVI BALA 2MP FULL COLOR CON\nIO \"MAX. 30 fps@1080P *3D NR 0\nIST. ILUM. 20M *LENTE 2. 8MM *IP67\nHAC HFW1200CL IL A 028",
+        "fila_original": 0
+      }
+    },
+    {
+      "id": 27,
+      "nombre": "CÁMARA HDCVI BALA 2MP WIZCOLOR",
+      "descripcion": "CÁMARA HDCVI BALA 2MP WIZCOLOR\nAX. 30 fps@1080p *LENTE 2. 8MM *AI a4\nDIST. ILUM. SOM *3D NR *MIC DUAL SMART ous igi)\n*IP67\nEGRADO *CVI/CVBS/AHD/TVI *1P6 HAC HFW1249X IL A PRO D",
+      "marca": null,
+      "modelo": "HAC-HFW1249X-IL-A-PRO-D",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 420,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 5,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.49 PM (1).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.49 PM (1).json",
+        "indice_en_pagina": 2
+      },
+      "ocr": {
+        "texto_original": "CÁMARA HDCVI BALA 2MP WIZCOLOR\nAX. 30 fps@1080p *LENTE 2. 8MM *AI a4\nDIST. ILUM. SOM *3D NR *MIC DUAL SMART ous igi)\n*IP67\nEGRADO *CVI/CVBS/AHD/TVI *1P6 HAC HFW1249X IL A PRO D",
+        "fila_original": 1
+      }
+    },
+    {
+      "id": 28,
+      "nombre": "CÁMARA HDCVI BALA 2MP SMART DUAL LIGHT",
+      "descripcion": "CÁMARA HDCVI BALA 2MP SMART DUAL LIGHT\nASTICA \"MAX. 30 fps@1080p \"AUDIO\nIRECCIONAL \"DIST. ILUM. 30M \"LENTE\nMM TMCVI/CVBS/AHD/TVI *IP67 San Oval Lp)\nHAC HFW1200RL IL T 28 DI",
+      "marca": null,
+      "modelo": "HAC-HFW1200RL-IL-T-28-DI",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 275,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 5,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.49 PM (1).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.49 PM (1).json",
+        "indice_en_pagina": 3
+      },
+      "ocr": {
+        "texto_original": "CÁMARA HDCVI BALA 2MP SMART DUAL LIGHT\nASTICA \"MAX. 30 fps@1080p \"AUDIO\nIRECCIONAL \"DIST. ILUM. 30M \"LENTE\nMM TMCVI/CVBS/AHD/TVI *IP67 San Oval Lp)\nHAC HFW1200RL IL T 28 DI",
+        "fila_original": 2
+      }
+    },
+    {
+      "id": 29,
+      "nombre": "CÁMARA HDCVI BALA 2MP SMART DUAL LIGHT",
+      "descripcion": "CÁMARA HDCVI BALA 2MP SMART DUAL LIGHT\n=TALICO \"Max. 30 fps@1080p \"DIST. a. /é\nM. 40M \"LENTE 2. 8MM *CVI/CVBS/AHD/TVI\n67 \"AUDIO BIDIRECCIONAL APP Smet Dual Ue)\nDH HAC HFW1200TLMN IL",
+      "marca": "Dahua",
+      "modelo": "DH-HAC-HFW1200TLMN-IL",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 340,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 5,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.49 PM (1).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.49 PM (1).json",
+        "indice_en_pagina": 4
+      },
+      "ocr": {
+        "texto_original": "CÁMARA HDCVI BALA 2MP SMART DUAL LIGHT\n=TALICO \"Max. 30 fps@1080p \"DIST. a. /é\nM. 40M \"LENTE 2. 8MM *CVI/CVBS/AHD/TVI\n67 \"AUDIO BIDIRECCIONAL APP Smet Dual Ue)\nDH HAC HFW1200TLMN IL",
+        "fila_original": 3
+      }
+    },
+    {
+      "id": 30,
+      "nombre": "CÁMARA HDCVI BALA 2MP FULL COLOR",
+      "descripcion": "CÁMARA HDCVI BALA 2MP FULL COLOR\n=NSOR 1/2. 8\" CMOS *LENTE 3. 6MM\nIST. ILUM 40M *MAX. 30 fps@1080p Fut fios\nVI/CVBS/AHD/TVI *IP67 *20 NR Se\nHAC HFW1209TLM LED 036",
+      "marca": null,
+      "modelo": "HAC-HFW1209TLM-LED-036",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 240,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 5,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.49 PM (1).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.49 PM (1).json",
+        "indice_en_pagina": 5
+      },
+      "ocr": {
+        "texto_original": "CÁMARA HDCVI BALA 2MP FULL COLOR\n=NSOR 1/2. 8\" CMOS *LENTE 3. 6MM\nIST. ILUM 40M *MAX. 30 fps@1080p Fut fios\nVI/CVBS/AHD/TVI *IP67 *20 NR Se\nHAC HFW1209TLM LED 036",
+        "fila_original": 4
+      }
+    },
+    {
+      "id": 31,
+      "nombre": "CÁMARA HDCVI BALA 2MP FULL COLOR",
+      "descripcion": "CÁMARA HDCVI BALA 2MP FULL COLOR\nNSOR 1/2. 8\" CMOS \"LENTE 2. 8MM\nSTANCIA LED 40M \"IP67 \"DWDR Full igor\nC/HLC/ 2DNR \"MATERIAL METALICO\nHAC HFW 1239TLMN LED 28",
+      "marca": null,
+      "modelo": null,
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 270,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 5,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.49 PM (1).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.49 PM (1).json",
+        "indice_en_pagina": 6
+      },
+      "ocr": {
+        "texto_original": "CÁMARA HDCVI BALA 2MP FULL COLOR\nNSOR 1/2. 8\" CMOS \"LENTE 2. 8MM\nSTANCIA LED 40M \"IP67 \"DWDR Full igor\nC/HLC/ 2DNR \"MATERIAL METALICO\nHAC HFW 1239TLMN LED 28",
+        "fila_original": 5
+      }
+    },
+    {
+      "id": 32,
+      "nombre": "CÁMARA HDCVI BALA 2MP METÁLICA DOBLE",
+      "descripcion": "CÁMARA HDCVI BALA 2MP \"METÁLICA \"DOBLE\nMINADOR INTELIGENTE \"LENTE 2. 8MM\nAX. 30 fps@1080P \"DIST. ILUM 40M q\nJPER ADAPT \"MIC INTEGRADO Full Rotor Ú\n1/CVBS/AHO/TVI \"IP67\nHAC HFW1239TM IL A 028",
+      "marca": null,
+      "modelo": "FULL-ROTOR",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 370,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 5,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.49 PM (1).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.49 PM (1).json",
+        "indice_en_pagina": 7
+      },
+      "ocr": {
+        "texto_original": "CÁMARA HDCVI BALA 2MP \"METÁLICA \"DOBLE\nMINADOR INTELIGENTE \"LENTE 2. 8MM\nAX. 30 fps@1080P \"DIST. ILUM 40M q\nJPER ADAPT \"MIC INTEGRADO Full Rotor Ú\n1/CVBS/AHO/TVI \"IP67\nHAC HFW1239TM IL A 028",
+        "fila_original": 6
+      }
+    },
+    {
+      "id": 33,
+      "nombre": "BALUN PASIVO 4K TRANSMISOR",
+      "descripcion": "BALUN PASIVO 4 EN 1 \"TRANSMISOR DE i\nJEO HDCVI, AHD, ANALOGO, TVI *DISTANCIA\nXIMA HASTA 440M EN 720P *REDUCCION\nRUIDO\nF302",
+      "marca": null,
+      "modelo": null,
+      "categoria": "Baluns",
+      "canales": null,
+      "precio": 24,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 6,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.49 PM (2).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.49 PM (2).json",
+        "indice_en_pagina": 1
+      },
+      "ocr": {
+        "texto_original": "BALUN PASIVO 4 EN 1 \"TRANSMISOR DE i\nJEO HDCVI, AHD, ANALOGO, TVI *DISTANCIA\nXIMA HASTA 440M EN 720P *REDUCCION\nRUIDO\nF302",
+        "fila_original": 1
+      }
+    },
+    {
+      "id": 34,
+      "nombre": "BALUN HDCVI/TVI/AHD/CVBS",
+      "descripcion": "BALUN HDCVI/TVI/AHD/CVBS, SOPORTA\nSTA 8MP\nleo/Audio Balun Balun UTP de video pasivo\n1 canal. Distancia de transmisión: Cámara\nPOC Máx. 250 m; cámara POC máx. 150\ntros. Antiinterferencia superior DS 1H18S/EO",
+      "marca": null,
+      "modelo": null,
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 24,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 6,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.49 PM (2).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.49 PM (2).json",
+        "indice_en_pagina": 2
+      },
+      "ocr": {
+        "texto_original": "BALUN HDCVI/TVI/AHD/CVBS, SOPORTA\nSTA 8MP\nleo/Audio Balun Balun UTP de video pasivo\n1 canal. Distancia de transmisión: Cámara\nPOC Máx. 250 m; cámara POC máx. 150\ntros. Antiinterferencia superior DS 1H18S/EO",
+        "fila_original": 3
+      }
+    },
+    {
+      "id": 35,
+      "nombre": "BALUN PASIVO VIDEO TRANSMISOR",
+      "descripcion": "BALUN PASIVO DE VIDEO\" TRANSMISOR DE\nJEO HDCVI, AHD, ANALOGO, TVI *MAX\nSTA 400M EN 720P, 250m en\n30P*REDUCCIÓN DE RUIDO\nDH PFM800 E",
+      "marca": "Dahua",
+      "modelo": "DH-PFM800-E",
+      "categoria": "Baluns",
+      "canales": null,
+      "precio": 24,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 6,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.49 PM (2).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.49 PM (2).json",
+        "indice_en_pagina": 3
+      },
+      "ocr": {
+        "texto_original": "BALUN PASIVO DE VIDEO\" TRANSMISOR DE\nJEO HDCVI, AHD, ANALOGO, TVI *MAX\nSTA 400M EN 720P, 250m en\n30P*REDUCCIÓN DE RUIDO\nDH PFM800 E",
+        "fila_original": 4
+      }
+    },
+    {
+      "id": 36,
+      "nombre": "BALUN PASIVO VIDEO 4K TRANSMISOR",
+      "descripcion": "BALUN PASIVO DE VIDEO 4K \"TRANSMISOR DE\nYEO HDCVI, AHD, ANALOGO, TVI *TX HDCVI\nP: MAX 400M *1080P MAX 250M\nM/6M/4K MAX 200M *REDUCCION DE RUIDO\nDH PFEM800B 4K",
+      "marca": "Dahua",
+      "modelo": "DH-PFEM800B",
+      "categoria": "Baluns",
+      "canales": null,
+      "precio": 35,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 6,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.49 PM (2).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.49 PM (2).json",
+        "indice_en_pagina": 4
+      },
+      "ocr": {
+        "texto_original": "BALUN PASIVO DE VIDEO 4K \"TRANSMISOR DE\nYEO HDCVI, AHD, ANALOGO, TVI *TX HDCVI\nP: MAX 400M *1080P MAX 250M\nM/6M/4K MAX 200M *REDUCCION DE RUIDO\nDH PFEM800B 4K",
+        "fila_original": 5
+      }
+    },
+    {
+      "id": 37,
+      "nombre": "BALUN PASIVO VIDEO 4K TRANSMISOR",
+      "descripcion": "BALUN PASIVO DE VIDEO 4K \"TRANSMISOR DE\nJEO HDCVI, AHD, ANALOGO, TVI *TX HDCVI\nJP: MAX 400M *1080P MAX 250M\nM/6M/4K MAX 200M *REDUCCION DE RUIDO\nDH PFM800 4K",
+      "marca": "Dahua",
+      "modelo": "DH-PFM800",
+      "categoria": "Baluns",
+      "canales": null,
+      "precio": 55,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 6,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.49 PM (2).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.49 PM (2).json",
+        "indice_en_pagina": 5
+      },
+      "ocr": {
+        "texto_original": "BALUN PASIVO DE VIDEO 4K \"TRANSMISOR DE\nJEO HDCVI, AHD, ANALOGO, TVI *TX HDCVI\nJP: MAX 400M *1080P MAX 250M\nM/6M/4K MAX 200M *REDUCCION DE RUIDO\nDH PFM800 4K",
+        "fila_original": 6
+      }
+    },
+    {
+      "id": 38,
+      "nombre": "BALUM 10 UNIDADES",
+      "descripcion": "ite cámara/DVR del dispositivo con POC SO\nTRANSMISIÓN de señal de vídeo en tiempo real\nmn actahlao da alta calidad. Mietanca da",
+      "marca": "HIKVISION",
+      "modelo": null,
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 210,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 7,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.49 PM (3).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.49 PM (3).json",
+        "indice_en_pagina": 1
+      },
+      "ocr": {
+        "texto_original": "ite cámara/DVR del dispositivo con POC SO\nTRANSMISIÓN de señal de vídeo en tiempo real\nmn actahlao da alta calidad. Mietanca da",
+        "fila_original": 1
+      }
+    },
+    {
+      "id": 39,
+      "nombre": "TRANSMISIÓN CÁMARA POC 250",
+      "descripcion": "TRANSMISIÓN: Cámara no POC Máx. 250 m\nCÁMARA POC máx. 150 metros. Antiinterferencia\nrior DS 1H18S/E©",
+      "marca": null,
+      "modelo": "DS-1H18S/E",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 150,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 7,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.49 PM (3).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.49 PM (3).json",
+        "indice_en_pagina": 2
+      },
+      "ocr": {
+        "texto_original": "TRANSMISIÓN: Cámara no POC Máx. 250 m\nCÁMARA POC máx. 150 metros. Antiinterferencia\nrior DS 1H18S/E©",
+        "fila_original": 2
+      }
+    },
+    {
+      "id": 40,
+      "nombre": "2 BALUN PASIVO 1080P SOPORTA AHD TVI",
+      "descripcion": "2 BALUN PASIVO 1080P, SOPORTA AHD TVI\nVI CBVS//// 10 UNIDADES POR CAJA\nJM PASIVO PARA CCTV 1080P Par de\nttadores pasivos de CCTV, 1080p 250 Mts/\n400 Mts, SOPORTA HDCVI/AHD/ TVI/ CBVS/\nZK CF200",
+      "marca": null,
+      "modelo": "VI-CBVS",
+      "categoria": "Baluns",
+      "canales": null,
+      "precio": 140,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 7,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.49 PM (3).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.49 PM (3).json",
+        "indice_en_pagina": 3
+      },
+      "ocr": {
+        "texto_original": "2 BALUN PASIVO 1080P, SOPORTA AHD TVI\nVI CBVS//// 10 UNIDADES POR CAJA\nJM PASIVO PARA CCTV 1080P Par de\nttadores pasivos de CCTV, 1080p 250 Mts/\n400 Mts, SOPORTA HDCVI/AHD/ TVI/ CBVS/\nZK CF200",
+        "fila_original": 3
+      }
+    },
+    {
+      "id": 41,
+      "nombre": "BALUN PASIVO VIDEO 4K TRANSMISOR",
+      "descripcion": "BALUN PASIVO DE VIDEO 4K \"TRANSMISOR DE\nHDCVI, AHD, ANALOGO, TVI *TX HDCVI (y\nMAX 400M 1080P MAX 250M *4M/6M/4K EF\n200M \"REDUCCION DE RUIDO\nJNIDADES\nDH PFM800B 4K",
+      "marca": "Dahua",
+      "modelo": "DH-PFM800B-4K",
+      "categoria": "Baluns",
+      "canales": null,
+      "precio": 350,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 7,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.49 PM (3).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.49 PM (3).json",
+        "indice_en_pagina": 4
+      },
+      "ocr": {
+        "texto_original": "BALUN PASIVO DE VIDEO 4K \"TRANSMISOR DE\nHDCVI, AHD, ANALOGO, TVI *TX HDCVI (y\nMAX 400M 1080P MAX 250M *4M/6M/4K EF\n200M \"REDUCCION DE RUIDO\nJNIDADES\nDH PFM800B 4K",
+        "fila_original": 7
+      }
+    },
+    {
+      "id": 42,
+      "nombre": "BALUN PASIVO 4 1 VIDEO 4K",
+      "descripcion": "BALUN PASIVO 4 EN 1 *TX DE VIDEO 4K\nNSMISOR DE VIDEO HDCVI, AHD, ANALOGO, in\nDISTANCIA MAXIMA HDCVI HASTA 200M EN\nREDUCCION DE RUIDO\nJNIDADES DH PFEM800 4K",
+      "marca": "Dahua",
+      "modelo": "DH-PFEM800-4K",
+      "categoria": "Baluns",
+      "canales": null,
+      "precio": 520,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 7,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.49 PM (3).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.49 PM (3).json",
+        "indice_en_pagina": 5
+      },
+      "ocr": {
+        "texto_original": "BALUN PASIVO 4 EN 1 *TX DE VIDEO 4K\nNSMISOR DE VIDEO HDCVI, AHD, ANALOGO, in\nDISTANCIA MAXIMA HDCVI HASTA 200M EN\nREDUCCION DE RUIDO\nJNIDADES DH PFEM800 4K",
+        "fila_original": 8
+      }
+    },
+    {
+      "id": 43,
+      "nombre": "FUENTE PODER 12VDC 2 5A 1 CANAL",
+      "descripcion": "FUENTE DE PODER 12VDC, 2. 5A *1 CANAL DE\nIDA 12VDC 3A *SOPORTA CAMARAS\nATERIAL PLÁSTICO\n12V2. 5A",
+      "marca": null,
+      "modelo": null,
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 40,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 8,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.49 PM (4).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.49 PM (4).json",
+        "indice_en_pagina": 1
+      },
+      "ocr": {
+        "texto_original": "FUENTE DE PODER 12VDC, 2. 5A *1 CANAL DE\nIDA 12VDC 3A *SOPORTA CAMARAS\nATERIAL PLÁSTICO\n12V2. 5A",
+        "fila_original": 3
+      }
+    },
+    {
+      "id": 44,
+      "nombre": "FUENTE PODER 12VDCXSA BORNERA",
+      "descripcion": "FUENTE DE PODER 12VDCXSA *BORNERA DE\nNEXION GENERAL *SOPORTA CAMARAS\nINTROLES DE ACCESO *CHAPAS *ENTRADA\n/220VAC *POTENCIA 60 W *CARCASA 2\nJURADA\nMO03 12V5A",
+      "marca": null,
+      "modelo": null,
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 60,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 8,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.49 PM (4).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.49 PM (4).json",
+        "indice_en_pagina": 2
+      },
+      "ocr": {
+        "texto_original": "FUENTE DE PODER 12VDCXSA *BORNERA DE\nNEXION GENERAL *SOPORTA CAMARAS\nINTROLES DE ACCESO *CHAPAS *ENTRADA\n/220VAC *POTENCIA 60 W *CARCASA 2\nJURADA\nMO03 12V5A",
+        "fila_original": 7
+      }
+    },
+    {
+      "id": 45,
+      "nombre": "FUENTE PODER TIPO REJILLA 12VDC 30A",
+      "descripcion": "FUENTE DE PODER TIPO REJILLA 12VDC 30A\nTENCIA NOMINAL 400W *RANGO VOLTAJE Ss\n110 220V *FRECUENCIA 50/60HZ ES\nATERIAL ALEACION DE ALUMINIO *IPSS\nZ039 12V30A",
+      "marca": null,
+      "modelo": null,
+      "categoria": "Fuentes de poder",
+      "canales": null,
+      "precio": 260,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 8,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.49 PM (4).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.49 PM (4).json",
+        "indice_en_pagina": 3
+      },
+      "ocr": {
+        "texto_original": "FUENTE DE PODER TIPO REJILLA 12VDC 30A\nTENCIA NOMINAL 400W *RANGO VOLTAJE Ss\n110 220V *FRECUENCIA 50/60HZ ES\nATERIAL ALEACION DE ALUMINIO *IPSS\nZ039 12V30A",
+        "fila_original": 8
+      }
+    },
+    {
+      "id": 46,
+      "nombre": "FUENTE SUPERVISADA 12VDC 4 SALIDAS",
+      "descripcion": "FUENTE SUPERVISADA 12VDC, SA *4 SALIDAS pas\nRA CAMARAS *ALIMENTACION 110 220V rey\n60Hz *CAJA METÁLICA 9\nNO23 12VDC 5A*",
+      "marca": null,
+      "modelo": null,
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 190,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 8,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.49 PM (4).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.49 PM (4).json",
+        "indice_en_pagina": 4
+      },
+      "ocr": {
+        "texto_original": "FUENTE SUPERVISADA 12VDC, SA *4 SALIDAS pas\nRA CAMARAS *ALIMENTACION 110 220V rey\n60Hz *CAJA METÁLICA 9\nNO23 12VDC 5A*",
+        "fila_original": 10
+      }
+    },
+    {
+      "id": 47,
+      "nombre": "FUENTE SUPERVISADA UPS 12VDC 20A 18",
+      "descripcion": "FUENTE SUPERVISADA UPS 12VDC, 20A *18 Lea\nIDAS *PARA CÁMARAS *ALIMENTACION ye\n220V, 50/60Hz *VIENE 2 BATERIAS DE 7A\nMA METÁLICA *SIN CABLE DE\nMENTACIÓN\nNO28 12VDC, 204",
+      "marca": null,
+      "modelo": null,
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 780,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 8,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.49 PM (4).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.49 PM (4).json",
+        "indice_en_pagina": 5
+      },
+      "ocr": {
+        "texto_original": "FUENTE SUPERVISADA UPS 12VDC, 20A *18 Lea\nIDAS *PARA CÁMARAS *ALIMENTACION ye\n220V, 50/60Hz *VIENE 2 BATERIAS DE 7A\nMA METÁLICA *SIN CABLE DE\nMENTACIÓN\nNO28 12VDC, 204",
+        "fila_original": 13
+      }
+    },
+    {
+      "id": 48,
+      "nombre": "CÁMARA HDCVI COOPER BALA 2MP",
+      "descripcion": "CÁMARA HDCVI COOPER BALA 2MP\nSTICA \"MAX IR 30M \"LENTE 2. 8MM\n67 *BLC, DWDR \"ILUMINACIÓN\nELIGENTE \"CVI/CVBS/AHD/TVI\nDH HAC B1A21N U 0280E",
+      "marca": "Dahua",
+      "modelo": "DH-HAC-B1A21N-U-0280E",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 150,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 9,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.49 PM.jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.49 PM.json",
+        "indice_en_pagina": 1
+      },
+      "ocr": {
+        "texto_original": "CÁMARA HDCVI COOPER BALA 2MP\nSTICA \"MAX IR 30M \"LENTE 2. 8MM\n67 *BLC, DWDR \"ILUMINACIÓN\nELIGENTE \"CVI/CVBS/AHD/TVI\nDH HAC B1A21N U 0280E",
+        "fila_original": 0
+      }
+    },
+    {
+      "id": 49,
+      "nombre": "CÁMARA HDCVI COOPER BALA 2MP",
+      "descripcion": "CÁMARA HDCVI COOPER BALA 2MP\nÍSTICA *CON AUDIO *LENTE 2. 8MM Q\nAX. 30 FPS 1080P \"MÁX. IR30 MTS LY\nJI/CVBS/AHD/TVI *IP67 *BLC, DWDR\nNR DH HAC B1A21N U A 0280",
+      "marca": "Dahua",
+      "modelo": "DH-HAC-B1A21N-U-A-0280",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 215,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 9,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.49 PM.jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.49 PM.json",
+        "indice_en_pagina": 2
+      },
+      "ocr": {
+        "texto_original": "CÁMARA HDCVI COOPER BALA 2MP\nÍSTICA *CON AUDIO *LENTE 2. 8MM Q\nAX. 30 FPS 1080P \"MÁX. IR30 MTS LY\nJI/CVBS/AHD/TVI *IP67 *BLC, DWDR\nNR DH HAC B1A21N U A 0280",
+        "fila_original": 1
+      }
+    },
+    {
+      "id": 50,
+      "nombre": "CÁMARA HDCVI COOPER BALA 2MP",
+      "descripcion": "CÁMARA HDCVI COOPER BALA 2MP\nTALICA *DIST. IR MAX 30M \"LENTE\nMM *CVI/CVBS/AHD/TVI *IP67\nDH HAC B2A21N U 02806",
+      "marca": "Dahua",
+      "modelo": "DH-HAC-B2A21N-U-02806",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 220,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 9,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.49 PM.jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.49 PM.json",
+        "indice_en_pagina": 3
+      },
+      "ocr": {
+        "texto_original": "CÁMARA HDCVI COOPER BALA 2MP\nTALICA *DIST. IR MAX 30M \"LENTE\nMM *CVI/CVBS/AHD/TVI *IP67\nDH HAC B2A21N U 02806",
+        "fila_original": 2
+      }
+    },
+    {
+      "id": 51,
+      "nombre": "CÁMARA HDCVI COOPER BALA 2MP",
+      "descripcion": "CÁMARA HDCVI COOPER BALA 2MP rod\nTALICA CON AUDIO *MAX. 30 Q\n@1080p \"LENTE 2. 8MM *IR MAX 30M\nVI/CVBS/AHD/TVI *IP67\nDH HAC B2A21N U A 0280",
+      "marca": "Dahua",
+      "modelo": "DH-HAC-B2A21N-U-A-0280",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 235,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 9,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.49 PM.jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.49 PM.json",
+        "indice_en_pagina": 4
+      },
+      "ocr": {
+        "texto_original": "CÁMARA HDCVI COOPER BALA 2MP rod\nTALICA CON AUDIO *MAX. 30 Q\n@1080p \"LENTE 2. 8MM *IR MAX 30M\nVI/CVBS/AHD/TVI *IP67\nDH HAC B2A21N U A 0280",
+        "fila_original": 3
+      }
+    },
+    {
+      "id": 52,
+      "nombre": "CÁMARA HDCVI BALA 2MP METÁLICA 0",
+      "descripcion": "CÁMARA HDCVI BALA 2MP METÁLICA *CON 0\n*MAX 30fpsQ 1080P \"SENSOR\n7\" CMOS *CVI/CVBS/AHD/TVI \"LENTE as\nMM *MICROFONO INTEGRADO *MAX IR\nSMART IR *IP67 HAC HFW 1200CMN A 028B",
+      "marca": null,
+      "modelo": null,
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 220,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 9,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.49 PM.jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.49 PM.json",
+        "indice_en_pagina": 5
+      },
+      "ocr": {
+        "texto_original": "CÁMARA HDCVI BALA 2MP METÁLICA *CON 0\n*MAX 30fpsQ 1080P \"SENSOR\n7\" CMOS *CVI/CVBS/AHD/TVI \"LENTE as\nMM *MICROFONO INTEGRADO *MAX IR\nSMART IR *IP67 HAC HFW 1200CMN A 028B",
+        "fila_original": 4
+      }
+    },
+    {
+      "id": 53,
+      "nombre": "CÁMARA HDCVI BALA 2MP AUDIO",
+      "descripcion": "CÁMARA HDCVI BALA 2MP CON AUDIO Q\nAX. 30 FPSQ1080P *IR MAX 40M\nJPER ADAPT *LENTE 2. 8MM *IP67 *3D B\n*META/PLÁSTICA\nHAC HFW 1200TH 14 A 028",
+      "marca": null,
+      "modelo": null,
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 350,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 9,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.49 PM.jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.49 PM.json",
+        "indice_en_pagina": 6
+      },
+      "ocr": {
+        "texto_original": "CÁMARA HDCVI BALA 2MP CON AUDIO Q\nAX. 30 FPSQ1080P *IR MAX 40M\nJPER ADAPT *LENTE 2. 8MM *IP67 *3D B\n*META/PLÁSTICA\nHAC HFW 1200TH 14 A 028",
+        "fila_original": 5
+      }
+    },
+    {
+      "id": 54,
+      "nombre": "CÁMARA HDCVI BALA METÁLICA 2MP 7O",
+      "descripcion": "CÁMARA HDCVI BALA METÁLICA 2MP 7o be\n6MM *SMART IR 80M *DIA/NOCHE\nWB *AGC *BLC *2D *IP67 \"DC12V\nTSC\nDH HAC HFW1200DN 0360",
+      "marca": "Dahua",
+      "modelo": "DH-HAC-HFW1200DN-0360",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 300,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 9,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.49 PM.jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.49 PM.json",
+        "indice_en_pagina": 7
+      },
+      "ocr": {
+        "texto_original": "CÁMARA HDCVI BALA METÁLICA 2MP 7o be\n6MM *SMART IR 80M *DIA/NOCHE\nWB *AGC *BLC *2D *IP67 \"DC12V\nTSC\nDH HAC HFW1200DN 0360",
+        "fila_original": 6
+      }
+    },
+    {
+      "id": 55,
+      "nombre": "CÁMARA HDCVI DOMO 8MP SMART DUAL",
+      "descripcion": "CÁMARA HDCVI DOMO 8MP SMART DUAL Q bm\nMAN LIGHT *METÁLICA \"SENSOR 4K CMOS 3\nCN \"DIST. ILUM. 40M *MIC INTEGRADO *LENTE\n2. 8MM *IP67 Smac Dual Light)\nHAC HDW1801T IL A S3 DIP",
+      "marca": null,
+      "modelo": "HAC-HDW1801T-IL-A-S3-DIP",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 1801,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 10,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.50 PM (1).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.50 PM (1).json",
+        "indice_en_pagina": 1
+      },
+      "ocr": {
+        "texto_original": "CÁMARA HDCVI DOMO 8MP SMART DUAL Q bm\nMAN LIGHT *METÁLICA \"SENSOR 4K CMOS 3\nCN \"DIST. ILUM. 40M *MIC INTEGRADO *LENTE\n2. 8MM *IP67 Smac Dual Light)\nHAC HDW1801T IL A S3 DIP",
+        "fila_original": null
+      }
+    },
+    {
+      "id": 56,
+      "nombre": "CÁMARA HDCVI DOMO 5MP AUDIO DOBLE",
+      "descripcion": "CÁMARA HDCVI DOMO 5MP C/ AUDIO DOBLE\n*METAL/PLÁSTICA *MAX. 25 fps@SMP\nMART DUAL LIGHT *DIT. ILUM. 40M sma Det if)\nINR \"LENTE 2. 8MM *IP67\nHAC HDW1500TQ IL T 28 1",
+      "marca": null,
+      "modelo": "HAC-HDW1500TQ-IL-T-28-1",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 460,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 11,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.50 PM (2).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.50 PM (2).json",
+        "indice_en_pagina": 1
+      },
+      "ocr": {
+        "texto_original": "CÁMARA HDCVI DOMO 5MP C/ AUDIO DOBLE\n*METAL/PLÁSTICA *MAX. 25 fps@SMP\nMART DUAL LIGHT *DIT. ILUM. 40M sma Det if)\nINR \"LENTE 2. 8MM *IP67\nHAC HDW1500TQ IL T 28 1",
+        "fila_original": 0
+      }
+    },
+    {
+      "id": 57,
+      "nombre": "CÁMARA HDCVI DOMO 5MP AUDIO",
+      "descripcion": "CÁMARA HDCVI DOMO 5MP *CON AUDIO Q\nEGRADO *1/2. 7\" CMOS *LENTE 2. 8MM\n60 M *SMART IR *IP67 *DC12V *DWDR\nHAC HDW1500TMQN A 028I",
+      "marca": null,
+      "modelo": "HAC-HDW1500TMQN-A-028I",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 390,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 11,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.50 PM (2).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.50 PM (2).json",
+        "indice_en_pagina": 2
+      },
+      "ocr": {
+        "texto_original": "CÁMARA HDCVI DOMO 5MP *CON AUDIO Q\nEGRADO *1/2. 7\" CMOS *LENTE 2. 8MM\n60 M *SMART IR *IP67 *DC12V *DWDR\nHAC HDW1500TMQN A 028I",
+        "fila_original": 1
+      }
+    },
+    {
+      "id": 58,
+      "nombre": "CÁMARA HDCVI DOMO 5MP TIOC LENTE",
+      "descripcion": "CÁMARA HDCVI DOMO 5MP TIOC *LENTE SOS\nMM *MAX 25 fps@5 MP \"DOBLE\nMINADOR *DIST. ILUMINACIÓN 40M Full Gir 0\nJPER ADAPT \"ALARMA DE LUZ SONIDO\nRLANTE INTEGRADO *IP67 HAC ME1509HN A PV 028",
+      "marca": null,
+      "modelo": "HAC-ME1509HN-A-PV-028",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 750,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 11,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.50 PM (2).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.50 PM (2).json",
+        "indice_en_pagina": 3
+      },
+      "ocr": {
+        "texto_original": "CÁMARA HDCVI DOMO 5MP TIOC *LENTE SOS\nMM *MAX 25 fps@5 MP \"DOBLE\nMINADOR *DIST. ILUMINACIÓN 40M Full Gir 0\nJPER ADAPT \"ALARMA DE LUZ SONIDO\nRLANTE INTEGRADO *IP67 HAC ME1509HN A PV 028",
+        "fila_original": 2
+      }
+    },
+    {
+      "id": 59,
+      "nombre": "CÁMARA HDCVI TIPO FULL COLOR KOTOR",
+      "descripcion": "CÁMARA HDCVI TIPO PT SMP FULL COLOR Full Kotor\nSTICO *MAX. 25 fps@SMP *IMAGEN 0\nL 16: 9 *DIST. ILUM 40M *SUPER ADAPT\nINTEGRADO *LENTE 2. 8MM *IP66\nHAC PT1509A A LED 280",
+      "marca": null,
+      "modelo": "HAC-PT1509A-A-LED-280",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 790,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 11,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.50 PM (2).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.50 PM (2).json",
+        "indice_en_pagina": 4
+      },
+      "ocr": {
+        "texto_original": "CÁMARA HDCVI TIPO PT SMP FULL COLOR Full Kotor\nSTICO *MAX. 25 fps@SMP *IMAGEN 0\nL 16: 9 *DIST. ILUM 40M *SUPER ADAPT\nINTEGRADO *LENTE 2. 8MM *IP66\nHAC PT1509A A LED 280",
+        "fila_original": 3
+      }
+    },
+    {
+      "id": 60,
+      "nombre": "CÁMARA HDCVI COOPER BALA",
+      "descripcion": "CÁMARA HDCVI COOPER BALA SMP\nTALICA *LENTE 2. 8MM *MAX 25 e)\n0SMP (16: 9 SALIDA DE VIDEO) *MAX\nMTS *CVI/CVBS/AHD/TVI *IP67 *BLC\nOWODR, 2D NR HAC B2AS1N U 0280B",
+      "marca": null,
+      "modelo": "HAC-B2AS1N-U-0280B",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 320,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 12,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.50 PM (3).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.50 PM (3).json",
+        "indice_en_pagina": 1
+      },
+      "ocr": {
+        "texto_original": "CÁMARA HDCVI COOPER BALA SMP\nTALICA *LENTE 2. 8MM *MAX 25 e)\n0SMP (16: 9 SALIDA DE VIDEO) *MAX\nMTS *CVI/CVBS/AHD/TVI *IP67 *BLC\nOWODR, 2D NR HAC B2AS1N U 0280B",
+        "fila_original": 0
+      }
+    },
+    {
+      "id": 61,
+      "nombre": "CÁMARA HDCVI BALA COOPER SMART",
+      "descripcion": "CÁMARA HDCVI BALA COOPER SMP *SMART\nL LIGHT *MAX. 25 FPS@SMP (16: 9)\nST. ILUMINACIÓN 30M \"LENTE 2. 8MM\n/1/CVBS/AHD/TVI *FACIL INSTALACIÓN\nDH HAC B1A51N U IL",
+      "marca": "Dahua",
+      "modelo": "DH-HAC-B1A51N-U-IL",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 350,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 12,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.50 PM (3).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.50 PM (3).json",
+        "indice_en_pagina": 2
+      },
+      "ocr": {
+        "texto_original": "CÁMARA HDCVI BALA COOPER SMP *SMART\nL LIGHT *MAX. 25 FPS@SMP (16: 9)\nST. ILUMINACIÓN 30M \"LENTE 2. 8MM\n/1/CVBS/AHD/TVI *FACIL INSTALACIÓN\nDH HAC B1A51N U IL",
+        "fila_original": 1
+      }
+    },
+    {
+      "id": 62,
+      "nombre": "CÁMARA HDCVI BALA AUDIO 8",
+      "descripcion": "CÁMARA HDCVI BALA SMP *CON AUDIO 8\n=TAL/PLÁSTICA *MAX. 25 fps@SMP\nST. ILUM. 30M *MIC INTEGRADO\nFUENTE 2. 8MM *IP67\nHAC HFW 1SOOTLM IL A 28",
+      "marca": null,
+      "modelo": "IL-A-28",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 440,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 12,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.50 PM (3).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.50 PM (3).json",
+        "indice_en_pagina": 3
+      },
+      "ocr": {
+        "texto_original": "CÁMARA HDCVI BALA SMP *CON AUDIO 8\n=TAL/PLÁSTICA *MAX. 25 fps@SMP\nST. ILUM. 30M *MIC INTEGRADO\nFUENTE 2. 8MM *IP67\nHAC HFW 1SOOTLM IL A 28",
+        "fila_original": 2
+      }
+    },
+    {
+      "id": 63,
+      "nombre": "CÁMARA HDCVI BALA SMART DUAL",
+      "descripcion": "CÁMARA HDCVI BALA SMP SMART DUAL\nHT *PLÁSTICA \"MAX. 25 fps@SMP Y. 2\nST. ILUM. 30M *MIC INTEGRADO\nFUENTE 2. 8MM *CVI/CVBS/AHD/TVI *IP67\nHAC HFW 1SOORL IL A S3 D",
+      "marca": null,
+      "modelo": "IL-A-S3-D",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 390,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 12,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.50 PM (3).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.50 PM (3).json",
+        "indice_en_pagina": 4
+      },
+      "ocr": {
+        "texto_original": "CÁMARA HDCVI BALA SMP SMART DUAL\nHT *PLÁSTICA \"MAX. 25 fps@SMP Y. 2\nST. ILUM. 30M *MIC INTEGRADO\nFUENTE 2. 8MM *CVI/CVBS/AHD/TVI *IP67\nHAC HFW 1SOORL IL A S3 D",
+        "fila_original": 3
+      }
+    },
+    {
+      "id": 64,
+      "nombre": "CÁMARA HDCVI BALA METÁLICA",
+      "descripcion": "CÁMARA HDCVI BALA METÁLICA DE SMP\n2. 7\" CMOS *LENTE 2. 8MM *MENU OSD YA\nMART IR30M *HASTA 700M\nAXIAL/300M UTP CAT5E MEDIANTE\nUN *IP67 *BLC/HLC/DWDR OH HAC HFW 1500TN 0280B",
+      "marca": null,
+      "modelo": "OH-HAC-HFW",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 380,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 12,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.50 PM (3).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.50 PM (3).json",
+        "indice_en_pagina": 5
+      },
+      "ocr": {
+        "texto_original": "CÁMARA HDCVI BALA METÁLICA DE SMP\n2. 7\" CMOS *LENTE 2. 8MM *MENU OSD YA\nMART IR30M *HASTA 700M\nAXIAL/300M UTP CAT5E MEDIANTE\nUN *IP67 *BLC/HLC/DWDR OH HAC HFW 1500TN 0280B",
+        "fila_original": 4
+      }
+    },
+    {
+      "id": 65,
+      "nombre": "CÁMARA HDCVI BALA WIZCOLOR 0",
+      "descripcion": "CÁMARA HDCVI BALA SMP WIZCOLOR 0 un\n=TAL/PLÁSTICA *MAX. 25 fps@SMP\nST. ILUM. SOM *SUPER ADAPT *MIC OF Coior\nL INTEGRADO *LENTE 2. 8MM *IP67\n/1/CVBS/AHD/TVI HAC HFW1549X IL A PRO D",
+      "marca": null,
+      "modelo": "HAC-HFW1549X-IL-A-PRO-D",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 500,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 13,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.50 PM (4).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.50 PM (4).json",
+        "indice_en_pagina": 1
+      },
+      "ocr": {
+        "texto_original": "CÁMARA HDCVI BALA SMP WIZCOLOR 0 un\n=TAL/PLÁSTICA *MAX. 25 fps@SMP\nST. ILUM. SOM *SUPER ADAPT *MIC OF Coior\nL INTEGRADO *LENTE 2. 8MM *IP67\n/1/CVBS/AHD/TVI HAC HFW1549X IL A PRO D",
+        "fila_original": 0
+      }
+    },
+    {
+      "id": 66,
+      "nombre": "CÁMARA HDCVI BALA AUDIO DOBLE",
+      "descripcion": "CÁMARA HDCVI BALA SMP C/ AUDIO DOBLE\nPLÁSTICA *MAX. 25 fps@5MP Dd\nAART DUAL LIGHT *DIST. ILUM. 30M Snat Owl uf)\nNR *LENTE 2. 8MM *IP67\nHAC HEW1SOORL IL T 28 D",
+      "marca": null,
+      "modelo": "HAC-HEW1SOORL-IL-T-28-D",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 410,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 13,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.50 PM (4).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.50 PM (4).json",
+        "indice_en_pagina": 2
+      },
+      "ocr": {
+        "texto_original": "CÁMARA HDCVI BALA SMP C/ AUDIO DOBLE\nPLÁSTICA *MAX. 25 fps@5MP Dd\nAART DUAL LIGHT *DIST. ILUM. 30M Snat Owl uf)\nNR *LENTE 2. 8MM *IP67\nHAC HEW1SOORL IL T 28 D",
+        "fila_original": 1
+      }
+    },
+    {
+      "id": 67,
+      "nombre": "CÁMARA HDCVI BALA",
+      "descripcion": "CÁMARA HDCVI BALA SMP\n=TAL/PLÁSTICA *SENSOR 1/2. 7\" CMOS\nFUENTE 3. 6MM *CVI/CVBS/AHD/TVI *MAX\n30M *IP67 *BLC/HLC/DWDR\nHAC HFW 1500THP I8 360!",
+      "marca": null,
+      "modelo": null,
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 390,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 13,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.50 PM (4).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.50 PM (4).json",
+        "indice_en_pagina": 3
+      },
+      "ocr": {
+        "texto_original": "CÁMARA HDCVI BALA SMP\n=TAL/PLÁSTICA *SENSOR 1/2. 7\" CMOS\nFUENTE 3. 6MM *CVI/CVBS/AHD/TVI *MAX\n30M *IP67 *BLC/HLC/DWDR\nHAC HFW 1500THP I8 360!",
+        "fila_original": 2
+      }
+    },
+    {
+      "id": 68,
+      "nombre": "CÁMARA HDCVI BALA METÁLICA",
+      "descripcion": "CÁMARA HDCVI BALA SMP METÁLICA iv\nENSOR 1/2. 7\" CMOS MAX 25 \"Me. on\n@SMP CVI/CVBS/AHD/TVI *LENTE _ <MA\nMM *IR MAX 80M SMART IR AN\nC/HLC/DWDR *DWDR *IP67 *12VDC DH HAC HFW1500DN 0360",
+      "marca": "Dahua",
+      "modelo": "DH-HAC-HFW1500DN-0360",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 450,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 13,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.50 PM (4).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.50 PM (4).json",
+        "indice_en_pagina": 4
+      },
+      "ocr": {
+        "texto_original": "CÁMARA HDCVI BALA SMP METÁLICA iv\nENSOR 1/2. 7\" CMOS MAX 25 \"Me. on\n@SMP CVI/CVBS/AHD/TVI *LENTE _ <MA\nMM *IR MAX 80M SMART IR AN\nC/HLC/DWDR *DWDR *IP67 *12VDC DH HAC HFW1500DN 0360",
+        "fila_original": 3
+      }
+    },
+    {
+      "id": 69,
+      "nombre": "CÁMARA HDCVI BALA FULL COLOR",
+      "descripcion": "CÁMARA HDCVI BALA SMP FULL COLOR CON\nUACION ACTIVA \"SENSOR CMOS \"LENTE\nMM \"MAX 25 FPS@S MP *120 dB TRUE q\nR, 3D NR \"DIST. ILUMI 40M \"CON MIC Futl Kolor\nEGRADO\nHAC ME1S509THN A PV 0361",
+      "marca": null,
+      "modelo": "FUTL-KOLOR",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 780,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 13,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.50 PM (4).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.50 PM (4).json",
+        "indice_en_pagina": 5
+      },
+      "ocr": {
+        "texto_original": "CÁMARA HDCVI BALA SMP FULL COLOR CON\nUACION ACTIVA \"SENSOR CMOS \"LENTE\nMM \"MAX 25 FPS@S MP *120 dB TRUE q\nR, 3D NR \"DIST. ILUMI 40M \"CON MIC Futl Kolor\nEGRADO\nHAC ME1S509THN A PV 0361",
+        "fila_original": 4
+      }
+    },
+    {
+      "id": 70,
+      "nombre": "CÁMARA HDCVI COOPER DOMO",
+      "descripcion": "CÁMARA HDCVI COOPER DOMO SMP\nTALICA *LENTE 2. 8MM *MAX IR30 MTS OS\n/I/CVBS/AHD/TVI *IP67 *BLC, HLC\nDR, 2D NR\nDH HAC T2AS 1N U 02801",
+      "marca": "Dahua",
+      "modelo": "DH-HAC-T2AS",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 320,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 14,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.50 PM.jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.50 PM.json",
+        "indice_en_pagina": 1
+      },
+      "ocr": {
+        "texto_original": "CÁMARA HDCVI COOPER DOMO SMP\nTALICA *LENTE 2. 8MM *MAX IR30 MTS OS\n/I/CVBS/AHD/TVI *IP67 *BLC, HLC\nDR, 2D NR\nDH HAC T2AS 1N U 02801",
+        "fila_original": 0
+      }
+    },
+    {
+      "id": 71,
+      "nombre": "CÁMARA HDCVI DOMO FULL COLOR",
+      "descripcion": "CÁMARA HDCVI DOMO SMP FULL COLOR\nASTICA *MAX 25 fps@SMP \"RAPIDA PA\nTALACIÓN \"LUZ DUAL INTELIGENTE\nST. ILUM 20M \"MIC INTEGRADO *LENTE\nMM *IP67 *2D NR HAC HDOW1SOOCLQ IL A S",
+      "marca": null,
+      "modelo": "HAC-HDOW1SOOCLQ-IL-A-S",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 390,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 14,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.50 PM.jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.50 PM.json",
+        "indice_en_pagina": 2
+      },
+      "ocr": {
+        "texto_original": "CÁMARA HDCVI DOMO SMP FULL COLOR\nASTICA *MAX 25 fps@SMP \"RAPIDA PA\nTALACIÓN \"LUZ DUAL INTELIGENTE\nST. ILUM 20M \"MIC INTEGRADO *LENTE\nMM *IP67 *2D NR HAC HDOW1SOOCLQ IL A S",
+        "fila_original": 2
+      }
+    },
+    {
+      "id": 72,
+      "nombre": "CÁMARA HDCVI DOMO SMART DUAL",
+      "descripcion": "CÁMARA HDCVI DOMO SMP SMART DUAL Q\nHT *METÁLICA *LENTE 2. 8MM *MAX. 25 S\n@SMP \"DIST. ILUM. 40M *MIC\nEGRADO *CVI/CVBS/AHD/TVI *IP67\nHAC HDW1500T IL A $3 C",
+      "marca": null,
+      "modelo": "HAC-HDW1500T-IL-A",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 440,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 14,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.50 PM.jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.50 PM.json",
+        "indice_en_pagina": 3
+      },
+      "ocr": {
+        "texto_original": "CÁMARA HDCVI DOMO SMP SMART DUAL Q\nHT *METÁLICA *LENTE 2. 8MM *MAX. 25 S\n@SMP \"DIST. ILUM. 40M *MIC\nEGRADO *CVI/CVBS/AHD/TVI *IP67\nHAC HDW1500T IL A $3 C",
+        "fila_original": 3
+      }
+    },
+    {
+      "id": 73,
+      "nombre": "CÁMARA HDCVI DOMO WIZCOLOR",
+      "descripcion": "CÁMARA HDCVI DOMO SMP WIZCOLOR Q SN\nAX. 25 fpsQ5MP *DIST. ILUM. 50M _~\nJPER ADAPT *MIC DUAL INTEGRADO\nFUENTE 2. 8MM *IP67 *METAL/PLÁSTICA OF. Cotor\n/1/CVBS/AHD/TVI HAC HDW 1549xX IL A PRO",
+      "marca": null,
+      "modelo": "IL-A-PRO",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 500,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 14,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.50 PM.jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.50 PM.json",
+        "indice_en_pagina": 4
+      },
+      "ocr": {
+        "texto_original": "CÁMARA HDCVI DOMO SMP WIZCOLOR Q SN\nAX. 25 fpsQ5MP *DIST. ILUM. 50M _~\nJPER ADAPT *MIC DUAL INTEGRADO\nFUENTE 2. 8MM *IP67 *METAL/PLÁSTICA OF. Cotor\n/1/CVBS/AHD/TVI HAC HDW 1549xX IL A PRO",
+        "fila_original": 4
+      }
+    },
+    {
+      "id": 74,
+      "nombre": "CABLE CAT5E ALEACION",
+      "descripcion": "CABLE UTP CAT5E CCA EXT* ALEACION\" gor\n24 AWG* 4 PARES\" 0. 5MM* PASS FLUKE\" 6\nCHAQUETA DOBLE\" 100 METROS\nCARRETE DE MADERA\" COLOR NEGRO* c\nC923 D\nCABLE UTP CAT6 EXTERIOR\" ALEACION\" ae\n24 AWG 4P 0. 5MM CCA (ALEACION) 75 6 G\nDEGREE NUEVO PVC* PRESENTACION DE\n100 METROS CARRETE\" COLOR NEGRO t\nC896 D\nCABLE UTP CAT5E CCA EXT\" ALEACION\n24 AWG\"4 PARES\" 0. 5MM\" PASS FLUKE\" AS G\nCHAQUETA SIMPLE* 305 METROS*\nCARRETE DE MADERA\" COLOR NEGRO* D\nZ054\ncabLe FTP CATEGORIA SE (ALEACION)\ned 24 AWG 4 PARES 0. 5MM CCA 305 G 480\nfeNMETROS OUTDOOR JACKET PE COLOR\nNEGRO ROLLO DE MADERA D\nC713\nCABLE UTP CAT6 CCA EXT\" ALEACION*\nfe) 22 AWG\" 4 PARES\" 0. 56MMTM PASS G\no) FLUKE* CHAQUETA DOBLE\" 305 METROS*\nÁ c925\nbe CABLE UTP CAT6E\nBi (ALEACION)*EXTERIORES CON G\npy] MENSAJERO\"24 AWG 4 PARES 0. 5MM\nfur] CCA*305 METROS EXTERIOR COLOR D\nVan NEGRO\"CARRETE DE MADERA\" C722\nCABLE UTP CAT6 (80% COBRE)*\nEXTERIORES CON MENSAJERO\" 23 AWG 4 G\nPARES 0. 5MM CCA\" 305 METROS 1070\nOUTDOOR COLOR NEGRO\" CARRETE DE D\nMADERA C725\nCABLE FTP CAT5E BC EXT* 100% d\nCOBRE\" 24 AWG*4 PARES* 0. 5MM* G\nPASS FLUKE* CHAQUETA SIMPLE* 305\nMETROS\" CARRETE DE MADERA\" COLOR\nNEGRO c718\nCABLE UTP CAT5E CCA EXT SIAMES*\nALEACION\" 24 AWG* 4 PARES\" 0. 5MM* Sy G\nPASS FLUKE* CABLE DE ALIMENTACION el 750\nDE 2 NUCLEOS\" 305 METROS\" CARRETE D\nDE MADERA* COLOR NEGRO* c919",
+      "marca": null,
+      "modelo": null,
+      "categoria": "Redes",
+      "canales": null,
+      "precio": 919,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 15,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.51 PM (1).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.51 PM (1).json",
+        "indice_en_pagina": 1
+      },
+      "ocr": {
+        "texto_original": "CABLE UTP CAT5E CCA EXT* ALEACION\" gor\n24 AWG* 4 PARES\" 0. 5MM* PASS FLUKE\" 6\nCHAQUETA DOBLE\" 100 METROS\nCARRETE DE MADERA\" COLOR NEGRO* c\nC923 D\nCABLE UTP CAT6 EXTERIOR\" ALEACION\" ae\n24 AWG 4P 0. 5MM CCA (ALEACION) 75 6 G\nDEGREE NUEVO PVC* PRESENTACION DE\n100 METROS CARRETE\" COLOR NEGRO t\nC896 D\nCABLE UTP CAT5E CCA EXT\" ALEACION\n24 AWG\"4 PARES\" 0. 5MM\" PASS FLUKE\" AS G\nCHAQUETA SIMPLE* 305 METROS*\nCARRETE DE MADERA\" COLOR NEGRO* D\nZ054\ncabLe FTP CATEGORIA SE (ALEACION)\ned 24 AWG 4 PARES 0. 5MM CCA 305 G 480\nfeNMETROS OUTDOOR JACKET PE COLOR\nNEGRO ROLLO DE MADERA D\nC713\nCABLE UTP CAT6 CCA EXT\" ALEACION*\nfe) 22 AWG\" 4 PARES\" 0. 56MMTM PASS G\no) FLUKE* CHAQUETA DOBLE\" 305 METROS*\nÁ c925\nbe CABLE UTP CAT6E\nBi (ALEACION)*EXTERIORES CON G\npy] MENSAJERO\"24 AWG 4 PARES 0. 5MM\nfur] CCA*305 METROS EXTERIOR COLOR D\nVan NEGRO\"CARRETE DE MADERA\" C722\nCABLE UTP CAT6 (80% COBRE)*\nEXTERIORES CON MENSAJERO\" 23 AWG 4 G\nPARES 0. 5MM CCA\" 305 METROS 1070\nOUTDOOR COLOR NEGRO\" CARRETE DE D\nMADERA C725\nCABLE FTP CAT5E BC EXT* 100% d\nCOBRE\" 24 AWG*4 PARES* 0. 5MM* G\nPASS FLUKE* CHAQUETA SIMPLE* 305\nMETROS\" CARRETE DE MADERA\" COLOR\nNEGRO c718\nCABLE UTP CAT5E CCA EXT SIAMES*\nALEACION\" 24 AWG* 4 PARES\" 0. 5MM* Sy G\nPASS FLUKE* CABLE DE ALIMENTACION el 750\nDE 2 NUCLEOS\" 305 METROS\" CARRETE D\nDE MADERA* COLOR NEGRO* c919",
+        "fila_original": null
+      }
+    },
+    {
+      "id": 75,
+      "nombre": "CABLE POE",
+      "descripcion": "f= [cante DE RED STP *CATEGORÍA SE 625\nPARA EXTERIOR *305M \"CON ALAMBRE NIA, me 5\nDRENADOR *24AWG recubierto por una 2 1450\nmalla conductora que actúa de apantalla 5\n0 frente interferencias ruido eléctrico\nimpedancia es de 150 Ohm\nUB UISP CABLE PRO\nCABLE UTP CAT5E 100% COBRE *100MTS: 3\n*24AWG \"MATERIAL HOPE\n*CERTIFICACION UL CM \"ESTANDAR Ñ\nANSI/TIA 568 C. 2 2009, UL444 2008. GI\nDH PFM920I1 5EU U 100\nCABLE UTP CAT 6UN 305 METROS\n*100% COBRE *VAINA =13, 5 MPa, ead 3\nAISLAMIENTO =16*POE LARGA\nDISTANCIA *COLOR BLANCO REV EXT\nPVC *CERTIFICACION CE, CPR, ECA 7\nLLAMA DH PFM9201 6UN C\nCABLE UTP 305m UTP CAT5E 305 METROS ma 3\nPOR LARGA DIST. MAX. 160M *99. 99% Cs r=\nOFC \"CERTIFICACION CE CPR Eca LLAMA\n*COLOR BLANCO 4\nDH PFM920I 5EU C\nCABLE UTP CAT SE 305m Cable de Cobre L\npuro al 99, 95% 305 metros Buen Sp S\nmaterial antinflamatorio Recomendado Ro 4\npara conexiones POE larga distancia Ne\ntesteado con multimetro FLUKE\ndiametro de cable 0, 45 mm DS 1LN5E E/E(O STD)\nCABLE UTP CAT6 305m Cable de Cobre\npuro al 99, 95% 305 metros Buen S\nmaterial antiinflamatorio Recomendado 4\npara conexiones POE larga distancia sf\ntesteado con multimetro FLUKE SS\ndiametro de cable 0, 53 mm DS 1LN6 UE W(O STD)",
+      "marca": null,
+      "modelo": "DH-PFM920I1-5EU-U-100",
+      "categoria": "Redes",
+      "canales": null,
+      "precio": 53,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 16,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.51 PM (2).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.51 PM (2).json",
+        "indice_en_pagina": 1
+      },
+      "ocr": {
+        "texto_original": "f= [cante DE RED STP *CATEGORÍA SE 625\nPARA EXTERIOR *305M \"CON ALAMBRE NIA, me 5\nDRENADOR *24AWG recubierto por una 2 1450\nmalla conductora que actúa de apantalla 5\n0 frente interferencias ruido eléctrico\nimpedancia es de 150 Ohm\nUB UISP CABLE PRO\nCABLE UTP CAT5E 100% COBRE *100MTS: 3\n*24AWG \"MATERIAL HOPE\n*CERTIFICACION UL CM \"ESTANDAR Ñ\nANSI/TIA 568 C. 2 2009, UL444 2008. GI\nDH PFM920I1 5EU U 100\nCABLE UTP CAT 6UN 305 METROS\n*100% COBRE *VAINA =13, 5 MPa, ead 3\nAISLAMIENTO =16*POE LARGA\nDISTANCIA *COLOR BLANCO REV EXT\nPVC *CERTIFICACION CE, CPR, ECA 7\nLLAMA DH PFM9201 6UN C\nCABLE UTP 305m UTP CAT5E 305 METROS ma 3\nPOR LARGA DIST. MAX. 160M *99. 99% Cs r=\nOFC \"CERTIFICACION CE CPR Eca LLAMA\n*COLOR BLANCO 4\nDH PFM920I 5EU C\nCABLE UTP CAT SE 305m Cable de Cobre L\npuro al 99, 95% 305 metros Buen Sp S\nmaterial antinflamatorio Recomendado Ro 4\npara conexiones POE larga distancia Ne\ntesteado con multimetro FLUKE\ndiametro de cable 0, 45 mm DS 1LN5E E/E(O STD)\nCABLE UTP CAT6 305m Cable de Cobre\npuro al 99, 95% 305 metros Buen S\nmaterial antiinflamatorio Recomendado 4\npara conexiones POE larga distancia sf\ntesteado con multimetro FLUKE SS\ndiametro de cable 0, 53 mm DS 1LN6 UE W(O STD)",
+        "fila_original": null
+      }
+    },
+    {
+      "id": 76,
+      "nombre": "CABLE CAT5E 24AWG ROLLO 5",
+      "descripcion": "CABLE UTP CAT5E 24AWG ROLLO DE 5\n100M, PARA USO INTERIOR, COLOR\nNEGRO S 0\nGCR CAT5E 100M 6\nCABLE UTP CATEGORIA SE*IDEAL PARA\nCAMARAS ANALOGICAS*24AWG*4 PARES G\nALEACCION) 100 METROS COLOR en\nBLANCO BAJO NORMA UL 5\nc715\nES 4\nCABLE UTP CAT5E CCA INT* ALEACION* ER G\n24 AWG* 4 PARES* 0. SMM* PASS FLUKE* NS\nfens CHAQUETA SIMPLE* 305 METROS* COLOR\nfap BLANCO*: D\nN c714\nsl CABLE UTP CAT5E CCAE INT* 80% Ha\ncore\" 24 AWG* 4 PARES* 0. 5MM* G\nlOlpass FLUKE* CHAQUETA SIMPLE* 305\nGI METROS* COLOR BLANCO*: D\n5 CABLE UTP CATE (ALEACION)* COLOR aa\nPERE BLANCO* 4 PARES *2*0. 6SMM 23AWG G\nyell CCA 75 DEGREE PRESENTACION EN 305 os\nMnerros* COLOR BLANCO* BAJO NORMA\nUL D\nCABLE UTP CATEGORIA 6 CCAE(80% se\nCOBRE) *4 PARES*2*0. 57mm 23AWG G 700\n75 DEGREE NUEVO 305 METROS* COLOR\nAZUL BAJO NORMA UL D\nC720",
+      "marca": null,
+      "modelo": "GCR-CATSE-100M",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 720,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 17,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.51 PM.jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.51 PM.json",
+        "indice_en_pagina": 1
+      },
+      "ocr": {
+        "texto_original": "CABLE UTP CAT5E 24AWG ROLLO DE 5\n100M, PARA USO INTERIOR, COLOR\nNEGRO S 0\nGCR CAT5E 100M 6\nCABLE UTP CATEGORIA SE*IDEAL PARA\nCAMARAS ANALOGICAS*24AWG*4 PARES G\nALEACCION) 100 METROS COLOR en\nBLANCO BAJO NORMA UL 5\nc715\nES 4\nCABLE UTP CAT5E CCA INT* ALEACION* ER G\n24 AWG* 4 PARES* 0. SMM* PASS FLUKE* NS\nfens CHAQUETA SIMPLE* 305 METROS* COLOR\nfap BLANCO*: D\nN c714\nsl CABLE UTP CAT5E CCAE INT* 80% Ha\ncore\" 24 AWG* 4 PARES* 0. 5MM* G\nlOlpass FLUKE* CHAQUETA SIMPLE* 305\nGI METROS* COLOR BLANCO*: D\n5 CABLE UTP CATE (ALEACION)* COLOR aa\nPERE BLANCO* 4 PARES *2*0. 6SMM 23AWG G\nyell CCA 75 DEGREE PRESENTACION EN 305 os\nMnerros* COLOR BLANCO* BAJO NORMA\nUL D\nCABLE UTP CATEGORIA 6 CCAE(80% se\nCOBRE) *4 PARES*2*0. 57mm 23AWG G 700\n75 DEGREE NUEVO 305 METROS* COLOR\nAZUL BAJO NORMA UL D\nC720",
+        "fila_original": null
+      }
+    },
+    {
+      "id": 77,
+      "nombre": "IDEAL PARA TODO TIPO DISPOSITIVOS",
+      "descripcion": "IDEAL PARA TODO TIPO DE DISPOSITIVOS\nTIMEDIA, CABLE DE LARGA DURACIÓN, COLOR\nNO34",
+      "marca": null,
+      "modelo": null,
+      "categoria": "Otros",
+      "canales": null,
+      "precio": 220,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 18,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.52 PM (1).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.52 PM (1).json",
+        "indice_en_pagina": 1
+      },
+      "ocr": {
+        "texto_original": "IDEAL PARA TODO TIPO DE DISPOSITIVOS\nTIMEDIA, CABLE DE LARGA DURACIÓN, COLOR\nNO34",
+        "fila_original": 1
+      }
+    },
+    {
+      "id": 78,
+      "nombre": "CABLE CANAL 10X20 PAQUETE 6",
+      "descripcion": "CABLE CANAL PVC 10X20 MM, PAQUETE o. 6\nMÁ DE 10 UNIDADES, COLOR BLANCO, S 70\nLONGITUD DE 2 MTS\nOo Vv\n0] ra\nPE CABLE CANAL PVC 25X25 MM, PAQUETE\nBos 10 UNIDADES, COLOR BLANCO, 95\npr] LONGITUD DE 2 MTS 5\n3 S115\ner CABLE CANAL PVC 19X39 MM, PAQUETE G\nPWEDE 10 UNIDADES, COLOR BLANCO, AS 130\nPAN LONGITUD DE 2 MTS\nrs) D",
+      "marca": null,
+      "modelo": null,
+      "categoria": "Otros",
+      "canales": null,
+      "precio": 116,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 19,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.52 PM (2).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.52 PM (2).json",
+        "indice_en_pagina": 1
+      },
+      "ocr": {
+        "texto_original": "CABLE CANAL PVC 10X20 MM, PAQUETE o. 6\nMÁ DE 10 UNIDADES, COLOR BLANCO, S 70\nLONGITUD DE 2 MTS\nOo Vv\n0] ra\nPE CABLE CANAL PVC 25X25 MM, PAQUETE\nBos 10 UNIDADES, COLOR BLANCO, 95\npr] LONGITUD DE 2 MTS 5\n3 S115\ner CABLE CANAL PVC 19X39 MM, PAQUETE G\nPWEDE 10 UNIDADES, COLOR BLANCO, AS 130\nPAN LONGITUD DE 2 MTS\nrs) D",
+        "fila_original": null
+      }
+    },
+    {
+      "id": 79,
+      "nombre": "IMAN CERRADURA LATERALES",
+      "descripcion": "IMAN CERRADURA, LATERALES en\n=SMONTABLES PROTECCION IP 20 c749",
+      "marca": null,
+      "modelo": null,
+      "categoria": "Otros",
+      "canales": null,
+      "precio": 749,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 20,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.52 PM (3).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.52 PM (3).json",
+        "indice_en_pagina": 1
+      },
+      "ocr": {
+        "texto_original": "IMAN CERRADURA, LATERALES en\n=SMONTABLES PROTECCION IP 20 c749",
+        "fila_original": 7
+      }
+    },
+    {
+      "id": 80,
+      "nombre": "CABLE BNC 3M PARA CAMARAS",
+      "descripcion": "CABLE BNC 3M *PARA CAMARAS\nALOGAS t\nNO54",
+      "marca": null,
+      "modelo": null,
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 20,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 21,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.52 PM.jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.52 PM.json",
+        "indice_en_pagina": 1
+      },
+      "ocr": {
+        "texto_original": "CABLE BNC 3M *PARA CAMARAS\nALOGAS t\nNO54",
+        "fila_original": 6
+      }
+    },
+    {
+      "id": 81,
+      "nombre": "CAPUCHÓN PARA RJ45 COLOR AZUL",
+      "descripcion": "CAPUCHÓN PARA RJ45 *COLOR AZUL *PARA\nBADO PROFESIONAL *PROTEGE EL CLIP\nNTRA TIRONES* 100 UNIDADES BOLSA*\nC844",
+      "marca": null,
+      "modelo": null,
+      "categoria": "Accesorios CCTV",
+      "canales": null,
+      "precio": 25,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 22,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.53 PM (1).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.53 PM (1).json",
+        "indice_en_pagina": 1
+      },
+      "ocr": {
+        "texto_original": "CAPUCHÓN PARA RJ45 *COLOR AZUL *PARA\nBADO PROFESIONAL *PROTEGE EL CLIP\nNTRA TIRONES* 100 UNIDADES BOLSA*\nC844",
+        "fila_original": 2
+      }
+    },
+    {
+      "id": 82,
+      "nombre": "BRACKET PARA CÁMARA EXCELENTE",
+      "descripcion": "BRACKET PARA CÁMARA *EXCELENTE PARA\nVARAS DOMO BALA *RESISTENTE AL\nJA *CON ESPACIO PARA COLOCAR EL\nDH PFA12A",
+      "marca": "Dahua",
+      "modelo": "DH-PFA12A",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 22,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 23,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.53 PM (2).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.53 PM (2).json",
+        "indice_en_pagina": 1
+      },
+      "ocr": {
+        "texto_original": "BRACKET PARA CÁMARA *EXCELENTE PARA\nVARAS DOMO BALA *RESISTENTE AL\nJA *CON ESPACIO PARA COLOCAR EL\nDH PFA12A",
+        "fila_original": 1
+      }
+    },
+    {
+      "id": 83,
+      "nombre": "SOPORTE MONTAJE PARED",
+      "descripcion": "SOPORTE DE MONTAJE EN PARED\nIMPATIBLE CON MODELOS DE CÁMARA H3B\n3D 3F *MATERIAL ABS *LIVIANO\nJUEÑO DE FACIL INSTALACIÓN\nDH PFB1210W V",
+      "marca": "Dahua",
+      "modelo": "DH-PFB1210W-V",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 1210,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 23,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.53 PM (2).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.53 PM (2).json",
+        "indice_en_pagina": 2
+      },
+      "ocr": {
+        "texto_original": "SOPORTE DE MONTAJE EN PARED\nIMPATIBLE CON MODELOS DE CÁMARA H3B\n3D 3F *MATERIAL ABS *LIVIANO\nJUEÑO DE FACIL INSTALACIÓN\nDH PFB1210W V",
+        "fila_original": 2
+      }
+    },
+    {
+      "id": 84,
+      "nombre": "CLIPS PARA SUJECION CABLES",
+      "descripcion": "SA DE CLIPS PARA SUJECION DE CABLES\nPARED, 100 UNIDADES, COLOR NEGRO, i\nSIDA: 8MM",
+      "marca": null,
+      "modelo": null,
+      "categoria": "Accesorios CCTV",
+      "canales": null,
+      "precio": 100,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 23,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.53 PM (2).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.53 PM (2).json",
+        "indice_en_pagina": 3
+      },
+      "ocr": {
+        "texto_original": "SA DE CLIPS PARA SUJECION DE CABLES\nPARED, 100 UNIDADES, COLOR NEGRO, i\nSIDA: 8MM",
+        "fila_original": 8
+      }
+    },
+    {
+      "id": 85,
+      "nombre": "CLIPS PARA SUJECION CABLES",
+      "descripcion": "SA DE CLIPS PARA SUJECION DE CABLES een\nPARED, 100 UNIDADES, COLOR BLANCO, Pecans\nSIDA: 6MM oes\nF321",
+      "marca": null,
+      "modelo": null,
+      "categoria": "Accesorios CCTV",
+      "canales": null,
+      "precio": 321,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 23,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.53 PM (2).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.53 PM (2).json",
+        "indice_en_pagina": 4
+      },
+      "ocr": {
+        "texto_original": "SA DE CLIPS PARA SUJECION DE CABLES een\nPARED, 100 UNIDADES, COLOR BLANCO, Pecans\nSIDA: 6MM oes\nF321",
+        "fila_original": 9
+      }
+    },
+    {
+      "id": 86,
+      "nombre": "REGLETA CORTA PICOS 0 9MT 6",
+      "descripcion": "REGLETA CORTA PICOS 0, 9MT DE 6\nCHUFES \"ENCHUFES TIPO B CON 20\nNTO TIERRA mii",
+      "marca": null,
+      "modelo": null,
+      "categoria": "Energía",
+      "canales": null,
+      "precio": 35,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 24,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.53 PM (3).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.53 PM (3).json",
+        "indice_en_pagina": 1
+      },
+      "ocr": {
+        "texto_original": "REGLETA CORTA PICOS 0, 9MT DE 6\nCHUFES \"ENCHUFES TIPO B CON 20\nNTO TIERRA mii",
+        "fila_original": 0
+      }
+    },
+    {
+      "id": 87,
+      "nombre": "REGLETA CORTA PICOS 2MT 6",
+      "descripcion": "REGLETA CORTA PICOS 2MT DE 6\nCHUFES*ENCHUFES TIPO B CON 292\nNTO TIERRA",
+      "marca": null,
+      "modelo": null,
+      "categoria": "Energía",
+      "canales": null,
+      "precio": 40,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 24,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.53 PM (3).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.53 PM (3).json",
+        "indice_en_pagina": 2
+      },
+      "ocr": {
+        "texto_original": "REGLETA CORTA PICOS 2MT DE 6\nCHUFES*ENCHUFES TIPO B CON 292\nNTO TIERRA",
+        "fila_original": 2
+      }
+    },
+    {
+      "id": 88,
+      "nombre": "CONECTOR PLUG TIPO HEMBRA 25CM",
+      "descripcion": "CONECTOR PLUG DC TIPO HEMBRA *25CM\nRA ALIMENTACION DE LAS CAMARAS ¡Sh\nLOGICAS *BOLSA 10 UNID\nNO49",
+      "marca": null,
+      "modelo": null,
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 25,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 25,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.53 PM.jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.53 PM.json",
+        "indice_en_pagina": 1
+      },
+      "ocr": {
+        "texto_original": "CONECTOR PLUG DC TIPO HEMBRA *25CM\nRA ALIMENTACION DE LAS CAMARAS ¡Sh\nLOGICAS *BOLSA 10 UNID\nNO49",
+        "fila_original": 0
+      }
+    },
+    {
+      "id": 89,
+      "nombre": "CONECTOR PLUG PARA ALIMENTACION",
+      "descripcion": "CONECTOR PLUG DC *PARA ALIMENTACION DE Ñ\nCAMARAS ANALÓGICAS *CONECTOR rd",
+      "marca": null,
+      "modelo": null,
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": null,
+      "moneda": null,
+      "fuente": {
+        "pagina": 25,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.53 PM.jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.53 PM.json",
+        "indice_en_pagina": 2
+      },
+      "ocr": {
+        "texto_original": "CONECTOR PLUG DC *PARA ALIMENTACION DE Ñ\nCAMARAS ANALÓGICAS *CONECTOR rd",
+        "fila_original": 1
+      }
+    },
+    {
+      "id": 90,
+      "nombre": "CONECTOR PLUG PARA ALIMENTACION",
+      "descripcion": "CONECTOR PLUG DC *PARA ALIMENTACION DE\nCAMARAS ANALÓGICAS *CONECTOR\nCHO\nNO488",
+      "marca": null,
+      "modelo": null,
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 488,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 25,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.53 PM.jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.53 PM.json",
+        "indice_en_pagina": 3
+      },
+      "ocr": {
+        "texto_original": "CONECTOR PLUG DC *PARA ALIMENTACION DE\nCAMARAS ANALÓGICAS *CONECTOR\nCHO\nNO488",
+        "fila_original": 3
+      }
+    },
+    {
+      "id": 91,
+      "nombre": "CONECTOR PLUG PARA ALIMENTACION",
+      "descripcion": "CONECTOR PLUG DC *PARA ALIMENTACION DE\nCAMARAS ANALÓGICAS *CONECTOR\n1BRA\nNO499",
+      "marca": null,
+      "modelo": null,
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 499,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 25,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.53 PM.jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.53 PM.json",
+        "indice_en_pagina": 4
+      },
+      "ocr": {
+        "texto_original": "CONECTOR PLUG DC *PARA ALIMENTACION DE\nCAMARAS ANALÓGICAS *CONECTOR\n1BRA\nNO499",
+        "fila_original": 4
+      }
+    },
+    {
+      "id": 92,
+      "nombre": "INCLUYE",
+      "descripcion": "INCLUYE AVR\nPROTEGE TUS EQUIPOS DE CORTES\nENERGÍA, SOBRE CARGA DE\nLTAJE, SUBIDAS BAJADAS DE\nNSIÓN DH PFM350 720 A",
+      "marca": "Dahua",
+      "modelo": "DH-PFM350-720-A",
+      "categoria": "Otros",
+      "canales": null,
+      "precio": 720,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 26,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.54 PM (1).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.54 PM (1).json",
+        "indice_en_pagina": 1
+      },
+      "ocr": {
+        "texto_original": "INCLUYE AVR\nPROTEGE TUS EQUIPOS DE CORTES\nENERGÍA, SOBRE CARGA DE\nLTAJE, SUBIDAS BAJADAS DE\nNSIÓN DH PFM350 720 A",
+        "fila_original": 5
+      }
+    },
+    {
+      "id": 93,
+      "nombre": "CÁMARA PTZ IP 4MP X25 ZOOM TIOC",
+      "descripcion": "CÁMARA PTZ IP 4MP \"X25 ZOOM TIOC\nIZSENSE \"MAX. 25/30fps@4M \"IR MAX 100M\nTO TRACKING 3. 0 \"SMD 4. 0 =1 RJ4S (10/100\ne T) \"MICRO SD MAX 51268\nSDT4E425 4F GB A PV1 0",
+      "marca": null,
+      "modelo": "GB-A-PV1-0",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 100,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 27,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.54 PM (2).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.54 PM (2).json",
+        "indice_en_pagina": 1
+      },
+      "ocr": {
+        "texto_original": "CÁMARA PTZ IP 4MP \"X25 ZOOM TIOC\nIZSENSE \"MAX. 25/30fps@4M \"IR MAX 100M\nTO TRACKING 3. 0 \"SMD 4. 0 =1 RJ4S (10/100\ne T) \"MICRO SD MAX 51268\nSDT4E425 4F GB A PV1 0",
+        "fila_original": 0
+      }
+    },
+    {
+      "id": 94,
+      "nombre": "CÁMARA PTZ IP PANORAMICA 1800 TIOC 8+4MP",
+      "descripcion": "CÁMARA PTZ IP PANORAMICA 1800 TIOC 8+4MP\nOM OPTICO 25X \"IR HASTA 100M \"AUTO mm\nCKING \"IP66 \"POE \"ALARMA 21/10 \"AUDIO\nSDT4E425 8P GB APV1 S",
+      "marca": null,
+      "modelo": "GB-APV1-S",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 6900,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 27,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.54 PM (2).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.54 PM (2).json",
+        "indice_en_pagina": 2
+      },
+      "ocr": {
+        "texto_original": "CÁMARA PTZ IP PANORAMICA 1800 TIOC 8+4MP\nOM OPTICO 25X \"IR HASTA 100M \"AUTO mm\nCKING \"IP66 \"POE \"ALARMA 21/10 \"AUDIO\nSDT4E425 8P GB APV1 S",
+        "fila_original": 1
+      }
+    },
+    {
+      "id": 95,
+      "nombre": "CÁMARA IP PTZ 4MP WIZSENSE SENSOR CMOS",
+      "descripcion": "CÁMARA IP PTZ 4MP WIZSENSE \"SENSOR CMOS\n8\" *ZOOM 32X \"MAX. 25/30 fpsQ4M\nSTANCIA IR HASTA 150M \"SMD 4. 0 *POE+\n57 *IK1O \"ALARMA 21/10 \"AUDIO 11/10\nDH SD5A432GB HNR",
+      "marca": "Dahua",
+      "modelo": "DH-SD5A432GB-HNR",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 8290,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 27,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.54 PM (2).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.54 PM (2).json",
+        "indice_en_pagina": 3
+      },
+      "ocr": {
+        "texto_original": "CÁMARA IP PTZ 4MP WIZSENSE \"SENSOR CMOS\n8\" *ZOOM 32X \"MAX. 25/30 fpsQ4M\nSTANCIA IR HASTA 150M \"SMD 4. 0 *POE+\n57 *IK1O \"ALARMA 21/10 \"AUDIO 11/10\nDH SD5A432GB HNR",
+        "fila_original": 2
+      }
+    },
+    {
+      "id": 96,
+      "nombre": "CÁMARA IP PTZ 4MP SENSOR 1/2 8 STARVIS",
+      "descripcion": "CÁMARA IP PTZ 4MP \"SENSOR 1/2. 8\" STARVIS\nIS \"ZOOM OPTCIO 45X \"TECNOLOGIA\nRLIGHT \"MAX. 25/30fps@4M \"DIT. IR 250M 'oe\nOT. PERIMETRAL \"SMD 4. 0 \"IP67/IK10 de\nDH SD6CE445GB HNR",
+      "marca": "Dahua",
+      "modelo": "DH-SD6CE445GB-HNR",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 11100,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 27,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.54 PM (2).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.54 PM (2).json",
+        "indice_en_pagina": 4
+      },
+      "ocr": {
+        "texto_original": "CÁMARA IP PTZ 4MP \"SENSOR 1/2. 8\" STARVIS\nIS \"ZOOM OPTCIO 45X \"TECNOLOGIA\nRLIGHT \"MAX. 25/30fps@4M \"DIT. IR 250M 'oe\nOT. PERIMETRAL \"SMD 4. 0 \"IP67/IK10 de\nDH SD6CE445GB HNR",
+        "fila_original": 3
+      }
+    },
+    {
+      "id": 97,
+      "nombre": "FUENTE CALLE IP PARA APARTAMENTOS",
+      "descripcion": "FUENTE DE CALLE IP PARA APARTAMENTOS\nNTALL LCD 4. 3\" \"RESOLUCIÓN PANTALLA 800\n80 \"CÁMARA 2MP \"SOPORTA 40. 000\nUSUARIOS, 20. 000 TARJETAS \"IP65 \"ALARMA 21/20\nDHI VTO6521F S2",
+      "marca": null,
+      "modelo": "DHI-VTO6521F-S2",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 2700,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 27,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.54 PM (2).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.54 PM (2).json",
+        "indice_en_pagina": 5
+      },
+      "ocr": {
+        "texto_original": "FUENTE DE CALLE IP PARA APARTAMENTOS\nNTALL LCD 4. 3\" \"RESOLUCIÓN PANTALLA 800\n80 \"CÁMARA 2MP \"SOPORTA 40. 000\nUSUARIOS, 20. 000 TARJETAS \"IP65 \"ALARMA 21/20\nDHI VTO6521F S2",
+        "fila_original": 4
+      }
+    },
+    {
+      "id": 98,
+      "nombre": "FUENTE CALLE IP PARA APARTAMENTOS",
+      "descripcion": "FUENTE DE CALLE IP PARA APARTAMENTOS CON\nRECONOCIMIENTO FACIAL (10000) TARJETA RFID\n300) \"PANTALLA DE 4. 3\" \"RESOLUCIÓN\nCÁMARA 2MP CMOS \"BOTONES TOUCH \"IP65\nDHI VTO6531H S2",
+      "marca": null,
+      "modelo": "DHI-VTO6531H-S2",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 2990,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 27,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.54 PM (2).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.54 PM (2).json",
+        "indice_en_pagina": 6
+      },
+      "ocr": {
+        "texto_original": "FUENTE DE CALLE IP PARA APARTAMENTOS CON\nRECONOCIMIENTO FACIAL (10000) TARJETA RFID\n300) \"PANTALLA DE 4. 3\" \"RESOLUCIÓN\nCÁMARA 2MP CMOS \"BOTONES TOUCH \"IP65\nDHI VTO6531H S2",
+        "fila_original": 5
+      }
+    },
+    {
+      "id": 99,
+      "nombre": "REGULADOR AUTOMÁTICO VOLTAJE",
+      "descripcion": "REGULADOR AUTOMÁTICO DE VOLTAJE\nN USB TIPO C DE CARGA RAPIDA\npacidad 1300VA/600W Voltaje\nIVAC 8 Salidas universales\ncuencia S0 60Hz Indicador LED de\nado AVR 1300USB",
+      "marca": null,
+      "modelo": "AVR-1300USB",
+      "categoria": "Energía",
+      "canales": null,
+      "precio": 220,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 28,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.54 PM.jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.54 PM.json",
+        "indice_en_pagina": 1
+      },
+      "ocr": {
+        "texto_original": "REGULADOR AUTOMÁTICO DE VOLTAJE\nN USB TIPO C DE CARGA RAPIDA\npacidad 1300VA/600W Voltaje\nIVAC 8 Salidas universales\ncuencia S0 60Hz Indicador LED de\nado AVR 1300USB",
+        "fila_original": 1
+      }
+    },
+    {
+      "id": 100,
+      "nombre": "SWITCH ADMINISTRABLE 6 PUERTOS 4 POE 3",
+      "descripcion": "SWITCH ADMINISTRABLE 6 PUERTOS *4 P POE 3\n=DIST. UTP 250M \"POE WATCHDOG \"POTENCIA\n60W 74 PUERTOS POE RJ 45 10/100 Mbps *2\nPUERTOS RJ 45 10/100/1000 Mbps \"METALICO\nDH CS4006 4ET 60\nSWITCH ADMINISTRABLE DE 6 PUERTO *4 POE *2 3\nPUERTOS GIGABIT \"CAPA 2 \"HI POE \"POE\nWATCHDOG \"POE 2. 0 TX 250M \"IEEE 802. 10\nVLAN\nDH CS4006 4ET2GT 60\nSWITCH POE FAST ETEHRNET 10 PUERTOS *8 3\nPUERTOS POE 2 PUERTOS UPLINK \"CAPACIDAD 550\nDE SWITCHING 2. 0 GBPS *AC100 AC240V\nPFS3010 8ET 65\nSWITCH ADMINISTRABLE GIGABIT 10 PUERTOS *8\nPUERTOS POE \"DIST. UTP 250M *POE WATCHDOG\n=8 PUERTOS RJ 45 10/100/1000 Mbps (PoE) *2\nMeg PUERTOS RI 45 10/100/1000 Mbps\nN DH CS4010 8GT 110\naye SWITCH ADMINISTRABLE 18 PUERTOS METALICO\nMad 16P POE \"POTENCIA 90W \"DIST. MAX UTP 250M\nBN \"POE WATCHDOG *16P R145 10/100 Mbps *2P RI\nlo) 45 10/100/1000 Mbps *2P SFP\n6) DH CS4218 16ET 135\nMAE SWITCH GIGABIT DE S PUERTOS \"PUERTOS 1 5: 5\n10/100/1000 BASE T \"CAPACIDAD DE\nTre] CONMUTACIÓN 10 Gbit \"TASA DE REENVIO DE em 115\nAN] PAQUETES 7. 44 Mpps \"PLÁSTICA\nDH PFS3005 5GT L V2\nSWITCH GIGABIT DE 8 PUERTOS \"PLUG AND PLAY\n*FACIL INSTALACIÓN \"CAPA 2 \"MATERIAL\nPLÁSTICO \"PUERTO 1 8: 8 10/100/1000 BASE\nT \"ALIMENTACION 5 VDC; 1 \"CE; FCC\nDH PFS3008 8GT L V2\nSWITCH GIGABIT DE 5 PUERTOS METALICO *NO 3\nADMINISTRABLE \"PUERTOS Sx 10/100/1000 Base 135\nT *S VDC; 1 *METALICO \"PLUG AND PLAY\nDH PFS3005 5GT V2\nSWITCH GIGABIT DE 8 PUERTOS METALICO *NO 3\nADMINISTRABLE *8x10/100/1000 Mbps Base T\n*METALICO \"PARA ESCRITORIO\nDH PFS3008 8GT V2\nSWITCH DE 16 PUERTOS NO ADMINISTRABLE\n=PLUG AND PLAY \"PUERTO GIGABIT \"FUENTE DE MA\nALIMENTACIÓN 100 240 VAC, 50/60 Hz, max 0. 7A\n*MATERIAL METALICO *RACKEABLE Gg\nDH SG1016",
+      "marca": null,
+      "modelo": "DH-CS4006-4ET-60",
+      "categoria": "Redes",
+      "canales": null,
+      "precio": 1016,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 29,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.55 PM (1).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.55 PM (1).json",
+        "indice_en_pagina": 1
+      },
+      "ocr": {
+        "texto_original": "SWITCH ADMINISTRABLE 6 PUERTOS *4 P POE 3\n=DIST. UTP 250M \"POE WATCHDOG \"POTENCIA\n60W 74 PUERTOS POE RJ 45 10/100 Mbps *2\nPUERTOS RJ 45 10/100/1000 Mbps \"METALICO\nDH CS4006 4ET 60\nSWITCH ADMINISTRABLE DE 6 PUERTO *4 POE *2 3\nPUERTOS GIGABIT \"CAPA 2 \"HI POE \"POE\nWATCHDOG \"POE 2. 0 TX 250M \"IEEE 802. 10\nVLAN\nDH CS4006 4ET2GT 60\nSWITCH POE FAST ETEHRNET 10 PUERTOS *8 3\nPUERTOS POE 2 PUERTOS UPLINK \"CAPACIDAD 550\nDE SWITCHING 2. 0 GBPS *AC100 AC240V\nPFS3010 8ET 65\nSWITCH ADMINISTRABLE GIGABIT 10 PUERTOS *8\nPUERTOS POE \"DIST. UTP 250M *POE WATCHDOG\n=8 PUERTOS RJ 45 10/100/1000 Mbps (PoE) *2\nMeg PUERTOS RI 45 10/100/1000 Mbps\nN DH CS4010 8GT 110\naye SWITCH ADMINISTRABLE 18 PUERTOS METALICO\nMad 16P POE \"POTENCIA 90W \"DIST. MAX UTP 250M\nBN \"POE WATCHDOG *16P R145 10/100 Mbps *2P RI\nlo) 45 10/100/1000 Mbps *2P SFP\n6) DH CS4218 16ET 135\nMAE SWITCH GIGABIT DE S PUERTOS \"PUERTOS 1 5: 5\n10/100/1000 BASE T \"CAPACIDAD DE\nTre] CONMUTACIÓN 10 Gbit \"TASA DE REENVIO DE em 115\nAN] PAQUETES 7. 44 Mpps \"PLÁSTICA\nDH PFS3005 5GT L V2\nSWITCH GIGABIT DE 8 PUERTOS \"PLUG AND PLAY\n*FACIL INSTALACIÓN \"CAPA 2 \"MATERIAL\nPLÁSTICO \"PUERTO 1 8: 8 10/100/1000 BASE\nT \"ALIMENTACION 5 VDC; 1 \"CE; FCC\nDH PFS3008 8GT L V2\nSWITCH GIGABIT DE 5 PUERTOS METALICO *NO 3\nADMINISTRABLE \"PUERTOS Sx 10/100/1000 Base 135\nT *S VDC; 1 *METALICO \"PLUG AND PLAY\nDH PFS3005 5GT V2\nSWITCH GIGABIT DE 8 PUERTOS METALICO *NO 3\nADMINISTRABLE *8x10/100/1000 Mbps Base T\n*METALICO \"PARA ESCRITORIO\nDH PFS3008 8GT V2\nSWITCH DE 16 PUERTOS NO ADMINISTRABLE\n=PLUG AND PLAY \"PUERTO GIGABIT \"FUENTE DE MA\nALIMENTACIÓN 100 240 VAC, 50/60 Hz, max 0. 7A\n*MATERIAL METALICO *RACKEABLE Gg\nDH SG1016",
+        "fila_original": null
+      }
+    },
+    {
+      "id": 101,
+      "nombre": "CÁMARA IP DOMO 2MP LENTE 2 8MM SENSOR 4",
+      "descripcion": "CÁMARA IP DOMO 2MP \"LENTE 2. 8MM \"SENSOR 4\n8\" CMOS \"IR 30M \"ROI, SMART\n64+/H. 265+ \"DWDR, 3D NR, HLC, BLC *IP67\nIPC HDW 1230T1 0280",
+      "marca": null,
+      "modelo": null,
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 450,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 30,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.55 PM (2).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.55 PM (2).json",
+        "indice_en_pagina": 1
+      },
+      "ocr": {
+        "texto_original": "CÁMARA IP DOMO 2MP \"LENTE 2. 8MM \"SENSOR 4\n8\" CMOS \"IR 30M \"ROI, SMART\n64+/H. 265+ \"DWDR, 3D NR, HLC, BLC *IP67\nIPC HDW 1230T1 0280",
+        "fila_original": 0
+      }
+    },
+    {
+      "id": 102,
+      "nombre": "CÁMARA IP DOMO 2MP AUDIO",
+      "descripcion": "CÁMARA IP DOMO 2MP CON AUDIO AY\nSTAL/PLÁSTICA \"SENSOR 1/2. 8\" CMOS \"DIST\nMINACION 30M \"DWDR, 3D NR, HLC, BLC \"MIC 0\nEGRADO \"12 VDC/PoE *IP67 \"1 RI45\nIPC HDW1230T1P A 028",
+      "marca": null,
+      "modelo": "IPC-HDW1230T1P-A-028",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 550,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 30,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.55 PM (2).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.55 PM (2).json",
+        "indice_en_pagina": 2
+      },
+      "ocr": {
+        "texto_original": "CÁMARA IP DOMO 2MP CON AUDIO AY\nSTAL/PLÁSTICA \"SENSOR 1/2. 8\" CMOS \"DIST\nMINACION 30M \"DWDR, 3D NR, HLC, BLC \"MIC 0\nEGRADO \"12 VDC/PoE *IP67 \"1 RI45\nIPC HDW1230T1P A 028",
+        "fila_original": 1
+      }
+    },
+    {
+      "id": 103,
+      "nombre": "CÁMARA IP BALA 2MP 1/2 7",
+      "descripcion": "CÁMARA IP BALA 2MP *METAL+PLÁSTICO *1/2. 7\nIS PROGRESIVO \"LENTE 2, 8MM\n/30fps@ 1080P(1920x 1080) \"DWDR\nfNoche(ICR), 3DNR MAX IR 30M *IP67 \"POE\nIPC HFW1230SP 280B S5",
+      "marca": null,
+      "modelo": "IPC-HFW1230SP-280B-S5",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 360,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 30,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.55 PM (2).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.55 PM (2).json",
+        "indice_en_pagina": 3
+      },
+      "ocr": {
+        "texto_original": "CÁMARA IP BALA 2MP *METAL+PLÁSTICO *1/2. 7\nIS PROGRESIVO \"LENTE 2, 8MM\n/30fps@ 1080P(1920x 1080) \"DWDR\nfNoche(ICR), 3DNR MAX IR 30M *IP67 \"POE\nIPC HFW1230SP 280B S5",
+        "fila_original": 2
+      }
+    },
+    {
+      "id": 104,
+      "nombre": "CÁMARA IP BALA SENSOR 1/2 8 CMOS 2MP",
+      "descripcion": "CÁMARA IP BALA \"SENSOR 1/2. 8\" CMOS 2MP\n20 1080) 025/30 fps \"ROL, SMART 0\n64+/H. 265+ \"IR 30M \"DWDR, 3D NR, HLC, BLC\n67 \"DETECCIÓN DE MOVIMIENTO\nIPC HFW 1230S1P 028 S5",
+      "marca": null,
+      "modelo": null,
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 420,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 30,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.55 PM (2).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.55 PM (2).json",
+        "indice_en_pagina": 4
+      },
+      "ocr": {
+        "texto_original": "CÁMARA IP BALA \"SENSOR 1/2. 8\" CMOS 2MP\n20 1080) 025/30 fps \"ROL, SMART 0\n64+/H. 265+ \"IR 30M \"DWDR, 3D NR, HLC, BLC\n67 \"DETECCIÓN DE MOVIMIENTO\nIPC HFW 1230S1P 028 S5",
+        "fila_original": 3
+      }
+    },
+    {
+      "id": 105,
+      "nombre": "CÁMARA IP BALA 2MP AUDIO SENSOR 1/2 8",
+      "descripcion": "CÁMARA IP BALA 2MP CON AUDIO \"SENSOR 1/2. 8\nS \"LENTE 2. 8MM *IR MAX 30M DWDR, 3D\nHLC, BLC *12 VOC/PoE *IP67 \"DETECCION\nPERSONAS *1RJ45 10/100 Base T\nIPC HFW 1230S1P A 0280",
+      "marca": null,
+      "modelo": null,
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 490,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 30,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.55 PM (2).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.55 PM (2).json",
+        "indice_en_pagina": 5
+      },
+      "ocr": {
+        "texto_original": "CÁMARA IP BALA 2MP CON AUDIO \"SENSOR 1/2. 8\nS \"LENTE 2. 8MM *IR MAX 30M DWDR, 3D\nHLC, BLC *12 VOC/PoE *IP67 \"DETECCION\nPERSONAS *1RJ45 10/100 Base T\nIPC HFW 1230S1P A 0280",
+        "fila_original": 4
+      }
+    },
+    {
+      "id": 106,
+      "nombre": "CÁMARA IP BALA 2MP SMART DUAL LIGHT",
+      "descripcion": "CÁMARA IP BALA 2MP SMART DUAL LIGHT\nTALICA/PLÁSTICA \"SENSOR 1/2. 8\" CMOS vi\nST. ILUM 30M *DWDR, 3D NR, HLC, BLC \"MIC\nEGRADO \"POE \"IP67\nIPC HFW 1239TL1P A IL 0",
+      "marca": null,
+      "modelo": null,
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 540,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 30,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.55 PM (2).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.55 PM (2).json",
+        "indice_en_pagina": 6
+      },
+      "ocr": {
+        "texto_original": "CÁMARA IP BALA 2MP SMART DUAL LIGHT\nTALICA/PLÁSTICA \"SENSOR 1/2. 8\" CMOS vi\nST. ILUM 30M *DWDR, 3D NR, HLC, BLC \"MIC\nEGRADO \"POE \"IP67\nIPC HFW 1239TL1P A IL 0",
+        "fila_original": 5
+      }
+    },
+    {
+      "id": 107,
+      "nombre": "GRABADOR IP SERIE LITE POE 4CH 4CH@1080P",
+      "descripcion": "GRABADOR IP SERIE LITE POE 4CH *4CH@1080P",
+      "marca": null,
+      "modelo": null,
+      "categoria": "Grabadores",
+      "canales": 4,
+      "precio": 1080,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 31,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.55 PM.jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.55 PM.json",
+        "indice_en_pagina": 1
+      },
+      "ocr": {
+        "texto_original": "GRABADOR IP SERIE LITE POE 4CH *4CH@1080P",
+        "fila_original": 0
+      }
+    },
+    {
+      "id": 108,
+      "nombre": "110 RCA 1RJ45 2 USB 1 HDD HASTA 8TB",
+      "descripcion": "110 RCA \"1RJ45 *2 USB *1 HDD HASTA 8TB\nNVR1104HS P S3/H(V2. C",
+      "marca": null,
+      "modelo": null,
+      "categoria": "Grabadores",
+      "canales": null,
+      "precio": 1104,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 31,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.55 PM.jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.55 PM.json",
+        "indice_en_pagina": 2
+      },
+      "ocr": {
+        "texto_original": "110 RCA \"1RJ45 *2 USB *1 HDD HASTA 8TB\nNVR1104HS P S3/H(V2. C",
+        "fila_original": 1
+      }
+    },
+    {
+      "id": 109,
+      "nombre": "GRABADOR IP 4CH POE ONVIF 1 HDD BASTA",
+      "descripcion": "GRABADOR IP DE 4CH POE \"ONVIF *1 HDD basta",
+      "marca": null,
+      "modelo": null,
+      "categoria": "Grabadores",
+      "canales": 4,
+      "precio": null,
+      "moneda": null,
+      "fuente": {
+        "pagina": 31,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.55 PM.jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.55 PM.json",
+        "indice_en_pagina": 3
+      },
+      "ocr": {
+        "texto_original": "GRABADOR IP DE 4CH POE \"ONVIF *1 HDD basta",
+        "fila_original": 2
+      }
+    },
+    {
+      "id": 110,
+      "nombre": "GRABADOR IP SERIE LITE POE 80H ACHO1O80",
+      "descripcion": "GRABADOR IP SERIE LITE POE 80H \"ACHO1O80 mmm",
+      "marca": null,
+      "modelo": null,
+      "categoria": "Grabadores",
+      "canales": null,
+      "precio": 80,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 31,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.55 PM.jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.55 PM.json",
+        "indice_en_pagina": 4
+      },
+      "ocr": {
+        "texto_original": "GRABADOR IP SERIE LITE POE 80H \"ACHO1O80 mmm",
+        "fila_original": 4
+      }
+    },
+    {
+      "id": 111,
+      "nombre": "HDMI 1 VGA RJ45 11/10 RCA HDD HASTA",
+      "descripcion": "HDMI, 1 VGA, 1 RJ45, 11/10 RCA *1 HDD HASTA SS\nNVR1108HS 8P S3/H(V2",
+      "marca": null,
+      "modelo": null,
+      "categoria": "Grabadores",
+      "canales": null,
+      "precio": 1240,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 31,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.55 PM.jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.55 PM.json",
+        "indice_en_pagina": 5
+      },
+      "ocr": {
+        "texto_original": "HDMI, 1 VGA, 1 RJ45, 11/10 RCA *1 HDD HASTA SS\nNVR1108HS 8P S3/H(V2",
+        "fila_original": 5
+      }
+    },
+    {
+      "id": 112,
+      "nombre": "GRABADOR NVR AUDIO 8CH 4K",
+      "descripcion": "LF PINAL ESA ZE NE PEA LA\nAUDIO 11/10 \"1HDD HASTA 20TB\nDHI NVR2108HS 8P 4KS2",
+      "marca": null,
+      "modelo": "DHI-NVR2108HS-8P-4KS2",
+      "categoria": "Grabadores",
+      "canales": null,
+      "precio": 2108,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 31,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.55 PM.jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.55 PM.json",
+        "indice_en_pagina": 6
+      },
+      "ocr": {
+        "texto_original": "LF PINAL ESA ZE NE PEA LA\nAUDIO 11/10 \"1HDD HASTA 20TB\nDHI NVR2108HS 8P 4KS2",
+        "fila_original": 7
+      }
+    },
+    {
+      "id": 113,
+      "nombre": "GRABADOR NVR 8CH 4K SOPORTA CAMARAS IP",
+      "descripcion": "GRABADOR NVR 8CH 4K \"SOPORTA CAMARAS IP\nTA 19MD *SOPORTA AC HSM \"SOPORTA MA",
+      "marca": null,
+      "modelo": null,
+      "categoria": "Cámaras",
+      "canales": 8,
+      "precio": null,
+      "moneda": null,
+      "fuente": {
+        "pagina": 31,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.55 PM.jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.55 PM.json",
+        "indice_en_pagina": 7
+      },
+      "ocr": {
+        "texto_original": "GRABADOR NVR 8CH 4K \"SOPORTA CAMARAS IP\nTA 19MD *SOPORTA AC HSM \"SOPORTA MA",
+        "fila_original": 8
+      }
+    },
+    {
+      "id": 114,
+      "nombre": "GRABADOR NVR AUDIO 8CH 4K",
+      "descripcion": "T. PERIMETRAL \"AUDIO 11/10 *2USB, 1HDMI, Po\nA, 1 R45 \"SMD PLUS\nDHI NVR2108HS 4KS3",
+      "marca": null,
+      "modelo": "DHI-NVR2108HS-4KS3",
+      "categoria": "Grabadores",
+      "canales": null,
+      "precio": 2108,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 31,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.55 PM.jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.55 PM.json",
+        "indice_en_pagina": 8
+      },
+      "ocr": {
+        "texto_original": "T. PERIMETRAL \"AUDIO 11/10 *2USB, 1HDMI, Po\nA, 1 R45 \"SMD PLUS\nDHI NVR2108HS 4KS3",
+        "fila_original": 9
+      }
+    },
+    {
+      "id": 115,
+      "nombre": "GRABADOR IP 16 CANALES 4K SOPORTA",
+      "descripcion": "GRABADOR IP DE 16 CANALES 4K \"SOPORTA",
+      "marca": null,
+      "modelo": null,
+      "categoria": "Grabadores",
+      "canales": null,
+      "precio": null,
+      "moneda": null,
+      "fuente": {
+        "pagina": 31,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.55 PM.jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.55 PM.json",
+        "indice_en_pagina": 9
+      },
+      "ocr": {
+        "texto_original": "GRABADOR IP DE 16 CANALES 4K \"SOPORTA",
+        "fila_original": 10
+      }
+    },
+    {
+      "id": 116,
+      "nombre": "GRABADOR NVR AUDIO 16CH 4K",
+      "descripcion": "FEN EDEN LLEVE FINAS Eee FOREN INZA\nID PLUS \"AUDIO 11/10 \"SOPORTA 1 HDD SS\nTA 20TB *2 USB, 1 HDMI, 1 VGA, 1 RJ45\nDHI NVR2116HS 4KS3",
+      "marca": null,
+      "modelo": "DHI-NVR2116HS-4KS3",
+      "categoria": "Grabadores",
+      "canales": null,
+      "precio": 870,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 31,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.55 PM.jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.55 PM.json",
+        "indice_en_pagina": 10
+      },
+      "ocr": {
+        "texto_original": "FEN EDEN LLEVE FINAS Eee FOREN INZA\nID PLUS \"AUDIO 11/10 \"SOPORTA 1 HDD SS\nTA 20TB *2 USB, 1 HDMI, 1 VGA, 1 RJ45\nDHI NVR2116HS 4KS3",
+        "fila_original": 11
+      }
+    },
+    {
+      "id": 117,
+      "nombre": "GRABADOR NVR 16CH 4K",
+      "descripcion": "DIO 11/10 *SOPORTA 2 HDD HASTA 20TB *2\nDHI NVR2216 4KS3",
+      "marca": null,
+      "modelo": "DHI-NVR2216-4KS3",
+      "categoria": "Grabadores",
+      "canales": null,
+      "precio": 2216,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 31,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.55 PM.jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.55 PM.json",
+        "indice_en_pagina": 11
+      },
+      "ocr": {
+        "texto_original": "DIO 11/10 *SOPORTA 2 HDD HASTA 20TB *2\nDHI NVR2216 4KS3",
+        "fila_original": 13
+      }
+    },
+    {
+      "id": 118,
+      "nombre": "GRABADOR IP 16CH WIZSENSE 1U SOPORTA",
+      "descripcion": "acunicr (UF Sense\nGRABADOR IP DE 16CH WIZSENSE *1U \"SOPORTA\n1DMI *ACUPICK *ANPR \"CONTEO DE",
+      "marca": null,
+      "modelo": null,
+      "categoria": "Grabadores",
+      "canales": 16,
+      "precio": 3450,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 31,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.55 PM.jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.55 PM.json",
+        "indice_en_pagina": 12
+      },
+      "ocr": {
+        "texto_original": "acunicr (UF Sense\nGRABADOR IP DE 16CH WIZSENSE *1U \"SOPORTA\n1DMI *ACUPICK *ANPR \"CONTEO DE",
+        "fila_original": 14
+      }
+    },
+    {
+      "id": 119,
+      "nombre": "485 2 USB 1 HDMI VGA PLUS",
+      "descripcion": "485, 2 USB, 1 HDMI, 1 VGA \"SMD PLUS\nDHI NVRS216 El2",
+      "marca": null,
+      "modelo": "DHI-NVRS216-EL2",
+      "categoria": "Grabadores",
+      "canales": null,
+      "precio": 216,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 31,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.55 PM.jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.55 PM.json",
+        "indice_en_pagina": 13
+      },
+      "ocr": {
+        "texto_original": "485, 2 USB, 1 HDMI, 1 VGA \"SMD PLUS\nDHI NVRS216 El2",
+        "fila_original": 15
+      }
+    },
+    {
+      "id": 120,
+      "nombre": "CÁMARA BALA IP 2X4MP DUAL TIOC IP67",
+      "descripcion": "CÁMARA BALA IP 2X4MP DUAL TIOC, IP67, LUZ\nAZUL, CON AUDIO DOS VÍAS, MICROSD, Lo. 5\nLUZ 20M, METÁLICA\nDH IPC PFW38495 A180 A",
+      "marca": "Dahua",
+      "modelo": "DH-IPC-PFW38495-A180-A",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 2450,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 32,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.56 PM (1).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.56 PM (1).json",
+        "indice_en_pagina": 1
+      },
+      "ocr": {
+        "texto_original": "CÁMARA BALA IP 2X4MP DUAL TIOC, IP67, LUZ\nAZUL, CON AUDIO DOS VÍAS, MICROSD, Lo. 5\nLUZ 20M, METÁLICA\nDH IPC PFW38495 A180 A",
+        "fila_original": 0
+      }
+    },
+    {
+      "id": 121,
+      "nombre": "CÁMARA IP BALA 4MP WIZCOLOR",
+      "descripcion": "CÁMARA IP BALA 4MP WIZCOLOR \"METAL/PLAS\nSOR 1/1. 8\" CMOS \"DIST. ILUM. 50M \"WDR\nNR, HLC, BLC \"SOPORTA MICRO SD HASTA OF 0: TR\nGB *12 VDC/PoE \"IP67 *SMD PLUS adP Color\nIPC HF. W2449MP S LEDB E",
+      "marca": null,
+      "modelo": "IPC-HF.W2449MP-S-LEDB-E",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 900,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 32,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.56 PM (1).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.56 PM (1).json",
+        "indice_en_pagina": 2
+      },
+      "ocr": {
+        "texto_original": "CÁMARA IP BALA 4MP WIZCOLOR \"METAL/PLAS\nSOR 1/1. 8\" CMOS \"DIST. ILUM. 50M \"WDR\nNR, HLC, BLC \"SOPORTA MICRO SD HASTA OF 0: TR\nGB *12 VDC/PoE \"IP67 *SMD PLUS adP Color\nIPC HF. W2449MP S LEDB E",
+        "fila_original": 1
+      }
+    },
+    {
+      "id": 122,
+      "nombre": "CÁMARA IP DOMO 4MP WIZCOLOR",
+      "descripcion": "CÁMARA IP DOMO 4MP WIZCOLOR \"METAL/PLAS r\nSOR 1/1. 8\" CMOS \"DIST. ILUM. 30M \"WDR\nNR, HLC, BLC \"SOPORTA MICRO SD HASTA\nGB \"12 VDC/POE *IP67 \"SMD PLUS CF Cotor\nIPC HDW2449TP S LED 28",
+      "marca": null,
+      "modelo": "IPC-HDW2449TP-S-LED-28",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 900,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 32,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.56 PM (1).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.56 PM (1).json",
+        "indice_en_pagina": 3
+      },
+      "ocr": {
+        "texto_original": "CÁMARA IP DOMO 4MP WIZCOLOR \"METAL/PLAS r\nSOR 1/1. 8\" CMOS \"DIST. ILUM. 30M \"WDR\nNR, HLC, BLC \"SOPORTA MICRO SD HASTA\nGB \"12 VDC/POE *IP67 \"SMD PLUS CF Cotor\nIPC HDW2449TP S LED 28",
+        "fila_original": 2
+      }
+    },
+    {
+      "id": 123,
+      "nombre": "CÁMARA IP 4MP WIZCOLOR WIZSENSE",
+      "descripcion": "CÁMARA IP 4MP PT WIZCOLOR WIZSENSE\nNSOR 1/1. 8\" CMOS \"AUDIO BIDIRECCIONAL\nOTEC. PERIMETRAL *IP66 \"SMD 3. 0 \"ONVIF\nNR; 3D NR \"ZOOM DIGITAL 16X CF: Color\nIPC PT2449C1 S PV LED3E€",
+      "marca": null,
+      "modelo": "IPC-PT2449C1-S-PV-LED3E",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 1020,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 32,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.56 PM (1).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.56 PM (1).json",
+        "indice_en_pagina": 4
+      },
+      "ocr": {
+        "texto_original": "CÁMARA IP 4MP PT WIZCOLOR WIZSENSE\nNSOR 1/1. 8\" CMOS \"AUDIO BIDIRECCIONAL\nOTEC. PERIMETRAL *IP66 \"SMD 3. 0 \"ONVIF\nNR; 3D NR \"ZOOM DIGITAL 16X CF: Color\nIPC PT2449C1 S PV LED3E€",
+        "fila_original": 3
+      }
+    },
+    {
+      "id": 124,
+      "nombre": "CÁMARA IP 2+2 LENTE DUAL",
+      "descripcion": "PTS22498P E2 S PV LED 03608 PRO\nCÁMARA IP PT 2+2 MP CON LENTE DUAL\nSENSE *DISUACION ACTIVA *WOR, 30 NR\nBLC *SOPORTA MICRO SD MAX 256GB *POE CF: Cotor\nIPC PTS2249B E2 S PV LI",
+      "marca": null,
+      "modelo": "PV-LED-03608-PRO",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 1500,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 32,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.56 PM (1).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.56 PM (1).json",
+        "indice_en_pagina": 5
+      },
+      "ocr": {
+        "texto_original": "PTS22498P E2 S PV LED 03608 PRO\nCÁMARA IP PT 2+2 MP CON LENTE DUAL\nSENSE *DISUACION ACTIVA *WOR, 30 NR\nBLC *SOPORTA MICRO SD MAX 256GB *POE CF: Cotor\nIPC PTS2249B E2 S PV LI",
+        "fila_original": 4
+      }
+    },
+    {
+      "id": 125,
+      "nombre": "CÁMARA IP CUBO WIFI 3MP PARA INTERIORES 0",
+      "descripcion": "CÁMARA IP CUBO WIFI 3MP \"PARA INTERIORES 0\nTEC. HUMANOS IA *DETEC. MASCOTAS\nJDIO BIDIRECCIONAL \"WIFI 6 *PAREO POR\nJETOOTH *RANURA MICRO SD HASTA 256GB\nDH IPC C3AP 0280B",
+      "marca": "Dahua",
+      "modelo": "DH-IPC-C3AP-0280B",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 340,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 33,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.56 PM (2).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.56 PM (2).json",
+        "indice_en_pagina": 1
+      },
+      "ocr": {
+        "texto_original": "CÁMARA IP CUBO WIFI 3MP \"PARA INTERIORES 0\nTEC. HUMANOS IA *DETEC. MASCOTAS\nJDIO BIDIRECCIONAL \"WIFI 6 *PAREO POR\nJETOOTH *RANURA MICRO SD HASTA 256GB\nDH IPC C3AP 0280B",
+        "fila_original": 0
+      }
+    },
+    {
+      "id": 126,
+      "nombre": "CÁMARA IP WIFI CUBE C1 PARA INTERIORES",
+      "descripcion": "CÁMARA IP WIFI CUBE C1 SMP \"PARA INTERIORES\nTEC. HUMANOS IA *DETEC. MASCOTAS\nJDIO BIDIRECCIONAL \"WIFI 6 *PAREO POR\nJETOOTH \"RANURA MICRO SD HASTA 256GB\nDH IPC C5AP 0280B",
+      "marca": "Dahua",
+      "modelo": "DH-IPC-C5AP-0280B",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 430,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 33,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.56 PM (2).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.56 PM (2).json",
+        "indice_en_pagina": 2
+      },
+      "ocr": {
+        "texto_original": "CÁMARA IP WIFI CUBE C1 SMP \"PARA INTERIORES\nTEC. HUMANOS IA *DETEC. MASCOTAS\nJDIO BIDIRECCIONAL \"WIFI 6 *PAREO POR\nJETOOTH \"RANURA MICRO SD HASTA 256GB\nDH IPC C5AP 0280B",
+        "fila_original": 1
+      }
+    },
+    {
+      "id": 127,
+      "nombre": "CÁMARA IP HERO WIFI 3MP TIPO 360°",
+      "descripcion": "CÁMARA IP HERO Al WIFI 3MP TIPO PT *360°\nJDIO BIDIRECCIONAL *DETEC. AI HUMANOS\nTEC. MASCOTAS \"WIFI 6 \"AUTO TRAKING\nNURA MICRO SD MAX 256GB \"1 RJ45\nDH IPC H3AP 0360B",
+      "marca": "Dahua",
+      "modelo": "DH-IPC-H3AP-0360B",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 350,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 33,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.56 PM (2).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.56 PM (2).json",
+        "indice_en_pagina": 3
+      },
+      "ocr": {
+        "texto_original": "CÁMARA IP HERO Al WIFI 3MP TIPO PT *360°\nJDIO BIDIRECCIONAL *DETEC. AI HUMANOS\nTEC. MASCOTAS \"WIFI 6 \"AUTO TRAKING\nNURA MICRO SD MAX 256GB \"1 RJ45\nDH IPC H3AP 0360B",
+        "fila_original": 2
+      }
+    },
+    {
+      "id": 128,
+      "nombre": "CÁMARA IP HERO 1 WIFI TIPO 3600",
+      "descripcion": "CÁMARA IP HERO 1 WIFI SMP TIPO PT \"3600 g\nJDIO BIDIRECCIONAL *DETEC. AI HUMANOS\nTEC. MASCOTAS \"WIFI 6 \"AUTO TRAKING\nOT MICRO SD MAX 256GB 71 RJ45\nDH IPC H5AP 0360B",
+      "marca": "Dahua",
+      "modelo": "DH-IPC-H5AP-0360B",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 490,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 33,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.56 PM (2).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.56 PM (2).json",
+        "indice_en_pagina": 4
+      },
+      "ocr": {
+        "texto_original": "CÁMARA IP HERO 1 WIFI SMP TIPO PT \"3600 g\nJDIO BIDIRECCIONAL *DETEC. AI HUMANOS\nTEC. MASCOTAS \"WIFI 6 \"AUTO TRAKING\nOT MICRO SD MAX 256GB 71 RJ45\nDH IPC H5AP 0360B",
+        "fila_original": 3
+      }
+    },
+    {
+      "id": 129,
+      "nombre": "CÁMARA IP WIFI 3MP LLAMADA TOQUE",
+      "descripcion": "CÁMARA IP WIFI 3MP \"LLAMADA UN TOQUE q\nTACION 360% \"LLAMADA UN TOQUE \"AUDIO\nIRECCIONAL \"DETEC. IA DE HUMANOS\nTEC. MASCOTA *RASTERO INTELIGENTE \"PARE\nDH IPC H3BP 0360B",
+      "marca": "Dahua",
+      "modelo": "DH-IPC-H3BP-0360B",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 380,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 33,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.56 PM (2).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.56 PM (2).json",
+        "indice_en_pagina": 5
+      },
+      "ocr": {
+        "texto_original": "CÁMARA IP WIFI 3MP \"LLAMADA UN TOQUE q\nTACION 360% \"LLAMADA UN TOQUE \"AUDIO\nIRECCIONAL \"DETEC. IA DE HUMANOS\nTEC. MASCOTA *RASTERO INTELIGENTE \"PARE\nDH IPC H3BP 0360B",
+        "fila_original": 4
+      }
+    },
+    {
+      "id": 130,
+      "nombre": "CÁMARA WIFI TIPO DOBLE LENTE 3+3MP",
+      "descripcion": "CÁMARA WIFI TIPO PT C/ DOBLE LENTE 3+3MP g\nAP \"ANGULOS DE VISION AJUSTABLES\nAMADA UN TOQUE *DETEC. DE PERSONAS\nSCOTAS *AUTO TRACKING \"MICRO SD HASTA 1]\nDH IPC H3DP 3F 0360!",
+      "marca": "Dahua",
+      "modelo": "DH-IPC-H3DP-3F-0360",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 640,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 33,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.56 PM (2).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.56 PM (2).json",
+        "indice_en_pagina": 6
+      },
+      "ocr": {
+        "texto_original": "CÁMARA WIFI TIPO PT C/ DOBLE LENTE 3+3MP g\nAP \"ANGULOS DE VISION AJUSTABLES\nAMADA UN TOQUE *DETEC. DE PERSONAS\nSCOTAS *AUTO TRACKING \"MICRO SD HASTA 1]\nDH IPC H3DP 3F 0360!",
+        "fila_original": 5
+      }
+    },
+    {
+      "id": 131,
+      "nombre": "CÁMARA WIFI TIPO DOBLE LENTE 5+SMP",
+      "descripcion": "CÁMARA WIFI TIPO PT C/ DOBLE LENTE 5+SMP s\nIMP \"ANGULOS DE VISIÓN AJUSTABLES\nAMADA UN TOQUE \"DETEC. DE PERSONAS\nCOTAS \"AUTO TRACKING \"MICRO SD HASTA\nDH IPC H5DP 5F 0360",
+      "marca": "Dahua",
+      "modelo": "DH-IPC-H5DP-5F-0360",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 690,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 33,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.56 PM (2).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.56 PM (2).json",
+        "indice_en_pagina": 7
+      },
+      "ocr": {
+        "texto_original": "CÁMARA WIFI TIPO PT C/ DOBLE LENTE 5+SMP s\nIMP \"ANGULOS DE VISIÓN AJUSTABLES\nAMADA UN TOQUE \"DETEC. DE PERSONAS\nCOTAS \"AUTO TRACKING \"MICRO SD HASTA\nDH IPC H5DP 5F 0360",
+        "fila_original": 6
+      }
+    },
+    {
+      "id": 132,
+      "nombre": "CÁMARA IP PICOO B1 WIFI 3MP TIPO SMART",
+      "descripcion": "CÁMARA IP PICOO B1 WIFI 3MP TIPO PT \"SMART\nAL LIGHT *360° \"SONIDO LUZ DE ALARMA\nTEC. IA DE PERSONAS VEHICULOS \"WIFI 6\nOT MICRO SD MAX 256GB \"AUDIO B\nDH IPC P3BP PV 0360!",
+      "marca": "Dahua",
+      "modelo": "DH-IPC-P3BP-PV-0360",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 590,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 34,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.56 PM (3).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.56 PM (3).json",
+        "indice_en_pagina": 1
+      },
+      "ocr": {
+        "texto_original": "CÁMARA IP PICOO B1 WIFI 3MP TIPO PT \"SMART\nAL LIGHT *360° \"SONIDO LUZ DE ALARMA\nTEC. IA DE PERSONAS VEHICULOS \"WIFI 6\nOT MICRO SD MAX 256GB \"AUDIO B\nDH IPC P3BP PV 0360!",
+        "fila_original": 0
+      }
+    },
+    {
+      "id": 133,
+      "nombre": "CÁMARA IP WIFI PICOO 81 TIOC SMART",
+      "descripcion": "CÁMARA IP WIFI \"PICOO 81\" SMP TIOC \"SMART _ vw\nAL LIGHT \"VISION 360% *DETEC. HUMANOS\n1ICULOS IA \"AUTO TRACKING \"WIFI 6 *IP66\nOT MICRO SD HASTA 256GB\nDH IPC P5BP PV 0360",
+      "marca": "Dahua",
+      "modelo": "DH-IPC-P5BP-PV-0360",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 690,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 34,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.56 PM (3).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.56 PM (3).json",
+        "indice_en_pagina": 2
+      },
+      "ocr": {
+        "texto_original": "CÁMARA IP WIFI \"PICOO 81\" SMP TIOC \"SMART _ vw\nAL LIGHT \"VISION 360% *DETEC. HUMANOS\n1ICULOS IA \"AUTO TRACKING \"WIFI 6 *IP66\nOT MICRO SD HASTA 256GB\nDH IPC P5BP PV 0360",
+        "fila_original": 1
+      }
+    },
+    {
+      "id": 134,
+      "nombre": "CÁMARA IP WIFI PICOO 3MP LENTE 4MM",
+      "descripcion": "CÁMARA IP WIFI PICOO 3MP \"LENTE 4MM\nINIDO LUZ DE ALARMA *DETEC. IA DE\nSONAS VEHICULOS *IP66 \"MODO\nRULLAJE \"AUDIO BIDIRECCIONAL \"MICRO SD\nTA 256GB\nDH IPC P3ASP PV 0400B",
+      "marca": "Dahua",
+      "modelo": "DH-IPC-P3ASP-PV-0400B",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 580,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 34,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.56 PM (3).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.56 PM (3).json",
+        "indice_en_pagina": 3
+      },
+      "ocr": {
+        "texto_original": "CÁMARA IP WIFI PICOO 3MP \"LENTE 4MM\nINIDO LUZ DE ALARMA *DETEC. IA DE\nSONAS VEHICULOS *IP66 \"MODO\nRULLAJE \"AUDIO BIDIRECCIONAL \"MICRO SD\nTA 256GB\nDH IPC P3ASP PV 0400B",
+        "fila_original": 2
+      }
+    },
+    {
+      "id": 135,
+      "nombre": "CÁMARA IP WIFI TIPO DETEC IA",
+      "descripcion": "CÁMARA IP WIFI SMP TIPO PT \"DETEC. IA DE\nSONAS VEHICULOS \"AUDIO BIDIRECCIONAL\nJTO TRACKIING *IP66 \"SONIDO LUZ DE\nRMA \"RANURA MICRO SD HASTA 256G8\nDH IPC PSASP PV 0400B",
+      "marca": "Dahua",
+      "modelo": "DH-IPC-PSASP-PV-0400B",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 700,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 34,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.56 PM (3).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.56 PM (3).json",
+        "indice_en_pagina": 4
+      },
+      "ocr": {
+        "texto_original": "CÁMARA IP WIFI SMP TIPO PT \"DETEC. IA DE\nSONAS VEHICULOS \"AUDIO BIDIRECCIONAL\nJTO TRACKIING *IP66 \"SONIDO LUZ DE\nRMA \"RANURA MICRO SD HASTA 256G8\nDH IPC PSASP PV 0400B",
+        "fila_original": 3
+      }
+    },
+    {
+      "id": 136,
+      "nombre": "CÁMARA IP WIFI 3X3MP DOBLE LENTE TIPO 2",
+      "descripcion": "CÁMARA IP WIFI 3X3MP DOBLE LENTE TIPO PT 2\nSTECCION DUAL \"CONTROL DE RONDA\nRENA LUZ DE ALARMA *DETEC. PERSONAS\nICULOS IA *IP66 \"MICRO SD HASTA 256GB\nIPC P3DP 3F PV 0280B/0",
+      "marca": null,
+      "modelo": "IPC-P3DP-3F-PV-0280B/0",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 740,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 34,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.56 PM (3).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.56 PM (3).json",
+        "indice_en_pagina": 5
+      },
+      "ocr": {
+        "texto_original": "CÁMARA IP WIFI 3X3MP DOBLE LENTE TIPO PT 2\nSTECCION DUAL \"CONTROL DE RONDA\nRENA LUZ DE ALARMA *DETEC. PERSONAS\nICULOS IA *IP66 \"MICRO SD HASTA 256GB\nIPC P3DP 3F PV 0280B/0",
+        "fila_original": 4
+      }
+    },
+    {
+      "id": 137,
+      "nombre": "CÁMARA IP WIFI SXSMP DOBLE LENTE TIPO",
+      "descripcion": "CÁMARA IP WIFI SXSMP DOBLE LENTE TIPO PT\nJETECCION DUAL \"CONTROL DE RONDA d\nRENA LUZ DE ALARMA *DETEC. PERSONAS\nICULOS IA \"IP66 \"MICRO SD HASTA 256GB\nIPC PSDP SF PV 0280B/0",
+      "marca": null,
+      "modelo": "IPC-PSDP-SF-PV-0280B/0",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 900,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 34,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.56 PM (3).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.56 PM (3).json",
+        "indice_en_pagina": 6
+      },
+      "ocr": {
+        "texto_original": "CÁMARA IP WIFI SXSMP DOBLE LENTE TIPO PT\nJETECCION DUAL \"CONTROL DE RONDA d\nRENA LUZ DE ALARMA *DETEC. PERSONAS\nICULOS IA \"IP66 \"MICRO SD HASTA 256GB\nIPC PSDP SF PV 0280B/0",
+        "fila_original": 5
+      }
+    },
+    {
+      "id": 138,
+      "nombre": "CÁMARA IP PTZ 2MP DOBLE LENTE SMART",
+      "descripcion": "CÁMARA IP PTZ 2MP CON DOBLE LENTE \"SMART\nL LIGHT \"SENSOR 1/2. 8\" CMOS \"DETECCIÓN\nVEHICULOS PERSONAS \"3 MODOS DE wo\nIÓN NOCTURNA \"AUDIO DOBLE VIA \"IP66\nSDT2A200 2F NB A PV 0",
+      "marca": null,
+      "modelo": "NB-A-PV-0",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 960,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 34,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.56 PM (3).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.56 PM (3).json",
+        "indice_en_pagina": 7
+      },
+      "ocr": {
+        "texto_original": "CÁMARA IP PTZ 2MP CON DOBLE LENTE \"SMART\nL LIGHT \"SENSOR 1/2. 8\" CMOS \"DETECCIÓN\nVEHICULOS PERSONAS \"3 MODOS DE wo\nIÓN NOCTURNA \"AUDIO DOBLE VIA \"IP66\nSDT2A200 2F NB A PV 0",
+        "fila_original": 6
+      }
+    },
+    {
+      "id": 139,
+      "nombre": "CÁMARA IP WIFI BALA 3MP DISUACION ACTIVA",
+      "descripcion": "CÁMARA IP WIFI BALA 3MP *DISUACION ACTIVA\nTEC. IA VEHICULO PERSONAS \"AUDIO de\nIRECCIONAL \"LUZ ROJA AZUL DE DISUACIÓN\n67 \"RANURA MICRO SD MAX 256GB\nDH IPC F3DP PV 02801",
+      "marca": "Dahua",
+      "modelo": "DH-IPC-F3DP-PV-02801",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 530,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 34,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.56 PM (3).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.56 PM (3).json",
+        "indice_en_pagina": 8
+      },
+      "ocr": {
+        "texto_original": "CÁMARA IP WIFI BALA 3MP *DISUACION ACTIVA\nTEC. IA VEHICULO PERSONAS \"AUDIO de\nIRECCIONAL \"LUZ ROJA AZUL DE DISUACIÓN\n67 \"RANURA MICRO SD MAX 256GB\nDH IPC F3DP PV 02801",
+        "fila_original": 7
+      }
+    },
+    {
+      "id": 140,
+      "nombre": "CÁMARA IP DOMO 4MP 2 8MM",
+      "descripcion": "CÁMARA IP DOMO 4MP \"2. 8MM *METAL/PLÁSTICA\n3 CMOS PROGRESIVO 4MP (2560 1440)\n5/30 fps \"DIST. IR MAX 30M \"WOR, 3D NR, 0\nBLC *12V DC/POE *IP67\nIPC HDW1431T1P 0280B",
+      "marca": null,
+      "modelo": "IPC-HDW1431T1P-0280B",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 590,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 35,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.56 PM.jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.56 PM.json",
+        "indice_en_pagina": 1
+      },
+      "ocr": {
+        "texto_original": "CÁMARA IP DOMO 4MP \"2. 8MM *METAL/PLÁSTICA\n3 CMOS PROGRESIVO 4MP (2560 1440)\n5/30 fps \"DIST. IR MAX 30M \"WOR, 3D NR, 0\nBLC *12V DC/POE *IP67\nIPC HDW1431T1P 0280B",
+        "fila_original": 0
+      }
+    },
+    {
+      "id": 141,
+      "nombre": "CÁMARA IP DOMO 4MP AUDIO",
+      "descripcion": "CÁMARA IP DOMO 4MP CON AUDIO mY\nSTAL/PLÁSTICA \"SENSOR 1/2. 9\" CMOS \"LENTE\nMM \"DIST. ILUM. 30M =WODR, 3D NR, HLC, BLC\nC INTEGRADO \"12 VDC/POE \"IP67\nIPC HDW1431T1P A 0280E",
+      "marca": null,
+      "modelo": "IPC-HDW1431T1P-A-0280E",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 620,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 35,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.56 PM.jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.56 PM.json",
+        "indice_en_pagina": 2
+      },
+      "ocr": {
+        "texto_original": "CÁMARA IP DOMO 4MP CON AUDIO mY\nSTAL/PLÁSTICA \"SENSOR 1/2. 9\" CMOS \"LENTE\nMM \"DIST. ILUM. 30M =WODR, 3D NR, HLC, BLC\nC INTEGRADO \"12 VDC/POE \"IP67\nIPC HDW1431T1P A 0280E",
+        "fila_original": 1
+      }
+    },
+    {
+      "id": 142,
+      "nombre": "CÁMARA IP DOMO ANTIVANDALICA 4MP",
+      "descripcion": "CÁMARA IP DOMO ANTIVANDALICA *4MP\n3\"CMOS*LENTE 2. 8MM*OWDR, DIA/NOCHE\n2), AWB, AGC, BLC, 3D DNR *IR 30M ho\n67*IK10* 12V1A*POE(802. 3AF)* ONVIF, CGI\nIPC HDBW1431EN 0280B",
+      "marca": null,
+      "modelo": "IPC-HDBW1431EN-0280B",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 760,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 35,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.56 PM.jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.56 PM.json",
+        "indice_en_pagina": 3
+      },
+      "ocr": {
+        "texto_original": "CÁMARA IP DOMO ANTIVANDALICA *4MP\n3\"CMOS*LENTE 2. 8MM*OWDR, DIA/NOCHE\n2), AWB, AGC, BLC, 3D DNR *IR 30M ho\n67*IK10* 12V1A*POE(802. 3AF)* ONVIF, CGI\nIPC HDBW1431EN 0280B",
+        "fila_original": 2
+      }
+    },
+    {
+      "id": 143,
+      "nombre": "CÁMARA IP BALA 4MP SENSOR 1/2 9 CMOS",
+      "descripcion": "CÁMARA IP BALA 4MP \"SENSOR 1/2. 9\" CMOS\nsTAL/PLÁSTICA \"DIST. MAX ILUM 30M *WDR\nNR, HLC, BLC *12 VDC/PoE *IP67\nIPC HFW1431S1P 0280B",
+      "marca": null,
+      "modelo": "IPC-HFW1431S1P-0280B",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 630,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 35,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.56 PM.jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.56 PM.json",
+        "indice_en_pagina": 4
+      },
+      "ocr": {
+        "texto_original": "CÁMARA IP BALA 4MP \"SENSOR 1/2. 9\" CMOS\nsTAL/PLÁSTICA \"DIST. MAX ILUM 30M *WDR\nNR, HLC, BLC *12 VDC/PoE *IP67\nIPC HFW1431S1P 0280B",
+        "fila_original": 3
+      }
+    },
+    {
+      "id": 144,
+      "nombre": "CÁMARA IP BALA 4MP AUDIO SENSOR 1/2 9",
+      "descripcion": "CÁMARA IP BALA 4MP CON AUDIO \"SENSOR 1/2. 9\nIS \"LENTE 2. 8MM *IR MAX 30M DWDR, 3D\nHLC, BLC *12 VDC/PoE *IP67 \"DETECCION\nPERSONAS 71 RJ45 10/100 Base T\nIPC HFW1431S1P A 0280",
+      "marca": null,
+      "modelo": "IPC-HFW1431S1P-A-0280",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 690,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 35,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.56 PM.jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.56 PM.json",
+        "indice_en_pagina": 5
+      },
+      "ocr": {
+        "texto_original": "CÁMARA IP BALA 4MP CON AUDIO \"SENSOR 1/2. 9\nIS \"LENTE 2. 8MM *IR MAX 30M DWDR, 3D\nHLC, BLC *12 VDC/PoE *IP67 \"DETECCION\nPERSONAS 71 RJ45 10/100 Base T\nIPC HFW1431S1P A 0280",
+        "fila_original": 4
+      }
+    },
+    {
+      "id": 145,
+      "nombre": "CÁMARA IP BALA 4MP WIZSENSE LENTE 2 8MM",
+      "descripcion": "CÁMARA IP BALA 4MP WIZSENSE \"LENTE 2. 8MM í\nINSOR 1/2. 9\" CMOS *H. 265 *IR MAX 30M AS\nOT MICRO SD HASTA 256G *SMD PLUS *IP67 aa\nIPC HFW2431SP S 0280",
+      "marca": null,
+      "modelo": "IPC-HFW2431SP-S-0280",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 650,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 35,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.56 PM.jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.56 PM.json",
+        "indice_en_pagina": 6
+      },
+      "ocr": {
+        "texto_original": "CÁMARA IP BALA 4MP WIZSENSE \"LENTE 2. 8MM í\nINSOR 1/2. 9\" CMOS *H. 265 *IR MAX 30M AS\nOT MICRO SD HASTA 256G *SMD PLUS *IP67 aa\nIPC HFW2431SP S 0280",
+        "fila_original": 5
+      }
+    },
+    {
+      "id": 146,
+      "nombre": "CÁMARA IP TIPO BALA 4MP METÁLICA 1/3",
+      "descripcion": "CÁMARA IP TIPO BALA 4MP METÁLICA 1/3\" 4MP\nIS PROGRESIVO *H. 264+/H. 265+ \"LENTE\nJFOCAL MOTORIZADO 2. 7 13. 5MM \"IR 60M\n67 \"MICRO SD HASTA 25668 1RJ45\nIPC HFW2431TN ZS 27135",
+      "marca": null,
+      "modelo": "IPC-HFW2431TN-ZS-27135",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 1120,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 35,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.56 PM.jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.56 PM.json",
+        "indice_en_pagina": 7
+      },
+      "ocr": {
+        "texto_original": "CÁMARA IP TIPO BALA 4MP METÁLICA 1/3\" 4MP\nIS PROGRESIVO *H. 264+/H. 265+ \"LENTE\nJFOCAL MOTORIZADO 2. 7 13. 5MM \"IR 60M\n67 \"MICRO SD HASTA 25668 1RJ45\nIPC HFW2431TN ZS 27135",
+        "fila_original": 6
+      }
+    },
+    {
+      "id": 147,
+      "nombre": "CÁMARA BALA IP 4MP 1/3",
+      "descripcion": "CÁMARA BALA IP 4MP \"METAL/PLÁSTICA *1/3\nIS *MOTORIZADO *LENTE 2. 8 12MM *BLC, \"A\nWOR, 3D DNR *IRSOM *RJ 45 *ONVIF *P2P\nIPC HFW1431T1P ZS 2812",
+      "marca": null,
+      "modelo": "IPC-HFW1431T1P-ZS-2812",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 1020,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 35,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.56 PM.jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.56 PM.json",
+        "indice_en_pagina": 8
+      },
+      "ocr": {
+        "texto_original": "CÁMARA BALA IP 4MP \"METAL/PLÁSTICA *1/3\nIS *MOTORIZADO *LENTE 2. 8 12MM *BLC, \"A\nWOR, 3D DNR *IRSOM *RJ 45 *ONVIF *P2P\nIPC HFW1431T1P ZS 2812",
+        "fila_original": 7
+      }
+    },
+    {
+      "id": 148,
+      "nombre": "CÁMARA WIFI 4MP TIPO FOCO DETEC",
+      "descripcion": "CÁMARA PT WIFI 4MP TIPO FOCO *DETEC\nSONAS *DETEC. MOVIMIENTO \"AUDIO\nIRECCIONAL \"DIT. IR 8 10M \"WIFI 2. 4GHz\nNURA MICRO SD MAX 256GB \"MATERIAL vit\nSTICO\nG120",
+      "marca": null,
+      "modelo": null,
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 270,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 36,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.57 PM (1).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.57 PM (1).json",
+        "indice_en_pagina": 1
+      },
+      "ocr": {
+        "texto_original": "CÁMARA PT WIFI 4MP TIPO FOCO *DETEC\nSONAS *DETEC. MOVIMIENTO \"AUDIO\nIRECCIONAL \"DIT. IR 8 10M \"WIFI 2. 4GHz\nNURA MICRO SD MAX 256GB \"MATERIAL vit\nSTICO\nG120",
+        "fila_original": 1
+      }
+    },
+    {
+      "id": 149,
+      "nombre": "CÁMARA WIFI 4MP PARA EXTERIORES",
+      "descripcion": "CÁMARA PT WIFI 4MP PARA EXTERIORES\nSTERO DE MOVIMIENTO *DETEC. PERSONAS\nILL COLOR *IP65 \"AUDIO BIDIRECCIONAL\nST. ILUM 10M \"RANURA MICRO SD MAX 256GB",
+      "marca": null,
+      "modelo": null,
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 400,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 36,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.57 PM (1).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.57 PM (1).json",
+        "indice_en_pagina": 2
+      },
+      "ocr": {
+        "texto_original": "CÁMARA PT WIFI 4MP PARA EXTERIORES\nSTERO DE MOVIMIENTO *DETEC. PERSONAS\nILL COLOR *IP65 \"AUDIO BIDIRECCIONAL\nST. ILUM 10M \"RANURA MICRO SD MAX 256GB",
+        "fila_original": 2
+      }
+    },
+    {
+      "id": 150,
+      "nombre": "CÁMARAS IP INALAMBRICA 2MP WIFI SMART",
+      "descripcion": "CÁMARAS IP INALAMBRICA 2MP, WIFI SMART CON\nJEL SOLAR PARA EXTERIOR, \"COMPATIBLE CON\nAPP SMART LIFE \"REQUIERE UNA MEMORIA\nROSD\nDMS PTZWIFI SOL",
+      "marca": null,
+      "modelo": "DMS-PTZWIFI-SOL",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 490,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 36,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.57 PM (1).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.57 PM (1).json",
+        "indice_en_pagina": 3
+      },
+      "ocr": {
+        "texto_original": "CÁMARAS IP INALAMBRICA 2MP, WIFI SMART CON\nJEL SOLAR PARA EXTERIOR, \"COMPATIBLE CON\nAPP SMART LIFE \"REQUIERE UNA MEMORIA\nROSD\nDMS PTZWIFI SOL",
+        "fila_original": 3
+      }
+    },
+    {
+      "id": 151,
+      "nombre": "CÁMARA 4G PANEL SOLAR BATERIA",
+      "descripcion": "CÁMARA PT 4G CON PANEL SOLAR BATERIA\nSOLUCION 4MP \"FULL COLOR \"SENSOR PIR\nJDIO BIDIRECCIONAL \"VISION NOCTURA MAS P\n*IP6S \"SLOT MICRO SD MAX 256GB 0\nG118",
+      "marca": null,
+      "modelo": null,
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 1020,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 36,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.57 PM (1).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.57 PM (1).json",
+        "indice_en_pagina": 4
+      },
+      "ocr": {
+        "texto_original": "CÁMARA PT 4G CON PANEL SOLAR BATERIA\nSOLUCION 4MP \"FULL COLOR \"SENSOR PIR\nJDIO BIDIRECCIONAL \"VISION NOCTURA MAS P\n*IP6S \"SLOT MICRO SD MAX 256GB 0\nG118",
+        "fila_original": 4
+      }
+    },
+    {
+      "id": 152,
+      "nombre": "CÁMARA RANGER 2 IP WIFI 3MP LLAMADA",
+      "descripcion": "CÁMARA RANGER 2 IP WIFI DE 3MP \"LLAMADA\nTOQUE *DETEC. DE PERSONAS MASCOTAS\nJDIO BIDIRECCIONAL \"FULL COLOR \"RANURA\nRO SD HASTA 51268\nIPC S2EN 3R1S imou",
+      "marca": null,
+      "modelo": "IPC-S2EN-3R1S-IMOU",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 380,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 37,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.57 PM (2).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.57 PM (2).json",
+        "indice_en_pagina": 1
+      },
+      "ocr": {
+        "texto_original": "CÁMARA RANGER 2 IP WIFI DE 3MP \"LLAMADA\nTOQUE *DETEC. DE PERSONAS MASCOTAS\nJDIO BIDIRECCIONAL \"FULL COLOR \"RANURA\nRO SD HASTA 51268\nIPC S2EN 3R1S imou",
+        "fila_original": 0
+      }
+    },
+    {
+      "id": 153,
+      "nombre": "CÁMARA IP WIFI RANGER DUAL 6MP DOBLE",
+      "descripcion": "CÁMARA IP WIFI RANGER DUAL 6MP \"DOBLE\nITE \"DETECCIÓN IA DE PERSONAS\nICULOS *DISUACIÓN ACTIVA \"AUDIO\nIRECCIONAL \"FULL COLOR \"MICRO SD HASTA hy\nIPC S2XN 6MOWED im",
+      "marca": null,
+      "modelo": "IPC-S2XN-6MOWED-IM",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 630,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 37,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.57 PM (2).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.57 PM (2).json",
+        "indice_en_pagina": 2
+      },
+      "ocr": {
+        "texto_original": "CÁMARA IP WIFI RANGER DUAL 6MP \"DOBLE\nITE \"DETECCIÓN IA DE PERSONAS\nICULOS *DISUACIÓN ACTIVA \"AUDIO\nIRECCIONAL \"FULL COLOR \"MICRO SD HASTA hy\nIPC S2XN 6MOWED im",
+        "fila_original": 1
+      }
+    },
+    {
+      "id": 154,
+      "nombre": "CÁMARA IP WIFI TIPO FOCO 3MP PTZ",
+      "descripcion": "CÁMARA IP WIFI TIPO FOCO 3MP \"PTZ\nSUACION ACTIVA *DETECCION IA DE\n1ICULOS PERSONAS \"FULL COLOR *AUDIO\nIRECCIONAL \"MICRO SD HASTA 256GB \"ONVIF NA\nIPC S6DN 3MOWEB E27 i",
+      "marca": null,
+      "modelo": "IPC-S6DN-3MOWEB-E27-I",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 450,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 37,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.57 PM (2).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.57 PM (2).json",
+        "indice_en_pagina": 3
+      },
+      "ocr": {
+        "texto_original": "CÁMARA IP WIFI TIPO FOCO 3MP \"PTZ\nSUACION ACTIVA *DETECCION IA DE\n1ICULOS PERSONAS \"FULL COLOR *AUDIO\nIRECCIONAL \"MICRO SD HASTA 256GB \"ONVIF NA\nIPC S6DN 3MOWEB E27 i",
+        "fila_original": 2
+      }
+    },
+    {
+      "id": 155,
+      "nombre": "CÁMARA IP WIFI CRUISER 3MP TIPO FULL ¡9",
+      "descripcion": "CÁMARA IP WIFI CRUISER SC 3MP *TIPO PT *FULL ¡9\n~OR *RASTERO INTELIGENTE \"AUDIO\nIRECCIONAL *1 PUERTO RJ45 \"MICRO SD\nTA 512G8 \"PARA EXTERIORES \"DISUASIVA\nIPC K7FN 3HOWE imo",
+      "marca": null,
+      "modelo": "IPC-K7FN-3HOWE-IMO",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 530,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 37,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.57 PM (2).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.57 PM (2).json",
+        "indice_en_pagina": 4
+      },
+      "ocr": {
+        "texto_original": "CÁMARA IP WIFI CRUISER SC 3MP *TIPO PT *FULL ¡9\n~OR *RASTERO INTELIGENTE \"AUDIO\nIRECCIONAL *1 PUERTO RJ45 \"MICRO SD\nTA 512G8 \"PARA EXTERIORES \"DISUASIVA\nIPC K7FN 3HOWE imo",
+        "fila_original": 3
+      }
+    },
+    {
+      "id": 156,
+      "nombre": "CÁMARA CRUISER DUAL 2 IP WIFI 3+SMP TIPO",
+      "descripcion": "CÁMARA CRUISER DUAL 2 IP WIFI 3+SMP \"TIPO\nLENTE FIJO 3MP, LENTE PT SMP \"LUCES\nUASIVAS ROJO/AZUL \"SIRENA INTEGRADA\nILL COLOR \"AUDIO BIDIRECCIONAL\n1PC S7XEN 8MOWED 031",
+      "marca": null,
+      "modelo": null,
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 820,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 37,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.57 PM (2).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.57 PM (2).json",
+        "indice_en_pagina": 5
+      },
+      "ocr": {
+        "texto_original": "CÁMARA CRUISER DUAL 2 IP WIFI 3+SMP \"TIPO\nLENTE FIJO 3MP, LENTE PT SMP \"LUCES\nUASIVAS ROJO/AZUL \"SIRENA INTEGRADA\nILL COLOR \"AUDIO BIDIRECCIONAL\n1PC S7XEN 8MOWED 031",
+        "fila_original": 4
+      }
+    },
+    {
+      "id": 157,
+      "nombre": "INALAMBRICA PARA EXTERIOR",
+      "descripcion": "ENA INALAMBRICA PARA EXTERIOR CON Q\nROBO ROJO \"11008 \"MULTIPLES SONIDOS DE",
+      "marca": null,
+      "modelo": null,
+      "categoria": "Otros",
+      "canales": null,
+      "precio": 700,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 38,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.57 PM (3).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.57 PM (3).json",
+        "indice_en_pagina": 1
+      },
+      "ocr": {
+        "texto_original": "ENA INALAMBRICA PARA EXTERIOR CON Q\nROBO ROJO \"11008 \"MULTIPLES SONIDOS DE",
+        "fila_original": 1
+      }
+    },
+    {
+      "id": 158,
+      "nombre": "NEVA ALARA DALERLA DAJA",
+      "descripcion": "NEVA IPO) ALARA UE DALERLA DAJA WN\nDHI ARA13 W2",
+      "marca": null,
+      "modelo": "DHI-ARA13-W2",
+      "categoria": "Otros",
+      "canales": null,
+      "precio": null,
+      "moneda": null,
+      "fuente": {
+        "pagina": 38,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.57 PM (3).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.57 PM (3).json",
+        "indice_en_pagina": 2
+      },
+      "ocr": {
+        "texto_original": "NEVA IPO) ALARA UE DALERLA DAJA WN\nDHI ARA13 W2",
+        "fila_original": 2
+      }
+    },
+    {
+      "id": 159,
+      "nombre": "ALARMA PARA GRABADORES 2",
+      "descripcion": "DE ALARMA PARA GRABADORES 2",
+      "marca": null,
+      "modelo": null,
+      "categoria": "Grabadores",
+      "canales": null,
+      "precio": null,
+      "moneda": null,
+      "fuente": {
+        "pagina": 38,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.57 PM (3).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.57 PM (3).json",
+        "indice_en_pagina": 3
+      },
+      "ocr": {
+        "texto_original": "DE ALARMA PARA GRABADORES 2",
+        "fila_original": 3
+      }
+    },
+    {
+      "id": 160,
+      "nombre": "DAHUA 4 CAMARAS PLASTICAS LENTE 3 6MM 2",
+      "descripcion": "DAHUA 4 CAMARAS PLASTICAS \"LENTE 3. 6MM (2 AZ\nCLUYE XVR1804 1 =2 CAMARAS B1A21N =2 ys Ta\nAADAC TIADBING 1 CIICAITC =D TTTECG OÍA",
+      "marca": "Dahua",
+      "modelo": null,
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 1460,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 38,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.57 PM (3).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.57 PM (3).json",
+        "indice_en_pagina": 4
+      },
+      "ocr": {
+        "texto_original": "DAHUA 4 CAMARAS PLASTICAS \"LENTE 3. 6MM (2 AZ\nCLUYE XVR1804 1 =2 CAMARAS B1A21N =2 ys Ta\nAADAC TIADBING 1 CIICAITC =D TTTECG OÍA",
+        "fila_original": 5
+      }
+    },
+    {
+      "id": 161,
+      "nombre": "CÁMARA PARA BEBE IP WIFI 3MP DETEC",
+      "descripcion": "CÁMARA PARA BEBE IP WIFI 3MP *DETEC\nSONAS DE LLANTO \"REPRODUCCIÓN\nICIONES DE CUNA \"RECORDATORIO DE Ñ\nMENTACIÓN \"AUDIO BIDIRECCIONAL \"MICRO 4\nMAX 256GB\nG117",
+      "marca": null,
+      "modelo": null,
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 240,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 39,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.57 PM.jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.57 PM.json",
+        "indice_en_pagina": 1
+      },
+      "ocr": {
+        "texto_original": "CÁMARA PARA BEBE IP WIFI 3MP *DETEC\nSONAS DE LLANTO \"REPRODUCCIÓN\nICIONES DE CUNA \"RECORDATORIO DE Ñ\nMENTACIÓN \"AUDIO BIDIRECCIONAL \"MICRO 4\nMAX 256GB\nG117",
+        "fila_original": 1
+      }
+    },
+    {
+      "id": 162,
+      "nombre": "CONTROL ACCESO TECLADO TARJETA",
+      "descripcion": "CONTROL DE ACCESO C/ TECLADO TARJETA\n000 USUARIOS *60. 000 REGISTROS *TCP/IP\nSOPORTA LECTORA ESCLAVO WIEGAND RS485\n66 \"DESB C/ TARJETA, PASSWOR, COMB\nDHI AS!1201E D",
+      "marca": null,
+      "modelo": null,
+      "categoria": "Control de acceso",
+      "canales": null,
+      "precio": 510,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 40,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.58 PM (1).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.58 PM (1).json",
+        "indice_en_pagina": 1
+      },
+      "ocr": {
+        "texto_original": "CONTROL DE ACCESO C/ TECLADO TARJETA\n000 USUARIOS *60. 000 REGISTROS *TCP/IP\nSOPORTA LECTORA ESCLAVO WIEGAND RS485\n66 \"DESB C/ TARJETA, PASSWOR, COMB\nDHI AS!1201E D",
+        "fila_original": 0
+      }
+    },
+    {
+      "id": 163,
+      "nombre": "SOPORTA P2P ONVIF",
+      "descripcion": "SOPORTA TCP/IP P2P \"ONVIF as\nDHI ASA2212GL",
+      "marca": null,
+      "modelo": "DHI-ASA2212GL",
+      "categoria": "Otros",
+      "canales": null,
+      "precio": 2212,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 40,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.58 PM (1).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.58 PM (1).json",
+        "indice_en_pagina": 2
+      },
+      "ocr": {
+        "texto_original": "SOPORTA TCP/IP P2P \"ONVIF as\nDHI ASA2212GL",
+        "fila_original": 6
+      }
+    },
+    {
+      "id": 164,
+      "nombre": "CENTRAL ALARMA MONITOREABLE SOPORTA 32",
+      "descripcion": "CENTRAL DE ALARMA MONITOREABLE, SOPORTA 32 dl\nIAS, OPCION INALAMBRICA DE MONITOREO\nAPLICACION MOVIL, VIENE SIN TECLADO\nJULO IP, SOPORTA SIRENA 1SWATTS\nACTIVE 20",
+      "marca": null,
+      "modelo": null,
+      "categoria": "Alarmas",
+      "canales": null,
+      "precio": 450,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 41,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.58 PM (2).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.58 PM (2).json",
+        "indice_en_pagina": 1
+      },
+      "ocr": {
+        "texto_original": "CENTRAL DE ALARMA MONITOREABLE, SOPORTA 32 dl\nIAS, OPCION INALAMBRICA DE MONITOREO\nAPLICACION MOVIL, VIENE SIN TECLADO\nJULO IP, SOPORTA SIRENA 1SWATTS\nACTIVE 20",
+        "fila_original": 0
+      }
+    },
+    {
+      "id": 165,
+      "nombre": "CONTACTO MAGNÉTICO INALÁMBRICO FRECUENCIA",
+      "descripcion": "CONTACTO MAGNÉTICO INALÁMBRICO *FRECUENCIA\n433. 92 MHZ*TECNOLOGIA HOPPING CODE* eu\nALCANCE DE HASTA 150M LIBRE DE ALARMES\nOBSTACULO*BATERIA CR2032\nSHC FIT\nSENSOR MAGNETICO NEGRO\nINALAMBRICO* Tecnología de 433, 92 MHz; Alcance L PL\nde hasta 100m (sin obstáculos). ALARME\nwo SHC Fit Black\nFRECUENCIA FIJA 433, 92 MHZ*RANGO DE100 MTS hy\nN SIN OBSTACULOS*DISPONIBLE EN COLOR L PL\nNEGRO*BATERIA INCLUIDA. ALARMES\nfe) TX4R 4. 0 PR\n8 \"TECLADO LCD PARA ALARMAS JFL, NO SIRVE PARA neve EU\nPROGRAMAR, SOLO PARA USUARIO FINAL 4 B\nALARMES\nre TEC 500\neG [TECLADO LCO PARA ALARMAS, OPCION DE S3si eu\nPROGRAMADOR USUARIO FINAL JFL d\nTEC 300\nSirena audiovisual cabelada, sonido 100 dB 1 m, r=\nfuncionamiento de 9 18 Vdc, Señalización visual: Ly FL\n4 LED rojos de alto brillo ALARMES\nSIR 120 V\nBOCINA 30 W Uf #BSRER\nOSP304HI",
+      "marca": null,
+      "modelo": null,
+      "categoria": "Alarmas",
+      "canales": null,
+      "precio": 304,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 42,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.58 PM (3).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.58 PM (3).json",
+        "indice_en_pagina": 1
+      },
+      "ocr": {
+        "texto_original": "CONTACTO MAGNÉTICO INALÁMBRICO *FRECUENCIA\n433. 92 MHZ*TECNOLOGIA HOPPING CODE* eu\nALCANCE DE HASTA 150M LIBRE DE ALARMES\nOBSTACULO*BATERIA CR2032\nSHC FIT\nSENSOR MAGNETICO NEGRO\nINALAMBRICO* Tecnología de 433, 92 MHz; Alcance L PL\nde hasta 100m (sin obstáculos). ALARME\nwo SHC Fit Black\nFRECUENCIA FIJA 433, 92 MHZ*RANGO DE100 MTS hy\nN SIN OBSTACULOS*DISPONIBLE EN COLOR L PL\nNEGRO*BATERIA INCLUIDA. ALARMES\nfe) TX4R 4. 0 PR\n8 \"TECLADO LCD PARA ALARMAS JFL, NO SIRVE PARA neve EU\nPROGRAMAR, SOLO PARA USUARIO FINAL 4 B\nALARMES\nre TEC 500\neG [TECLADO LCO PARA ALARMAS, OPCION DE S3si eu\nPROGRAMADOR USUARIO FINAL JFL d\nTEC 300\nSirena audiovisual cabelada, sonido 100 dB 1 m, r=\nfuncionamiento de 9 18 Vdc, Señalización visual: Ly FL\n4 LED rojos de alto brillo ALARMES\nSIR 120 V\nBOCINA 30 W Uf #BSRER\nOSP304HI",
+        "fila_original": null
+      }
+    },
+    {
+      "id": 166,
+      "nombre": "PÁNICO IP66 1CH MIC SPEAKER",
+      "descripcion": "PÁNICO *IP66 *1CH MIC 1CH SPEAKER LJ\nDHI KTHO1",
+      "marca": null,
+      "modelo": "DHI-KTHO1",
+      "categoria": "Alarmas",
+      "canales": 1,
+      "precio": 66,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 43,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.58 PM.jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.58 PM.json",
+        "indice_en_pagina": 1
+      },
+      "ocr": {
+        "texto_original": "PÁNICO *IP66 *1CH MIC 1CH SPEAKER LJ\nDHI KTHO1",
+        "fila_original": 4
+      }
+    },
+    {
+      "id": 167,
+      "nombre": "CENTRAL 4 ZONAS EXPANDIBLE 32 2",
+      "descripcion": "CENTRAL 4 ZONAS EXPANDIBLE 32*2 En\nTICIONES*1 PGM EN PLACA*32 CODIGOS dl\nJSUARIO* COMPATIBLE CON\nRTX3, PCS250 G, 1P150+, VDMP3, TIP RING\nIONAL EN PLACA\nSP 4000",
+      "marca": null,
+      "modelo": "TIP-RING",
+      "categoria": "Alarmas",
+      "canales": null,
+      "precio": 420,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 44,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.59 PM (1).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.59 PM (1).json",
+        "indice_en_pagina": 1
+      },
+      "ocr": {
+        "texto_original": "CENTRAL 4 ZONAS EXPANDIBLE 32*2 En\nTICIONES*1 PGM EN PLACA*32 CODIGOS dl\nJSUARIO* COMPATIBLE CON\nRTX3, PCS250 G, 1P150+, VDMP3, TIP RING\nIONAL EN PLACA\nSP 4000",
+        "fila_original": 2
+      }
+    },
+    {
+      "id": 168,
+      "nombre": "TIENE LENTE HÍBRIDO CILÍNDRICO ESFÉRICO",
+      "descripcion": "TIENE LENTE HÍBRIDO CILÍNDRICO ESFÉRICO\nÁNGULO DE VISIÓN DE 90°*SIN ZONA MUERTA\nEN LA ESTRUCTURAS DE HACES CON EL\nESPEJO*NO INCLUIYE BRACKET\nNVS\nTow OSEE UN UNICO BOTON QUE PUEDE SER\nPete PROGRAMADO COMO PANICO*COMPATIBLE\nPP] CON PANEL INALAMBRICO MAGELLAN*SE\nPBB REQUIERE DE RTX3(SP/EVO) RX1(SP)\nREM101\ngall CONTACTO MAGNÉTICO INALÁMBRICO DE 2\nNU zONAS=BORNERA PARA ENTRADA DE UNA\nlona CABLEADA, QUE PUEDE SER\nIG RECONOCIDA COMO OTRA ZONA INALÁMBRICA\n8 INDEPENDIENTE\nDCTXP2\n8) CONTACTO MAGNETICO PARA PROTEGER\nfava CORTINAS METALICAS PORTONES QUE DAN Ue\nHACIA LA CALLE, POR SU FORMA IDEAL PARA AA sentex<\nIn COLOCAR EN EL PISO, DIMENSIONES 110\njana BSD 3020\nLid\na] CONTACTO MAGNÉTICO PARA PUERTAS\n7) MEPORTONES COLOR GRIS*TAMANO 10 1. 6 sentex\nBSI 2041P GY\nW Contacto mágnetico de sobreponer para o]\npuertas de madera, estado NC, color café, sente<\nfyi dimensiones 50x14mm\nBS 20338N\nCONTACTO MAGNÉTICO PARA BLINDEX COLOR seríte<\nBLANCO pa\nBS 2021WH",
+      "marca": null,
+      "modelo": "BSD-3020",
+      "categoria": "Accesorios CCTV",
+      "canales": null,
+      "precio": 2021,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 45,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.59 PM (2).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.59 PM (2).json",
+        "indice_en_pagina": 1
+      },
+      "ocr": {
+        "texto_original": "TIENE LENTE HÍBRIDO CILÍNDRICO ESFÉRICO\nÁNGULO DE VISIÓN DE 90°*SIN ZONA MUERTA\nEN LA ESTRUCTURAS DE HACES CON EL\nESPEJO*NO INCLUIYE BRACKET\nNVS\nTow OSEE UN UNICO BOTON QUE PUEDE SER\nPete PROGRAMADO COMO PANICO*COMPATIBLE\nPP] CON PANEL INALAMBRICO MAGELLAN*SE\nPBB REQUIERE DE RTX3(SP/EVO) RX1(SP)\nREM101\ngall CONTACTO MAGNÉTICO INALÁMBRICO DE 2\nNU zONAS=BORNERA PARA ENTRADA DE UNA\nlona CABLEADA, QUE PUEDE SER\nIG RECONOCIDA COMO OTRA ZONA INALÁMBRICA\n8 INDEPENDIENTE\nDCTXP2\n8) CONTACTO MAGNETICO PARA PROTEGER\nfava CORTINAS METALICAS PORTONES QUE DAN Ue\nHACIA LA CALLE, POR SU FORMA IDEAL PARA AA sentex<\nIn COLOCAR EN EL PISO, DIMENSIONES 110\njana BSD 3020\nLid\na] CONTACTO MAGNÉTICO PARA PUERTAS\n7) MEPORTONES COLOR GRIS*TAMANO 10 1. 6 sentex\nBSI 2041P GY\nW Contacto mágnetico de sobreponer para o]\npuertas de madera, estado NC, color café, sente<\nfyi dimensiones 50x14mm\nBS 20338N\nCONTACTO MAGNÉTICO PARA BLINDEX COLOR seríte<\nBLANCO pa\nBS 2021WH",
+        "fila_original": null
+      }
+    },
+    {
+      "id": 169,
+      "nombre": "0 DISCO DURO SATA DAHUA 2 5 CAPACIDAD",
+      "descripcion": "0 DISCO DISCO DURO SATA DAHUA de 2, 5\". Capacidad\n256GB. Incorpora chip de oblea de alta\ndad. Admite el protocolo SATA con una\ncidad de transmisión de hasta SSOMbps\nOHI SSD E800S256G",
+      "marca": "Dahua",
+      "modelo": "OHI-SSD-E800S256G",
+      "categoria": "Almacenamiento",
+      "canales": null,
+      "precio": 990,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 46,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.59 PM (3).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.59 PM (3).json",
+        "indice_en_pagina": 1
+      },
+      "ocr": {
+        "texto_original": "0 DISCO DISCO DURO SATA DAHUA de 2, 5\". Capacidad\n256GB. Incorpora chip de oblea de alta\ndad. Admite el protocolo SATA con una\ncidad de transmisión de hasta SSOMbps\nOHI SSD E800S256G",
+        "fila_original": 1
+      }
+    },
+    {
+      "id": 170,
+      "nombre": "0 DISCO DURO SATA DAHUA 2 5 CAPACIDAD",
+      "descripcion": "0 DISCO DISCO DURO SATA DAHUA de 2, 5\". Capacidad\n480GB. Incorpora chip de oblea de alta\ndad. Admite el protocolo SATA con una\ncidad de transmisión de hasta SSOMbps\nOHI SSD E800S480G",
+      "marca": "Dahua",
+      "modelo": "OHI-SSD-E800S480G",
+      "categoria": "Almacenamiento",
+      "canales": null,
+      "precio": 1205,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 46,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.59 PM (3).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.59 PM (3).json",
+        "indice_en_pagina": 2
+      },
+      "ocr": {
+        "texto_original": "0 DISCO DISCO DURO SATA DAHUA de 2, 5\". Capacidad\n480GB. Incorpora chip de oblea de alta\ndad. Admite el protocolo SATA con una\ncidad de transmisión de hasta SSOMbps\nOHI SSD E800S480G",
+        "fila_original": 2
+      }
+    },
+    {
+      "id": 171,
+      "nombre": "DISCO DURO PULL TOSHIBA",
+      "descripcion": "PEN DISCO DISCO DURO PULL TOSHIBA\nPB SOOGBTM5700RPMTMCACHE 32MB*SATA III\nPM GGbpsTMFACTOR DE FORMA 3. 5\"*RE\nPage EMPAQUETADO\n5 DTO1ABAOS5OV\nbrig DISCO DISCO DURO WD PURPURA 2TB 3. 5\"*SERIE 3\nPURPURA DE VIDEO VIGILANCIA \"TRABAJO 4\n1 24/7 *BAJO CONSUMO ALTO RENDIMIENTO\n=SATA 6 GB/S *5400 RPM\nWD23PURZ",
+      "marca": null,
+      "modelo": null,
+      "categoria": "Almacenamiento",
+      "canales": null,
+      "precio": 23,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 47,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.59 PM (4).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.59 PM (4).json",
+        "indice_en_pagina": 1
+      },
+      "ocr": {
+        "texto_original": "PEN DISCO DISCO DURO PULL TOSHIBA\nPB SOOGBTM5700RPMTMCACHE 32MB*SATA III\nPM GGbpsTMFACTOR DE FORMA 3. 5\"*RE\nPage EMPAQUETADO\n5 DTO1ABAOS5OV\nbrig DISCO DISCO DURO WD PURPURA 2TB 3. 5\"*SERIE 3\nPURPURA DE VIDEO VIGILANCIA \"TRABAJO 4\n1 24/7 *BAJO CONSUMO ALTO RENDIMIENTO\n=SATA 6 GB/S *5400 RPM\nWD23PURZ",
+        "fila_original": null
+      }
+    },
+    {
+      "id": 172,
+      "nombre": "DISCO DURO PULL SEAGATE 1TB",
+      "descripcion": "CO DISCO DISCO DURO NEW PULL SEAGATE 1TB \"RPM\n10 \"CAHE 64MB \"SATA 6. 0GB/s\nTIMIZADO PARA GRABADORES DE ALTO ette\nSUMO \"FUNCION 24/7\"RE EMPAQUETADO \"bh\nST1000VM002",
+      "marca": null,
+      "modelo": null,
+      "categoria": "Grabadores",
+      "canales": null,
+      "precio": 695,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 48,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.59 PM (5).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.59 PM (5).json",
+        "indice_en_pagina": 1
+      },
+      "ocr": {
+        "texto_original": "CO DISCO DISCO DURO NEW PULL SEAGATE 1TB \"RPM\n10 \"CAHE 64MB \"SATA 6. 0GB/s\nTIMIZADO PARA GRABADORES DE ALTO ette\nSUMO \"FUNCION 24/7\"RE EMPAQUETADO \"bh\nST1000VM002",
+        "fila_original": 0
+      }
+    },
+    {
+      "id": 173,
+      "nombre": "CÁMARA IP WIFI CRUISER TRIPLE 3+3+5 2",
+      "descripcion": "CÁMARA IP WIFI CRUISER TRIPLE 3+3+5 =2 r 2\nRANURAS MICRO SD, TOTAL 1024 GB if Q\nALMACENAMIENTO \"AUDIO BIDIRECCIONAL\n=VISION NOCTURNA 30M \"PARA EXTERIORES L\nIPC S7UN 11MOWED imou",
+      "marca": null,
+      "modelo": "IPC-S7UN-11MOWED-IMOU",
+      "categoria": "Cámaras",
+      "canales": null,
+      "precio": 30,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 49,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.59 PM (6).jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.59 PM (6).json",
+        "indice_en_pagina": 1
+      },
+      "ocr": {
+        "texto_original": "CÁMARA IP WIFI CRUISER TRIPLE 3+3+5 =2 r 2\nRANURAS MICRO SD, TOTAL 1024 GB if Q\nALMACENAMIENTO \"AUDIO BIDIRECCIONAL\n=VISION NOCTURNA 30M \"PARA EXTERIORES L\nIPC S7UN 11MOWED imou",
+        "fila_original": null
+      }
+    },
+    {
+      "id": 174,
+      "nombre": "BATERÍA SECA RECARGABLE 12V 7A 12VOLTIOS",
+      "descripcion": "BATERÍA SECA RECARGABLE 12V 7A*12VOLTIOS\nIPERES*IDEAL PARA UPS ON LINE\nRACTIVOS* SISTEMAS DE RESPALDO\nTEMAS SOLARES\nP102",
+      "marca": null,
+      "modelo": null,
+      "categoria": "Energía",
+      "canales": null,
+      "precio": 190,
+      "moneda": "BOB",
+      "fuente": {
+        "pagina": 50,
+        "imagen": "WhatsApp Image 2026-08-21 at 11.56.59 PM.jpeg",
+        "archivo_ocr": "WhatsApp Image 2026-08-21 at 11.56.59 PM.json",
+        "indice_en_pagina": 1
+      },
+      "ocr": {
+        "texto_original": "BATERÍA SECA RECARGABLE 12V 7A*12VOLTIOS\nIPERES*IDEAL PARA UPS ON LINE\nRACTIVOS* SISTEMAS DE RESPALDO\nTEMAS SOLARES\nP102",
+        "fila_original": 4
+      }
+    }
+  ]
+}

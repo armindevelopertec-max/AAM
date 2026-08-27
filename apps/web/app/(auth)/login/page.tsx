@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useAuth } from "../../components/AuthProvider";
 
@@ -12,11 +11,11 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError(null);
     try {
-      login({ email, password });
+      await login({ email, password });
       router.replace("/");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Error desconocido");
@@ -65,13 +64,6 @@ export default function LoginPage() {
           Iniciar sesión
         </button>
       </form>
-
-      <p className="mt-6 text-sm text-neutral-600 dark:text-neutral-400">
-        ¿No tienes cuenta?{" "}
-        <Link href="/register" className="font-medium text-neutral-900 underline dark:text-white">
-          Regístrate
-        </Link>
-      </p>
     </div>
   );
 }

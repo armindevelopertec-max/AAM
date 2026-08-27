@@ -1,58 +1,57 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { PrismaService } from '../prisma/prisma.service';
 import { CreateClientDto } from './dto/create-client.dto';
 import { UpdateClientDto } from './dto/update-client.dto';
 
 @Injectable()
 export class ClientsService {
-  private clients = [
-    {
-      id: 1,
-      name: 'Ana García',
-      email: 'ana.garcia@example.com',
-      phone: '555-0101',
-    },
-    {
-      id: 2,
-      name: 'Luis Pérez',
-      email: 'luis.perez@example.com',
-      phone: '555-0102',
-    },
-  ];
+  constructor(private readonly prisma: PrismaService) {}
 
-  create(createClientDto: CreateClientDto) {
-    const newClient = {
-      id: this.clients.length + 1,
-      ...createClientDto,
-    };
-
-    this.clients.push(newClient);
-
-    return newClient;
+  create(createClientDto: CreateClientDto, storeId: number) {
+    return this.prisma.client.create({
+      data: { storeId, ...createClientDto },
+    });
   }
 
-  findAll() {
-    return this.clients;
+  findAll(storeId: number, q?: string) {
+    return this.prisma.client.findMany({
+      where: {
+        storeId,
+        ...(q
+          ? {
+              OR: [
+                { name: { contains: q, mode: 'insensitive' } },
+                { email: { contains: q, mode: 'insensitive' } },
+                { phone: { contains: q, mode: 'insensitive' } },
+                { ci: { contains: q, mode: 'insensitive' } },
+              ],
+            }
+          : {}),
+      },
+      orderBy: { id: 'asc' },
+    });
   }
 
-  findOne(id: number) {
-    return this.clients.find((client) => client.id === id);
-  }
-
-  update(id: number, updateClientDto: UpdateClientDto) {
-    const client = this.clients.find((client) => client.id === id);
+  async findOne(id: number, storeId: number) {
+    const client = await this.prisma.client.findFirst({
+      where: { id, storeId },
+    });
     if (!client) {
-      return null;
+      throw new NotFoundException(`Cliente ${id} no encontrado`);
     }
-    Object.assign(client, updateClientDto);
     return client;
   }
 
-  remove(id: number) {
-    const index = this.clients.findIndex((client) => client.id === id);
-    if (index === -1) {
-      return null;
-    }
-    const deletedClient = this.clients.splice(index, 1);
-    return deletedClient[0];
+  async update(id: number, updateClientDto: UpdateClientDto, storeId: number) {
+    const client = await this.findOne(id, storeId);
+    return this.prisma.client.update({
+      where: { id: client.id },
+      data: updateClientDto,
+    });
+  }
+
+  async remove(id: number, storeId: number) {
+    const client = await this.findOne(id, storeId);
+    return this.prisma.client.delete({ where: { id: client.id } });
   }
 }

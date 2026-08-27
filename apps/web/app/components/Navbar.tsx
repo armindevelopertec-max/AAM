@@ -7,8 +7,12 @@ import { useAuth } from "./AuthProvider";
 
 const links = [
   { href: "/", label: "Dashboard" },
-  { href: "/products", label: "Productos" },
+  { href: "/pos", label: "POS" },
+  { href: "/quotes", label: "Cotizaciones" },
+  { href: "/seguimiento", label: "Seguimiento" },
+  { href: "/products", label: "Inventario" },
   { href: "/clients", label: "Clientes" },
+  { href: "/scraping", label: "Scraping" },
 ];
 
 export default function Navbar() {
@@ -21,23 +25,23 @@ export default function Navbar() {
       <nav className="mx-auto flex w-full max-w-5xl items-center justify-between px-6 py-3">
         <div className="flex items-center gap-8">
           <Link href="/" className="text-lg font-bold" onClick={() => setOpen(false)}>
-            MiApp
+            AAM
           </Link>
           <div className="hidden items-center gap-6 md:flex">
             {links.map((link) => {
-              const active = pathname === link.href;
-              return (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className={active
-                    ? "font-medium text-neutral-900 dark:text-white"
-                    : "text-neutral-500 transition hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white"}
-                >
-                  {link.label}
-                </Link>
-              );
-            })}
+                const active = pathname === link.href;
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className={active
+                      ? "font-medium text-neutral-900 dark:text-white"
+                      : "text-neutral-500 transition hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white"}
+                  >
+                    {link.label}
+                  </Link>
+                );
+              })}
           </div>
         </div>
         <div className="hidden items-center gap-4 md:flex">
@@ -74,20 +78,20 @@ export default function Navbar() {
         <div className="border-t border-neutral-200 px-6 py-4 md:hidden dark:border-neutral-800">
           <div className="flex flex-col gap-3">
             {links.map((link) => {
-              const active = pathname === link.href;
-              return (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setOpen(false)}
-                  className={active
-                    ? "font-medium text-neutral-900 dark:text-white"
-                    : "text-neutral-500 transition hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white"}
-                >
-                  {link.label}
-                </Link>
-              );
-            })}
+                const active = pathname === link.href;
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    onClick={() => setOpen(false)}
+                    className={active
+                      ? "font-medium text-neutral-900 dark:text-white"
+                      : "text-neutral-500 transition hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white"}
+                  >
+                    {link.label}
+                  </Link>
+                );
+              })}
             <div className="mt-2 flex flex-col gap-3 border-t border-neutral-200 pt-3 dark:border-neutral-800">
               {user && <span className="text-sm text-neutral-600 dark:text-neutral-400">{user.name}</span>}
               <button

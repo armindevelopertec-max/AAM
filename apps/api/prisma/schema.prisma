@@ -1,0 +1,156 @@
+generator client {
+  provider = "prisma-client-js"
+
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum QuoteStatus {
+  borrador
+  enviada
+  aceptada
+  perdida
+  vencida
+}
+
+model Store {
+  id               Int        @id @default(autoincrement())
+  name             String
+  currency         String     @default("MXN")
+  taxRate          Float      @default(0)
+  lowStockThreshold Int       @default(5)
+  products         Product[]
+  clients          Client[]
+  sales            Sale[]
+  quotes           Quote[]
+  users            User[]
+  sequences        Sequence[]
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
+}
+
+model User {
+  id           Int      @id @default(autoincrement())
+  storeId      Int
+  store        Store    @relation(fields: [storeId], references: [id])
+  name         String
+  email        String   @unique
+  passwordHash String
+  role         String   @default("admin")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([storeId])
+}
+
+model Sequence {
+  storeId Int
+  store   Store  @relation(fields: [storeId], references: [id])
+  name    String
+  value   Int    @default(0)
+
+  @@id([storeId, name])
+}
+
+model Product {
+  id           Int         @id @default(autoincrement())
+  storeId      Int
+  store        Store       @relation(fields: [storeId], references: [id])
+  name         String
+  sku          String
+  category     String      @default("General")
+  costPrice    Float
+  regularPrice Float @default(0)
+  price        Float
+  stock        Int         @default(0)
+  imageKey     String?
+  saleItems    SaleItem[]
+  quoteItems   QuoteItem[]
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+
+  @@index([storeId, sku])
+}
+
+model Client {
+  id        Int       @id @default(autoincrement())
+  storeId   Int
+  store     Store     @relation(fields: [storeId], references: [id])
+  name      String
+  email     String?
+  phone     String?
+  ci        String?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Sale {
+  id        Int        @id @default(autoincrement())
+  storeId   Int
+  store     Store      @relation(fields: [storeId], references: [id])
+  number    String
+  clientId  Int?
+  createdBy String?
+  items     SaleItem[]
+  subtotal  Float
+  discount  Float      @default(0)
+  total     Float
+  createdAt DateTime   @default(now())
+
+  @@unique([storeId, number])
+}
+
+model SaleItem {
+  id        Int     @id @default(autoincrement())
+  saleId    Int
+  sale      Sale    @relation(fields: [saleId], references: [id])
+  productId Int
+  product   Product @relation(fields: [productId], references: [id])
+  name      String
+  sku       String
+  quantity  Int
+  unitPrice Float
+  subtotal  Float
+
+  @@index([saleId])
+  @@index([productId])
+}
+
+model Quote {
+  id         Int         @id @default(autoincrement())
+  storeId    Int
+  store      Store       @relation(fields: [storeId], references: [id])
+  number     String
+  clientId   Int?
+  clientName String      @default("Cliente general")
+  createdBy  String?
+  items      QuoteItem[]
+  subtotal   Float
+  discount   Float       @default(0)
+  total      Float
+  validDays  Int         @default(7)
+  expiresAt  DateTime
+  status     QuoteStatus @default(borrador)
+  createdAt  DateTime    @default(now())
+
+  @@unique([storeId, number])
+}
+
+model QuoteItem {
+  id            Int     @id @default(autoincrement())
+  quoteId       Int
+  quote         Quote   @relation(fields: [quoteId], references: [id])
+  productId     Int
+  product       Product @relation(fields: [productId], references: [id])
+  name          String
+  sku           String
+  quantity      Int
+  unitPrice     Float
+  originalPrice Float @default(0)
+  subtotal      Float
+
+  @@index([quoteId])
+  @@index([productId])
+}

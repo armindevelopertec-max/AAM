@@ -1,60 +1,57 @@
-export type User = {
-  id: string;
+export type SafeUser = {
+  id: number;
   name: string;
   email: string;
-  password: string;
+  storeId: number;
+  role: string;
 };
 
-export type SafeUser = Omit<User, "password">;
-
-type Session = {
-  userId: string;
-};
-
-const USERS_KEY = "auth_users";
-const SESSION_KEY = "auth_session";
+const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3001";
+const TOKEN_KEY = "auth_token";
+const USER_KEY = "auth_user";
 
 let currentUser: SafeUser | null | undefined;
 
-function readUsers(): User[] {
-  if (typeof window === "undefined") return [];
-  const raw = window.localStorage.getItem(USERS_KEY);
-  if (!raw) return [];
-  try {
-    return JSON.parse(raw) as User[];
-  } catch {
-    return [];
-  }
-}
+const listeners = new Set<() => void>();
 
-function writeUsers(users: User[]) {
-  window.localStorage.setItem(USERS_KEY, JSON.stringify(users));
-}
-
-function readSession(): Session | null {
+function readToken(): string | null {
   if (typeof window === "undefined") return null;
-  const raw = window.localStorage.getItem(SESSION_KEY);
+  return window.localStorage.getItem(TOKEN_KEY);
+}
+
+function readUser(): SafeUser | null {
+  if (typeof window === "undefined") return null;
+  const raw = window.localStorage.getItem(USER_KEY);
   if (!raw) return null;
   try {
-    return JSON.parse(raw) as Session;
+    return JSON.parse(raw) as SafeUser;
   } catch {
     return null;
   }
 }
 
-function toSafe(user: User): SafeUser {
-  return { id: user.id, name: user.name, email: user.email };
+function writeSession(token: string, user: SafeUser) {
+  window.localStorage.setItem(TOKEN_KEY, token);
+  window.localStorage.setItem(USER_KEY, JSON.stringify(user));
 }
 
-function computeCurrentUser(): SafeUser | null {
-  const session = readSession();
-  if (!session) return null;
-  const user = readUsers().find((u) => u.id === session.userId);
-  if (!user) return null;
-  return toSafe(user);
+function clearSession() {
+  window.localStorage.removeItem(TOKEN_KEY);
+  window.localStorage.removeItem(USER_KEY);
 }
 
-const listeners = new Set<() => void>();
+function notify() {
+  listeners.forEach((listener) => listener());
+}
+
+function setUser(user: SafeUser | null) {
+  currentUser = user;
+  notify();
+}
+
+export function getToken(): string | null {
+  return readToken();
+}
 
 export function subscribeAuth(listener: () => void) {
   listeners.add(listener);
@@ -65,47 +62,60 @@ export function subscribeAuth(listener: () => void) {
 
 export function getAuthSnapshot(): SafeUser | null {
   if (currentUser === undefined) {
-    currentUser = computeCurrentUser();
+    currentUser = readUser();
   }
   return currentUser;
 }
 
-function setCurrentUser(user: SafeUser | null) {
-  currentUser = user;
-  listeners.forEach((listener) => listener());
-}
-
-export function signUp(input: { name: string; email: string; password: string }) {
-  const users = readUsers();
-  const existing = users.find((u) => u.email.toLowerCase() === input.email.toLowerCase());
-  if (existing) {
-    throw new Error("Ya existe una cuenta con este email");
+async function apiPost<T>(path: string, body: unknown): Promise<T> {
+  const res = await fetch(`${API_URL}${path}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+  if (!res.ok) {
+    const data = await res.json().catch(() => null);
+    const message = Array.isArray(data?.message)
+      ? data.message.join(", ")
+      : data?.message ?? res.statusText;
+    throw new Error(message);
   }
-  const user: User = {
-    id: crypto.randomUUID(),
-    name: input.name,
-    email: input.email,
-    password: input.password,
-  };
-  writeUsers([...users, user]);
-  window.localStorage.setItem(SESSION_KEY, JSON.stringify({ userId: user.id }));
-  setCurrentUser(toSafe(user));
-  return getAuthSnapshot();
+  return res.json() as Promise<T>;
 }
 
-export function signIn(input: { email: string; password: string }) {
-  const user = readUsers().find(
-    (u) => u.email.toLowerCase() === input.email.toLowerCase() && u.password === input.password
+export async function signIn(input: { email: string; password: string }) {
+  const { token, user } = await apiPost<{ token: string; user: SafeUser }>(
+    "/auth/login",
+    input,
   );
-  if (!user) {
-    throw new Error("Email o contraseña incorrectos");
-  }
-  window.localStorage.setItem(SESSION_KEY, JSON.stringify({ userId: user.id }));
-  setCurrentUser(toSafe(user));
-  return getAuthSnapshot();
+  writeSession(token, user);
+  setUser(user);
+  return user;
 }
 
 export function signOut() {
-  window.localStorage.removeItem(SESSION_KEY);
-  setCurrentUser(null);
+  clearSession();
+  setUser(null);
+}
+
+export async function verifySession(): Promise<SafeUser | null> {
+  const token = readToken();
+  if (!token) {
+    setUser(null);
+    return null;
+  }
+  try {
+    const res = await fetch(`${API_URL}/auth/me`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    if (!res.ok) throw new Error("Sesión inválida");
+    const user = (await res.json()) as SafeUser;
+    writeSession(token, user);
+    setUser(user);
+    return user;
+  } catch {
+    clearSession();
+    setUser(null);
+    return null;
+  }
 }

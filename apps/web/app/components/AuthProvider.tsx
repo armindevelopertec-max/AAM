@@ -1,19 +1,19 @@
 "use client";
 
-import { createContext, useCallback, useContext, useMemo, useSyncExternalStore } from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useState, useSyncExternalStore } from "react";
 import {
   getAuthSnapshot,
   signIn as doSignIn,
   signOut as doSignOut,
-  signUp as doSignUp,
   subscribeAuth,
+  verifySession,
   type SafeUser,
 } from "../lib/auth";
 
 type AuthContextValue = {
   user: SafeUser | null;
-  login: (input: { email: string; password: string }) => void;
-  register: (input: { name: string; email: string; password: string }) => void;
+  loading: boolean;
+  login: (input: { email: string; password: string }) => Promise<SafeUser>;
   logout: () => void;
 };
 
@@ -21,20 +21,21 @@ const AuthContext = createContext<AuthContextValue | null>(null);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const user = useSyncExternalStore(subscribeAuth, getAuthSnapshot, () => null);
+  const [loading, setLoading] = useState(true);
 
-  const login = useCallback((input: { email: string; password: string }) => {
-    doSignIn(input);
+  useEffect(() => {
+    void verifySession().finally(() => setLoading(false));
   }, []);
 
-  const register = useCallback((input: { name: string; email: string; password: string }) => {
-    doSignUp(input);
+  const login = useCallback((input: { email: string; password: string }) => {
+    return doSignIn(input);
   }, []);
 
   const logout = useCallback(() => {
     doSignOut();
   }, []);
 
-  const value = useMemo(() => ({ user, login, register, logout }), [user, login, register, logout]);
+  const value = useMemo(() => ({ user, loading, login, logout }), [user, loading, login, logout]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
