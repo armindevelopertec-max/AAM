@@ -249,7 +249,7 @@ export default function CatalogoPage() {
 
   return (
     <div className="flex flex-col gap-6">
-      <header className="flex items-center justify-between">
+      <header className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-3xl font-bold">Catálogo CCTV</h1>
           <p className="mt-1 text-neutral-600 dark:text-neutral-400">
@@ -260,7 +260,7 @@ export default function CatalogoPage() {
         <button
           onClick={handleImport}
           disabled={importing}
-          className="rounded-md border border-neutral-300 px-4 py-2 text-sm transition hover:border-neutral-400 disabled:opacity-50 dark:border-neutral-700"
+          className="w-fit rounded-md border border-neutral-300 px-4 py-2 text-sm transition hover:border-neutral-400 disabled:opacity-50 dark:border-neutral-700"
         >
           {importing ? "Importando..." : "Importar desde JSON"}
         </button>

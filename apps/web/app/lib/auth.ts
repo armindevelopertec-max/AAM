@@ -6,7 +6,7 @@ export type SafeUser = {
   role: string;
 };
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3001";
+const API_URL = "/api";
 const TOKEN_KEY = "auth_token";
 const USER_KEY = "auth_user";
 

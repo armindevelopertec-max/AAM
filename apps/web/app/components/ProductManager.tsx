@@ -145,9 +145,9 @@ export default function ProductManager({ initialProducts }: { initialProducts: P
   return (
     <div className="flex w-full flex-col gap-8">
       <section className="rounded-lg border border-neutral-200 bg-white p-6 dark:border-neutral-800 dark:bg-neutral-900">
-        <div className="mb-4 flex items-center justify-between">
+        <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <h2 className="text-lg font-semibold">Inventario</h2>
-          <div className="flex items-center gap-3">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
             <input
               type="search"
               value={query}
@@ -166,7 +166,8 @@ export default function ProductManager({ initialProducts }: { initialProducts: P
         {filtered.length === 0 ? (
           <p className="text-sm text-neutral-500 dark:text-neutral-400">No hay productos.</p>
         ) : (
-          <table className="w-full text-left text-sm">
+          <div className="overflow-x-auto">
+            <table className="w-full min-w-[760px] text-left text-sm">
             <thead>
               <tr className="border-b border-neutral-200 dark:border-neutral-800">
                 <th className="py-2 pr-4 font-medium">SKU</th>
@@ -354,6 +355,7 @@ export default function ProductManager({ initialProducts }: { initialProducts: P
               ))}
             </tbody>
           </table>
+          </div>
         )}
       </section>
 
@@ -371,7 +373,7 @@ export default function ProductManager({ initialProducts }: { initialProducts: P
                 <label className={labelClass}>Nombre *</label>
                 <input name="name" type="text" required className={inputClass} />
               </div>
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                 <div className="flex flex-col gap-1">
                   <label className={labelClass}>SKU</label>
                   <input name="sku" type="text" placeholder="ELC-0001" className={inputClass} />
@@ -381,7 +383,7 @@ export default function ProductManager({ initialProducts }: { initialProducts: P
                   <input name="category" type="text" placeholder="Electrónica" className={inputClass} />
                 </div>
               </div>
-              <div className="grid grid-cols-3 gap-3">
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
                 <div className="flex flex-col gap-1">
                   <label className={labelClass}>Costo</label>
                   <input name="costPrice" type="number" min="0" step="0.01" className={inputClass} />
@@ -395,7 +397,7 @@ export default function ProductManager({ initialProducts }: { initialProducts: P
                   <input name="price" type="number" min="0" step="0.01" required className={inputClass} />
                 </div>
               </div>
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                 <div className="flex flex-col gap-1">
                   <label className={labelClass}>Stock</label>
                   <input name="stock" type="number" min="0" step="1" className={inputClass} />

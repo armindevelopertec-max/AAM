@@ -1,7 +1,14 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  allowedDevOrigins: ["localhost", "127.0.0.1", "192.168.50.58"],
+  async rewrites() {
+    return [
+      {
+        source: "/api/:path*",
+        destination: "http://localhost:3001/:path*",
+      },
+    ];
+  },
 };
 
 export default nextConfig;

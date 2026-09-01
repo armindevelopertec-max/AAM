@@ -12,6 +12,9 @@ API_DIR="$ROOT/apps/api"
 WEB_DIR="$ROOT/apps/web"
 LOG_DIR="$ROOT/.logs"
 SERVER_IP="$(hostname -I | awk '{print $1}')"
+# Preferir la IP de Tailscale si está activa (así el sistema sale por la Tailnet)
+TS_IP="$(tailscale ip -4 2>/dev/null | head -1)"
+[ -n "$TS_IP" ] && [ "$TS_IP" != "$SERVER_IP" ] && SERVER_IP="$TS_IP"
 mkdir -p "$LOG_DIR"
 
 # Cargar Node.js vía nvm
@@ -48,11 +51,11 @@ info "Preparando backend (API)..."
 cd "$API_DIR"
 [ -f .env ] || fail "No existe apps/api/.env"
 
-# Permitir CORS desde localhost y desde la IP actual (para laptop en la red)
+# Permitir CORS desde localhost, LAN y Tailscale (agregando, sin borrar)
 if grep -q "CORS_ORIGIN" "$API_DIR/.env"; then
-    if ! grep -q "$SERVER_IP" "$API_DIR/.env"; then
-        sed -i "s|^CORS_ORIGIN=.*|CORS_ORIGIN=\"http://localhost:3000,http://${SERVER_IP}:3000\"|" "$API_DIR/.env"
-        info "Actualizado CORS_ORIGIN en apps/api/.env con ${SERVER_IP}"
+    if ! grep -q "http://${SERVER_IP}:3000" "$API_DIR/.env"; then
+        sed -i "s|^CORS_ORIGIN=\"\(.*\)\"|CORS_ORIGIN=\"\1,http://${SERVER_IP}:3000\"|" "$API_DIR/.env"
+        info "Agregado http://${SERVER_IP}:3000 a CORS_ORIGIN"
     fi
 fi
 
@@ -86,25 +89,24 @@ if [ ! -d node_modules ]; then
     npm install || fail "Falló npm install en el frontend"
 fi
 
-# Configurar la API URL del frontend para el acceso en red
+# Configurar la API URL del frontend: el backend se accede por el proxy
+# de Next.js (/api -> localhost:3001), apuntando siempre a una URL relativa
+# para evitar Mixed Content detrás de Cloudflare/HTTPS.
 if [ ! -f "$WEB_DIR/.env" ]; then
-    echo "NEXT_PUBLIC_API_URL=http://${SERVER_IP}:3001" > "$WEB_DIR/.env"
-    info "Creado apps/web/.env con NEXT_PUBLIC_API_URL=http://${SERVER_IP}:3001"
+    echo "NEXT_PUBLIC_API_URL=/api" > "$WEB_DIR/.env"
+    info "Creado apps/web/.env con NEXT_PUBLIC_API_URL=/api (proxy via Next.js)"
     NEED_RESTART=1
 fi
 
-# Permitir el acceso cross-origin en dev desde la IP actual (y localhost)
-if grep -q "allowedDevOrigins" "$WEB_DIR/next.config.ts"; then
-    if ! grep -q "$SERVER_IP" "$WEB_DIR/next.config.ts"; then
-        sed -i "s|allowedDevOrigins: \[[^]]*\]|allowedDevOrigins: [\"localhost\", \"127.0.0.1\", \"${SERVER_IP}\"]|" "$WEB_DIR/next.config.ts"
-        info "Actualizado allowedDevOrigins en next.config.ts con ${SERVER_IP}"
-        NEED_RESTART=1
-    fi
+# Construir para producción si no existe el build
+if [ ! -d "$WEB_DIR/.next" ] || [ -z "$(ls -A "$WEB_DIR/.next" 2>/dev/null)" ]; then
+    info "Compilando frontend para producción..."
+    ( cd "$WEB_DIR" && npm run build ) || fail "Falló el build del frontend"
 fi
 
 if ! curl -sf -o /dev/null http://localhost:3000 2>/dev/null; then
-    info "Iniciando frontend en http://${SERVER_IP}:3000 ..."
-    ( cd "$WEB_DIR" && setsid npx next dev -H 0.0.0.0 -p 3000 > "$LOG_DIR/web.log" 2>&1 < /dev/null & )
+    info "Iniciando frontend (producción) en http://${SERVER_IP}:3000 ..."
+    ( cd "$WEB_DIR" && setsid npm run start -- -H 0.0.0.0 -p 3000 > "$LOG_DIR/web.log" 2>&1 < /dev/null & )
     for i in $(seq 1 40); do
         if curl -sf -o /dev/null http://localhost:3000 2>/dev/null; then
             ok "Frontend listo"
@@ -117,9 +119,9 @@ else
     ok "Frontend ya estaba corriendo"
     if [ "$NEED_RESTART" = "1" ]; then
         info "Reiniciando frontend para aplicar NEXT_PUBLIC_API_URL..."
-        pkill -f "next dev" 2>/dev/null
+        pkill -f "next start" 2>/dev/null
         sleep 2
-        ( cd "$WEB_DIR" && setsid npx next dev -H 0.0.0.0 -p 3000 > "$LOG_DIR/web.log" 2>&1 < /dev/null & )
+        ( cd "$WEB_DIR" && setsid npm run start -- -H 0.0.0.0 -p 3000 > "$LOG_DIR/web.log" 2>&1 < /dev/null & )
         sleep 8
         ok "Frontend reiniciado"
     fi

@@ -151,7 +151,7 @@ export default function ScrapingManager() {
                     : "border-neutral-200 bg-white dark:border-neutral-800 dark:bg-neutral-900"
               }`}
             >
-              <div className="flex items-start justify-between gap-4">
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                 {item.imagenesDescargadas.length > 0 && (
                   <img
                     src={getScrapedImageUrl(item.imagenesDescargadas[0].key)}
@@ -161,7 +161,7 @@ export default function ScrapingManager() {
                   />
                 )}
                 <div className="flex-1">
-                  <div className="flex items-center gap-2">
+                  <div className="flex flex-wrap items-center gap-2">
                     <h3 className="font-medium">{item.datosCrudos.nombre}</h3>
                     {item.importadoAPostgres && (
                       <span className="rounded bg-green-100 px-2 py-0.5 text-xs text-green-700 dark:bg-green-900 dark:text-green-300">
@@ -192,7 +192,7 @@ export default function ScrapingManager() {
                     </span>
                   </div>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex flex-wrap items-center gap-2">
                   {!item.importadoAPostgres && !item.descartado && (
                     <button
                       onClick={() => setImportModal(item)}
@@ -331,7 +331,7 @@ export default function ScrapingManager() {
 function StatCard({
   label,
   value,
-  color = "text-neutral-900",
+  color = "text-neutral-900 dark:text-neutral-100",
 }: {
   label: string;
   value: number;
@@ -339,7 +339,7 @@ function StatCard({
 }) {
   return (
     <div className="rounded-lg border border-neutral-200 bg-white p-4 dark:border-neutral-800 dark:bg-neutral-900">
-      <p className="text-sm text-neutral-500">{label}</p>
+      <p className="text-sm text-neutral-500 dark:text-neutral-400">{label}</p>
       <p className={`text-2xl font-bold ${color}`}>{value}</p>
     </div>
   );

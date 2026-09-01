@@ -259,7 +259,7 @@ export default function PosManager({
       </section>
 
       {/* ── Carrito ── */}
-      <section className="sticky top-20 flex flex-col rounded-xl border border-neutral-200 bg-white p-5 lg:col-span-2 dark:border-neutral-800 dark:bg-neutral-900">
+      <section className="flex flex-col rounded-xl border border-neutral-200 bg-white p-5 lg:sticky lg:top-20 lg:col-span-2 dark:border-neutral-800 dark:bg-neutral-900">
         <h2 className="mb-3 text-base font-semibold">
           Carrito
           {totalItems > 0 && (
