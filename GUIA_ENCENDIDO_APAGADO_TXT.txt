@@ -1,0 +1,139 @@
+=====================================================================
+ AAM - GUIA DE ENCENDIDO / APAGADO DEL SERVIDOR Y CLOUDFLARED
+=====================================================================
+  Contexto especifico: como apagar y encender el servidor de forma
+  segura, y que todo (incluido el tunnel cloudflared) vuelva solo.
+=====================================================================
+
+
+---------------------------------------------------------------------
+ 1) SITUACION ACTUAL (importante conocerla)
+---------------------------------------------------------------------
+
+  cloudflared (el tunnel de segtecam.space) se lanza de FORMA MANUAL:
+     cloudflared tunnel run segtecam
+
+  NO esta configurado como servicio del sistema al arrancar:
+     systemctl is-active  cloudflared  ->  inactive
+     systemctl is-enabled cloudflared  ->  not-found (no arranca al boot)
+
+  El script ./iniciar.sh SOLO levanta: contenedores + backend + frontend.
+  NO levanta cloudflared.
+
+  CONSECUENCIA:
+     Si apagas el servidor y lo enciendes, ejecutar ./iniciar.sh levanta
+     el backend y frontend, PERO segtecam.space NO respondera hasta que
+     vuelvas a lanzar cloudflared a mano.
+
+
+---------------------------------------------------------------------
+ 2) LA SOLUCION RECOMENDADA: cloudflared como servicio systemd
+---------------------------------------------------------------------
+
+  Asi cloudflared arranca SOLO al encender el servidor (sin terminal).
+
+  EJECUTAR UNA SOLA VEZ (con sudo):
+
+     # Instalar y crear el servicio systemd
+     sudo cloudflared service install
+
+     # Si la config no esta en el lugar por defecto, indicarla:
+     sudo cloudflared --config /home/arminserver/.cloudflared/config.yml service install
+
+     # Habilitar que arranque al boot + iniciarlo ya mismo
+     sudo systemctl enable --now cloudflared
+
+  VERIFICAR:
+
+     sudo systemctl status cloudflared
+     curl -I https://segtecam.space          # -> 200
+
+
+---------------------------------------------------------------------
+ 3) FLUJO CORRECTO AL ENCENDER EL SERVIDOR (una vez instalado el servicio)
+---------------------------------------------------------------------
+
+  PASO 1 - Encender la maquina.
+           cloudflared arranca solo (systemd), sin hacer nada.
+
+  PASO 2 - Levantar la aplicacion:
+           cd ~/AAM
+           ./iniciar.sh
+           # levanta contenedores (Podman) + backend + frontend
+
+  PASO 3 - Verificar que todo este publicado:
+           curl -I https://segtecam.space               # -> 200
+           curl -I https://segtecam.space/api/catalogo  # -> 200
+
+  Si los curls devuelven 200, el sitio esta publicado.
+
+
+---------------------------------------------------------------------
+ 4) FLUJO CORRECTO AL APAGAR (parada ordenada, opcional pero recomendado)
+---------------------------------------------------------------------
+
+  Antes de apagar, detener la aplicacion de forma ordenada:
+
+     # Detener frontend
+     pkill -f "next start"
+     # Detener backend
+     pkill -f "node dist/src/main"
+     # Detener contenedores
+     cd ~/AAM && podman-compose down
+
+  Luego apagar el servidor:
+     sudo shutdown -h now        # o: sudo poweroff
+
+  (El cloudflared se detiene solo al apagar el sistema.)
+
+
+---------------------------------------------------------------------
+ 5) NOTAS Y REGLAS PARA NO ROMPER EL TUNNEL / SERVICIO
+---------------------------------------------------------------------
+
+  R1. El tunnel depende del proceso cloudflared. Sin el, segtecam.space
+      da error. Si el sitio "no carga" tras reiniciar, primero:
+          systemctl status cloudflared
+          systemctl restart cloudflared
+
+  R2. El archivo de config del tunnel es:
+          /home/arminserver/.cloudflared/config.yml
+      Contiene el tunnel ID + certificado. NO borrarlo ni editar sin
+      saber que haces (ahí se definen las rutas segtecam.space y www).
+
+  R3. Si prefieres NO usar systemd, alternativa manual:
+      - Anadir el arranque de cloudflared al final de ./iniciar.sh.
+      - Asi cada vez que ejecutes ./iniciar.sh, se levanta tambien el tunnel.
+      (Menos robusto que systemd: no arranca en el boot, hay que correr
+       ./iniciar.sh a mano; con systemd arranca solo.)
+
+  R4. Seguridad (ya configurada, NO desactivar):
+      - fail2ban protege SSH:   sudo fail2ban-client status sshd
+      - Firewall: SSH solo por Tailscale/LAN; 3000/3001 solo localhost.
+        Si algun dia el tunnel falla, NO abras 3000/3001 al exterior
+        como "solución"; arregla cloudflared, no el firewall.
+
+  R5. Despues de cualquier reinicio del servidor, verifica SIEMPRE:
+          systemctl is-active cloudflared   # -> active
+          curl -I https://segtecam.space    # -> 200
+          curl -I http://localhost:3000     # -> 200
+          curl -I http://localhost:3001/catalogo  # -> 200
+
+
+---------------------------------------------------------------------
+ 6) RESUMEN RAPIDO
+---------------------------------------------------------------------
+
+  ENCENDER:
+     1. (cloudflared arranca solo si instale el servicio)
+     2. cd ~/AAM && ./iniciar.sh
+     3. curl -I https://segtecam.space   # esperar 200
+
+  APAGAR:
+     1. (pkill next start / node dist / podman-compose down)
+     2. sudo shutdown -h now
+
+  TUNNEL CAIDO (el mas comun):
+     1. systemctl status cloudflared
+     2. systemctl enable --now cloudflared   (si not-found)
+     3. systemctl restart cloudflared
