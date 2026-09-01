@@ -1,0 +1,161 @@
+=====================================================================
+ AAM - GUIA DE DESARROLLO, DEPLOY Y REGLAS DE SEGURIDAD
+=====================================================================
+ Proyecto: AAM (POS + Catalogo + Cotizador + Scraping)
+ Stack:    Next.js 16 (apps/web) + NestJS (apps/api)
+           PostgreSQL + MongoDB + MinIO (Podman)
+ Acceso:   Cloudflare Tunnel -> localhost (web en produccion)
+=====================================================================
+
+
+---------------------------------------------------------------------
+ 1) ARQUITECTURA / FLUJO DE TRAFICO (IMPORTANTE ENTENDERLO)
+---------------------------------------------------------------------
+
+  PRODUCCION (publico):
+
+     Navegador
+        |
+        v
+     Cloudflare Tunnel (https://segtecam.space)   <-- frontera (HTTPS)
+        |
+        v
+     localhost:3000  Next.js (next start)
+        |
+        +-- /api/*  (rewrite)  ->  localhost:3001  NestJS (backend)
+        |
+        +-- paginas, estaticos, imagenes
+
+  CLAVE: el backend (3001) y el app (3000) SOLO escuchan en localhost.
+         Nunca se abren al exterior. Todo el trafico entra por Cloudflare.
+         El proxy de Next.js (/api -> 3001) sirve la API sin exponerla.
+
+
+---------------------------------------------------------------------
+ 2) COMANDOS DE DESARROLLO LOCAL (modo dev)
+---------------------------------------------------------------------
+
+  Los contenedores (BD) se levantan primero:
+
+      cd ~/AAM
+      podman-compose up -d          # PostgreSQL, MongoDB, MinIO
+      podman ps                     # verificar que esten healthy
+
+  BACKEND (NestJS, puerto 3001):
+
+      cd ~/AAM/apps/api
+      npm install
+      npm run start:dev             # modo dev con hot-reload (watch)
+
+  FRONTEND (Next.js, puerto 3000):
+
+      cd ~/AAM/apps/web
+      npm install
+      npm run dev                   # modo dev con HMR (hot reload)
+
+  Acceso en dev: http://localhost:3000
+  API en dev:    http://localhost:3001
+
+
+---------------------------------------------------------------------
+ 3) PASAR DE DESARROLLO A PRODUCCION (procedimiento)
+---------------------------------------------------------------------
+
+  El servidor real usa el script  ./iniciar.sh  (levanta en PRODUCCION).
+
+  Cuando ya probaste en dev y quieres publicar:
+
+  PASO 1 - Backend
+     cd ~/AAM/apps/api
+     npm run build                   # genera dist/
+     npm run start:prod              # arranca el backend compilado
+     # Verifica: curl http://localhost:3001/catalogo  -> 200
+
+  PASO 2 - Frontend (produccion)
+     cd ~/AAM/apps/web
+     npm run build                   # genera .next (compila + typecheck)
+     npm run start -- -H 0.0.0.0 -p 3000
+     # Verifica: curl -I http://localhost:3000        -> 200
+
+  PASO 3 - Todo junto (recomendado)
+     cd ~/AAM
+     ./iniciar.sh                    # levanta contenedores + backend + frontend en prod
+
+  PASO 4 - Verificar publico
+     curl -I https://segtecam.space          -> 200
+     curl -I https://segtecam.space/api/catalogo -> 200
+     curl -s -X POST https://segtecam.space/api/auth/login \
+          -H "Content-Type: application/json" \
+          -d '{"email":"admin@demo.mx","password":"admin123"}'
+     # -> debe devolver un token JSON (200/201), NO error CORS ni Mixed Content
+
+
+---------------------------------------------------------------------
+ 4) DIFERENCIAS DEV vs PRODUCCION
+---------------------------------------------------------------------
+
+  | Aspecto          | DEV                          | PRODUCCION                 |
+  |------------------|------------------------------|----------------------------|
+  | Frontend         | next dev (HMR)               | next start (compilado)     |
+  | Backend          | nest start:dev (watch)       | node dist (start:prod)     |
+  | URL API          | http://localhost:3001        | /api (proxy relative)      |
+  | HMR/websocket    | SI (/_next/hmr)              | NO existe (404, correcto)  |
+  | Build            | no aplica                    | npm run build obligatorio  |
+
+  TIP: si en produccion ves 403 en .js o 502 en /_next/hmr, es que
+       estas usando next dev. La solucion es BUILD + next start.
+
+
+---------------------------------------------------------------------
+ 5) REGLAS PARA NO ROMPER / NO TIRAR EL SERVICIO EN PRODUCCION
+---------------------------------------------------------------------
+
+  R1. NUNCA uses "next dev" en el servidor real frente a Cloudflare.
+      Causa 403 en recursos y 502 en HMR. Usa siempre build + start.
+
+  R2. El frontend consume la API por la ruta RELATIVA "/api".
+      - En app/lib/api.ts y app/lib/auth.ts:  const API_URL = "/api";
+      - NO apuntes a http://IP:3001 desde el frontend.
+        Provoca Mixed Content (pagina HTTPS -> fetch HTTP) y rompe CORS.
+      - El proxy que hace esto vive en apps/web/next.config.ts (rewrites).
+
+  R3. Cualquier nueva ruta de API debe existir en el backend ANTES
+      que el frontend la consuma. Si /api/foo no se implementa en
+      NestJS, el proxy devuelve 404.
+
+  R4. FIREWALL: no abras los puertos 3000/3001 al exterior.
+      Permanece: SSH solo por Tailscale/LAN, y 3000/3001 solo localhost.
+      Si alguien "abre" 3000/3001, reviertelo de inmediato:
+         sudo firewall-cmd --permanent --zone=FedoraServer \
+              --add-rich-rule='rule family="ipv4" port port=3000 protocol=tcp reject'
+         sudo firewall-cmd --permanent --zone=FedoraServer \
+              --add-rich-rule='rule family="ipv4" port port=3001 protocol=tcp reject'
+         sudo firewall-cmd --reload
+
+  R5. CODE DEPLOYS CON CUIDADO:
+      - Antes de publicar:  npm run build (detecta errores TS)
+      - Despues de publicar, verifica SIEMPRE con los curls del PASO 4.
+      - Si algo se rompe: revisa los logs
+           tail -f ~/AAM/.logs/web.log
+           tail -f ~/AAM/.logs/api.log
+
+  R6. NUNCA subas al repo:   apps/*/.env , *.log , backups/ , .next/ , dist/
+      (ya estan en .gitignore; verificalo con:  git status)
+
+  R7. CAMBIOS EN next.config.ts (rewrites/CORS):
+      - Cualquier cambio aqui requiere: npm run build (aunque no cambies codigo).
+      - Manten el rewrite de /api intacto (es el puente al backend).
+
+  R8. CAMBIOS EN EL BACKEND:
+      - Cambios en src/ -> npm run build + reiniciar start:prod.
+      - Cambios en CORS_ORIGIN (.env del api) -> reinicia el backend.
+      - El backend NO se expone; las llamadas entran por el proxy.
+
+  R9. SEGURIDAD / FUERZA BRUTA:
+      - fail2ban protege SSH (5 fallos / 10 min -> baneo 1h).
+        Estado:  sudo fail2ban-client status sshd
+      - NUNCA desactivar fail2ban ni el firewall.
+
+  R10. ANTES DE REINICIAR EL SERVIDOR:
+      - Todo se recupera con:  ./iniciar.sh   (contenedores + backend + frontend).
+      - Asegurate que cloudflared este corriendo (tunnel segtecam).
