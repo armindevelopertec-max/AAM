@@ -50,7 +50,7 @@ export default function CatalogManager() {
         </p>
       </div>
 
-      <div className="flex flex-wrap items-center gap-3">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
         <input
           type="text"
           placeholder="Buscar por nombre, SKU o marca..."
@@ -59,7 +59,7 @@ export default function CatalogManager() {
             setBuscar(e.target.value);
             setPage(1);
           }}
-          className="flex-1 rounded-md border border-neutral-300 px-3 py-2 dark:border-neutral-700 dark:bg-neutral-800"
+          className="w-full rounded-md border border-neutral-300 px-3 py-2 dark:border-neutral-700 dark:bg-neutral-800 sm:flex-1"
         />
         <select
           value={filtroFuente}
@@ -67,7 +67,7 @@ export default function CatalogManager() {
             setFiltroFuente(e.target.value);
             setPage(1);
           }}
-          className="rounded-md border border-neutral-300 px-3 py-2 dark:border-neutral-700 dark:bg-neutral-800"
+          className="w-full rounded-md border border-neutral-300 px-3 py-2 dark:border-neutral-700 dark:bg-neutral-800 sm:w-auto"
         >
           <option value="">Todas las fuentes</option>
           <option value="dahubolivia">Dahua Bolivia</option>
@@ -84,73 +84,81 @@ export default function CatalogManager() {
           {items.map((item) => (
             <div
               key={item._id}
-              className="rounded-lg border border-neutral-200 bg-white p-4 dark:border-neutral-800 dark:bg-neutral-900"
+              className="rounded-lg border border-neutral-200 bg-white p-3 sm:p-4 dark:border-neutral-800 dark:bg-neutral-900"
             >
-              <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+              <div className="flex gap-3 sm:gap-4">
                 {item.imagenesDescargadas.length > 0 ? (
                   <img
                     src={getScrapedImageUrl(item.imagenesDescargadas[0].key)}
                     alt={item.datosCrudos.nombre}
-                    className="h-14 w-14 flex-shrink-0 rounded border border-neutral-200 object-cover dark:border-neutral-700"
+                    className="h-12 w-12 flex-shrink-0 rounded border border-neutral-200 object-cover sm:h-14 sm:w-14 dark:border-neutral-700"
                     loading="lazy"
                   />
                 ) : (
-                  <div className="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded border border-neutral-200 text-xs text-neutral-400 dark:border-neutral-700">
-                    Sin imagen
+                  <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded border border-neutral-200 text-[10px] text-neutral-400 sm:h-14 sm:w-14 dark:border-neutral-700">
+                    Sin img
                   </div>
                 )}
-                <div className="flex-1">
-                  <h3 className="font-medium">{item.datosCrudos.nombre}</h3>
-                  <div className="mt-1 flex flex-wrap gap-x-4 gap-y-1 text-sm text-neutral-500">
-                    <span>SKU: {item.datosCrudos.sku || "N/A"}</span>
-                    <span>Marca: {item.datosCrudos.marca || "N/A"}</span>
-                    <span>Categoría: {item.categoriaScrape}</span>
-                    <span>Fuente: {item.fuente}</span>
-                  </div>
-                  <div className="mt-1 flex gap-4 text-sm">
-                    <span>
-                      Regular: {item.datosCrudos.precioRegular} {item.datosCrudos.moneda}
-                    </span>
-                    <span>
-                      Oferta: {item.datosCrudos.precioOferta} {item.datosCrudos.moneda}
-                    </span>
-                    <span
-                      className={
-                        hasStock(item.datosCrudos)
-                          ? "text-green-600"
-                          : "text-red-600"
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-start justify-between gap-2">
+                    <h3 className="min-w-0 truncate text-sm font-medium sm:text-base">
+                      {item.datosCrudos.nombre}
+                    </h3>
+                    <button
+                      onClick={() =>
+                        setExpandedId(expandedId === item._id ? null : item._id)
                       }
+                      className="flex-shrink-0 rounded-md border border-neutral-300 px-2 py-1 text-xs dark:border-neutral-700 sm:px-3 sm:py-1.5 sm:text-sm"
                     >
-                      {hasStock(item.datosCrudos) ? "En stock" : "Sin stock"}
-                      {typeof item.datosCrudos.stockCantidad === "number" &&
-                        ` (${item.datosCrudos.stockCantidad})`}
+                      {expandedId === item._id ? "Menos" : "Editar"}
+                    </button>
+                  </div>
+                  <div className="mt-1 flex flex-wrap gap-x-3 gap-y-0.5 text-xs text-neutral-500 sm:text-sm sm:gap-x-4 sm:gap-y-1">
+                    <span className="truncate">SKU: {item.datosCrudos.sku || "N/A"}</span>
+                    <span className="hidden sm:inline">Marca: {item.datosCrudos.marca || "N/A"}</span>
+                    <span className="hidden sm:inline">Categoría: {item.categoriaScrape}</span>
+                    <span className="hidden sm:inline">Fuente: {item.fuente}</span>
+                  </div>
+                  <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs sm:text-sm sm:gap-x-4">
+                    <span className="font-medium text-neutral-700 dark:text-neutral-300">
+                      {item.datosCrudos.precioRegular} {item.datosCrudos.moneda}
+                    </span>
+                    {item.datosCrudos.precioOferta > 0 && (
+                      <span className="font-medium text-green-600 dark:text-green-400">
+                        Oferta: {item.datosCrudos.precioOferta} {item.datosCrudos.moneda}
+                      </span>
+                    )}
+                    <span
+                      className={`rounded-full px-2 py-0.5 text-[10px] font-bold sm:text-xs ${
+                        hasStock(item.datosCrudos)
+                          ? "bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300"
+                          : "bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-300"
+                      }`}
+                    >
+                      {hasStock(item.datosCrudos)
+                        ? `En stock (${item.datosCrudos.stockCantidad})`
+                        : "Sin stock"}
                     </span>
                   </div>
                 </div>
-                <button
-                  onClick={() => setExpandedId(expandedId === item._id ? null : item._id)}
-                  className="rounded-md border border-neutral-300 px-3 py-1.5 text-sm dark:border-neutral-700"
-                >
-                  {expandedId === item._id ? "Menos" : "Editar"}
-                </button>
               </div>
 
               {expandedId === item._id && (
-                <div className="mt-4 border-t border-neutral-200 pt-4 dark:border-neutral-700">
+                <div className="mt-3 border-t border-neutral-200 pt-3 sm:mt-4 sm:pt-4 dark:border-neutral-700">
                   <PrecioEditor
                     product={item}
                     onSaved={() => {
                       void fetchData();
                     }}
                   />
-                  <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                  <div className="grid grid-cols-1 gap-4 pt-3 sm:pt-4 md:grid-cols-2">
                     <div>
                       <p className="text-sm font-medium">Descripción corta:</p>
-                      <p className="text-sm text-neutral-600 dark:text-neutral-400">
+                      <p className="mt-1 text-xs text-neutral-600 sm:text-sm dark:text-neutral-400">
                         {item.datosCrudos.descripcionCorta || "Sin descripción"}
                       </p>
                       <p className="mt-2 text-sm font-medium">Categorías:</p>
-                      <div className="flex flex-wrap gap-1">
+                      <div className="mt-1 flex flex-wrap gap-1">
                         {item.datosCrudos.categorias.map((cat) => (
                           <span key={cat} className="rounded bg-neutral-100 px-2 py-0.5 text-xs dark:bg-neutral-800">
                             {cat}
@@ -160,7 +168,7 @@ export default function CatalogManager() {
                     </div>
                     <div>
                       <p className="text-sm font-medium">Imágenes:</p>
-                      <div className="flex flex-wrap gap-2">
+                      <div className="mt-1 flex flex-wrap gap-2">
                         {item.imagenesDescargadas.map((img) => (
                           <a
                             key={img.key}
@@ -171,7 +179,7 @@ export default function CatalogManager() {
                             <img
                               src={getScrapedImageUrl(img.key)}
                               alt={item.datosCrudos.nombre}
-                              className="h-20 w-20 rounded border border-neutral-200 object-cover dark:border-neutral-700"
+                              className="h-16 w-16 rounded border border-neutral-200 object-cover sm:h-20 sm:w-20 dark:border-neutral-700"
                               loading="lazy"
                             />
                           </a>
@@ -195,7 +203,7 @@ export default function CatalogManager() {
             <button
               onClick={() => setPage(Math.max(1, page - 1))}
               disabled={page === 1}
-              className="rounded border border-neutral-300 px-3 py-1 text-sm disabled:opacity-50 dark:border-neutral-700"
+              className="rounded border border-neutral-300 px-2 py-1 text-xs disabled:opacity-50 sm:px-3 sm:text-sm dark:border-neutral-700"
             >
               Anterior
             </button>
@@ -203,7 +211,7 @@ export default function CatalogManager() {
               p === "…" ? (
                 <span
                   key={`ellipsis-${i}`}
-                  className="px-1 text-sm text-neutral-400"
+                  className="px-1 text-xs text-neutral-400 sm:text-sm"
                 >
                   …
                 </span>
@@ -212,7 +220,7 @@ export default function CatalogManager() {
                   key={p}
                   onClick={() => setPage(p)}
                   disabled={p === page}
-                  className={`min-w-8 rounded border px-2 py-1 text-sm ${
+                  className={`min-w-7 rounded border px-1.5 py-1 text-xs sm:min-w-8 sm:px-2 sm:text-sm ${
                     p === page
                       ? "border-blue-600 bg-blue-600 text-white"
                       : "border-neutral-300 hover:border-blue-400 dark:border-neutral-700 dark:hover:border-blue-600"
@@ -225,12 +233,12 @@ export default function CatalogManager() {
             <button
               onClick={() => setPage(Math.min(totalPages, page + 1))}
               disabled={page === totalPages}
-              className="rounded border border-neutral-300 px-3 py-1 text-sm disabled:opacity-50 dark:border-neutral-700"
+              className="rounded border border-neutral-300 px-2 py-1 text-xs disabled:opacity-50 sm:px-3 sm:text-sm dark:border-neutral-700"
             >
               Siguiente
             </button>
           </div>
-          <span className="text-sm text-neutral-500">
+          <span className="text-xs text-neutral-500 sm:text-sm">
             Página {page} de {totalPages} ({total} productos)
           </span>
         </div>
