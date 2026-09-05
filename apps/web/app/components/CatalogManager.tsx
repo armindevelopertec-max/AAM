@@ -190,24 +190,49 @@ export default function CatalogManager() {
       )}
 
       {totalPages > 1 && (
-        <div className="flex items-center justify-center gap-2">
-          <button
-            onClick={() => setPage(Math.max(1, page - 1))}
-            disabled={page === 1}
-            className="rounded border border-neutral-300 px-3 py-1 text-sm disabled:opacity-50 dark:border-neutral-700"
-          >
-            Anterior
-          </button>
+        <div className="flex flex-col items-center gap-2">
+          <div className="flex flex-wrap items-center justify-center gap-1">
+            <button
+              onClick={() => setPage(Math.max(1, page - 1))}
+              disabled={page === 1}
+              className="rounded border border-neutral-300 px-3 py-1 text-sm disabled:opacity-50 dark:border-neutral-700"
+            >
+              Anterior
+            </button>
+            {getPageNumbers(page, totalPages).map((p, i) =>
+              p === "…" ? (
+                <span
+                  key={`ellipsis-${i}`}
+                  className="px-1 text-sm text-neutral-400"
+                >
+                  …
+                </span>
+              ) : (
+                <button
+                  key={p}
+                  onClick={() => setPage(p)}
+                  disabled={p === page}
+                  className={`min-w-8 rounded border px-2 py-1 text-sm ${
+                    p === page
+                      ? "border-blue-600 bg-blue-600 text-white"
+                      : "border-neutral-300 hover:border-blue-400 dark:border-neutral-700 dark:hover:border-blue-600"
+                  }`}
+                >
+                  {p}
+                </button>
+              ),
+            )}
+            <button
+              onClick={() => setPage(Math.min(totalPages, page + 1))}
+              disabled={page === totalPages}
+              className="rounded border border-neutral-300 px-3 py-1 text-sm disabled:opacity-50 dark:border-neutral-700"
+            >
+              Siguiente
+            </button>
+          </div>
           <span className="text-sm text-neutral-500">
             Página {page} de {totalPages} ({total} productos)
           </span>
-          <button
-            onClick={() => setPage(Math.min(totalPages, page + 1))}
-            disabled={page === totalPages}
-            className="rounded border border-neutral-300 px-3 py-1 text-sm disabled:opacity-50 dark:border-neutral-700"
-          >
-            Siguiente
-          </button>
         </div>
       )}
     </div>
@@ -301,4 +326,26 @@ function hasStock(datosCrudos: ScrapedProduct["datosCrudos"]): boolean {
   return typeof datosCrudos.stockCantidad === "number"
     ? datosCrudos.stockCantidad > 0
     : datosCrudos.enStock;
+}
+
+function getPageNumbers(
+  current: number,
+  total: number,
+): (number | "…")[] {
+  const windowSize = 5;
+  let start = Math.max(1, current - Math.floor(windowSize / 2));
+  let end = start + windowSize - 1;
+  if (end > total) {
+    end = total;
+    start = Math.max(1, end - windowSize + 1);
+  }
+  const pages: (number | "…")[] = [];
+  if (start > 1) {
+    pages.push(1);
+    if (start > 2) pages.push("…");
+  }
+  for (let i = start; i <= end; i++) pages.push(i);
+  if (end < total - 1) pages.push("…");
+  if (end < total) pages.push(total);
+  return pages;
 }
