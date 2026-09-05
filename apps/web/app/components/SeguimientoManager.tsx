@@ -50,11 +50,11 @@ export default function SeguimientoManager({
 }) {
   const [tab, setTab] = useState<"cotizaciones" | "ventas">("cotizaciones");
   const [quotes, setQuotes] = useState<Quote[]>(initialQuotes);
-  const [expandedQuoteId, setExpandedQuoteId] = useState<number | null>(null);
-  const [expandedSaleId, setExpandedSaleId] = useState<number | null>(null);
+  const [expandedQuoteId, setExpandedQuoteId] = useState<string | null>(null);
+  const [expandedSaleId, setExpandedSaleId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  async function handleGeneratePdf(quoteId: number) {
+  async function handleGeneratePdf(quoteId: string) {
     setError(null);
     try {
       await generateQuotePdf(quoteId);
@@ -66,7 +66,7 @@ export default function SeguimientoManager({
     }
   }
 
-  async function handleStatus(quoteId: number, status: QuoteStatus) {
+  async function handleStatus(quoteId: string, status: QuoteStatus) {
     setError(null);
     try {
       const updated = await updateQuoteStatus(quoteId, status);
@@ -76,7 +76,7 @@ export default function SeguimientoManager({
     }
   }
 
-  async function handleConvert(quoteId: number) {
+  async function handleConvert(quoteId: string) {
     setError(null);
     try {
       const result = await convertQuoteToSale(quoteId);

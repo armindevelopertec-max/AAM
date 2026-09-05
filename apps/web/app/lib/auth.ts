@@ -1,9 +1,11 @@
 export type SafeUser = {
-  id: number;
+  id: string;
   name: string;
   email: string;
-  storeId: number;
+  storeId: string;
   role: string;
+  alias?: string | null;
+  phone?: string | null;
 };
 
 const API_URL = "/api";

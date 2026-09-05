@@ -18,6 +18,7 @@ import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { CurrentUser } from '../auth/current-user.decorator';
 import { SaveScrapedProductsDto } from './dto/save-scraped-products.dto';
 import { ImportToPostgresDto } from './dto/import-to-postgres.dto';
+import { PatchPrecioDto } from './dto/patch-precio.dto';
 import { FilesService } from '../files/files.service';
 import { Public } from '../auth/jwt-auth.guard';
 
@@ -40,6 +41,7 @@ export class ScrapingController {
     @Query('categoria') categoria?: string,
     @Query('importado') importado?: string,
     @Query('descartado') descartado?: string,
+    @Query('conStock') conStock?: string,
     @Query('buscar') buscar?: string,
     @Query('page') page?: string,
     @Query('limit') limit?: string,
@@ -49,6 +51,7 @@ export class ScrapingController {
       categoria,
       importado,
       descartado,
+      conStock,
       buscar,
       page,
       limit,
@@ -80,6 +83,11 @@ export class ScrapingController {
   @Patch('products/:id/notes')
   addNotes(@Param('id') id: string, @Body('notas') notas: string) {
     return this.scrapingService.addNotes(id, notas);
+  }
+
+  @Patch('products/:id/precio')
+  updatePrecio(@Param('id') id: string, @Body() dto: PatchPrecioDto) {
+    return this.scrapingService.updatePrecios(id, dto);
   }
 
   @Delete('products/:id')

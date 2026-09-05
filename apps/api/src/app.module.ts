@@ -11,6 +11,7 @@ import { AuthModule } from './auth/auth.module';
 import { CatalogoModule } from './catalogo/catalogo.module';
 import { MongoModule } from './mongo/mongo.module';
 import { ScrapingModule } from './scraping/scraping.module';
+import { VentaModule } from './venta/venta.module';
 import { PdfModule } from './pdf/pdf.module';
 
 @Module({
@@ -25,6 +26,7 @@ import { PdfModule } from './pdf/pdf.module';
     AuthModule,
     CatalogoModule,
     ScrapingModule,
+    VentaModule,
     PdfModule,
   ],
   controllers: [AppController],

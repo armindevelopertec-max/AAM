@@ -22,6 +22,6 @@ export class SalesController {
 
   @Get(':id')
   findOne(@Param('id') id: string, @CurrentUser() user: User) {
-    return this.salesService.findOne(+id, user.storeId);
+    return this.salesService.findOne(id, user.storeId);
   }
 }

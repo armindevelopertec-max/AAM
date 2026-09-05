@@ -33,7 +33,7 @@ export class ClientsController {
 
   @Get(':id')
   findOne(@Param('id') id: string, @CurrentUser() user: User) {
-    return this.clientsService.findOne(+id, user.storeId);
+    return this.clientsService.findOne(id, user.storeId);
   }
 
   @Patch(':id')
@@ -42,11 +42,11 @@ export class ClientsController {
     @Body() updateClientDto: UpdateClientDto,
     @CurrentUser() user: User,
   ) {
-    return this.clientsService.update(+id, updateClientDto, user.storeId);
+    return this.clientsService.update(id, updateClientDto, user.storeId);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string, @CurrentUser() user: User) {
-    return this.clientsService.remove(+id, user.storeId);
+    return this.clientsService.remove(id, user.storeId);
   }
 }

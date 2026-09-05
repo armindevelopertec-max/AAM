@@ -2,23 +2,22 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { StoresService } from '../stores/stores.service';
 import { PENDING_STATUSES } from '../quotes/quote-statuses';
+import { VentaService } from '../venta/venta.service';
 
 @Injectable()
 export class DashboardService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly storesService: StoresService,
+    private readonly venta: VentaService,
   ) {}
 
-  async summary(storeId: number) {
+  async summary(storeId: string) {
     const store = await this.storesService.findOne(storeId);
     const lowStockThreshold = store.lowStockThreshold;
 
-    const [products, clients, sales, quotes] = await Promise.all([
-      this.prisma.product.findMany({
-        where: { storeId },
-        orderBy: { id: 'asc' },
-      }),
+    const [sellable, clients, sales, quotes] = await Promise.all([
+      this.venta.list({ limit: '1000' }),
       this.prisma.client.findMany({ where: { storeId } }),
       this.prisma.sale.findMany({
         where: { storeId },
@@ -31,6 +30,22 @@ export class DashboardService {
         include: { items: true },
       }),
     ]);
+
+    const products = sellable.products
+      .filter((p) => p.stock != null)
+      .map((p) => ({
+        id: p.id,
+        storeId,
+        name: p.nombre,
+        sku: p.sku,
+        category: p.categoria,
+        costPrice: p.precioRegular ?? 0,
+        regularPrice: p.precioRegular ?? 0,
+        price: p.precioVenta ?? 0,
+        stock: p.stock ?? 0,
+        imageUrl: p.imagenUrl,
+      }));
+    const totalProducts = sellable.products.length;
 
     const lowStockProducts = products
       .filter((product) => product.stock <= lowStockThreshold)
@@ -63,7 +78,7 @@ export class DashboardService {
     return {
       store,
       products: {
-        total: products.length,
+        total: totalProducts,
         lowStock: lowStockProducts.length,
         inventoryValue,
         stockValue,

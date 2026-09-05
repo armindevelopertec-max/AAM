@@ -20,7 +20,7 @@ async function main() {
   const store = await prisma.store.create({
     data: {
       name: 'Tienda Principal',
-      currency: 'MXN',
+      currency: 'BOB',
       taxRate: 0,
       lowStockThreshold: 5,
     },

@@ -22,3 +22,8 @@ node_modules/
 Thumbs.db
 .vscode/
 .idea/
+
+# Python (scrapers)
+__pycache__/
+*.pyc
+.venv/

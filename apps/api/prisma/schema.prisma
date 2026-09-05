@@ -16,9 +16,9 @@ enum QuoteStatus {
 }
 
 model Store {
-  id               Int        @id @default(autoincrement())
+  id               String     @id @default(uuid())
   name             String
-  currency         String     @default("MXN")
+  currency         String     @default("BOB")
   taxRate          Float      @default(0)
   lowStockThreshold Int       @default(5)
   products         Product[]
@@ -32,8 +32,8 @@ model Store {
 }
 
 model User {
-  id           Int      @id @default(autoincrement())
-  storeId      Int
+  id           String   @id @default(uuid())
+  storeId      String
   store        Store    @relation(fields: [storeId], references: [id])
   name         String
   alias        String?
@@ -48,7 +48,7 @@ model User {
 }
 
 model Sequence {
-  storeId Int
+  storeId String
   store   Store  @relation(fields: [storeId], references: [id])
   name    String
   value   Int    @default(0)
@@ -57,43 +57,41 @@ model Sequence {
 }
 
 model Product {
-  id           Int         @id @default(autoincrement())
-  storeId      Int
-  store        Store       @relation(fields: [storeId], references: [id])
+  id           String   @id @default(uuid())
+  storeId      String
+  store        Store    @relation(fields: [storeId], references: [id])
   name         String
   sku          String
-  category     String      @default("General")
+  category     String   @default("General")
   costPrice    Float
-  regularPrice Float @default(0)
+  regularPrice Float    @default(0)
   price        Float
-  stock        Int         @default(0)
+  stock        Int      @default(0)
   imageKey     String?
-  saleItems    SaleItem[]
-  quoteItems   QuoteItem[]
-  createdAt    DateTime    @default(now())
-  updatedAt    DateTime    @updatedAt
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 
   @@index([storeId, sku])
 }
 
 model Client {
-  id        Int       @id @default(autoincrement())
-  storeId   Int
-  store     Store     @relation(fields: [storeId], references: [id])
+  id        String   @id @default(uuid())
+  storeId   String
+  store     Store    @relation(fields: [storeId], references: [id])
   name      String
   email     String?
   phone     String?
   ci        String?
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Sale {
-  id        Int        @id @default(autoincrement())
-  storeId   Int
+  id        String     @id @default(uuid())
+  storeId   String
   store     Store      @relation(fields: [storeId], references: [id])
   number    String
-  clientId  Int?
+  clientId  String?
   createdBy String?
   items     SaleItem[]
   subtotal  Float
@@ -105,11 +103,12 @@ model Sale {
 }
 
 model SaleItem {
-  id        Int     @id @default(autoincrement())
-  saleId    Int
-  sale      Sale    @relation(fields: [saleId], references: [id])
-  productId Int
-  product   Product @relation(fields: [productId], references: [id])
+  id        String @id @default(uuid())
+  saleId    String
+  sale      Sale   @relation(fields: [saleId], references: [id])
+  // Código de producto del catálogo maestro (Mongo): idExterno + fuente
+  productId Int?
+  fuente    String?
   name      String
   sku       String
   quantity  Int
@@ -117,15 +116,15 @@ model SaleItem {
   subtotal  Float
 
   @@index([saleId])
-  @@index([productId])
+  @@index([productId, fuente])
 }
 
 model Quote {
-  id         Int         @id @default(autoincrement())
-  storeId    Int
+  id         String      @id @default(uuid())
+  storeId    String
   store      Store       @relation(fields: [storeId], references: [id])
   number     String
-  clientId   Int?
+  clientId   String?
   clientName String      @default("Cliente general")
   createdBy  String?
   items      QuoteItem[]
@@ -141,18 +140,19 @@ model Quote {
 }
 
 model QuoteItem {
-  id            Int     @id @default(autoincrement())
-  quoteId       Int
-  quote         Quote   @relation(fields: [quoteId], references: [id])
-  productId     Int
-  product       Product @relation(fields: [productId], references: [id])
+  id            String @id @default(uuid())
+  quoteId       String
+  quote         Quote  @relation(fields: [quoteId], references: [id])
+  // Código de producto del catálogo maestro (Mongo): idExterno + fuente
+  productId     Int?
+  fuente        String?
   name          String
   sku           String
   quantity      Int
   unitPrice     Float
-  originalPrice Float @default(0)
+  originalPrice Float  @default(0)
   subtotal      Float
 
   @@index([quoteId])
-  @@index([productId])
+  @@index([productId, fuente])
 }

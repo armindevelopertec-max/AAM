@@ -23,7 +23,7 @@ export class ProductsService {
 
   async create(
     createProductDto: CreateProductDto,
-    storeId: number,
+    storeId: string,
   ): Promise<ProductWithImage> {
     const product = await this.prisma.product.create({
       data: {
@@ -44,7 +44,7 @@ export class ProductsService {
   }
 
   async findAll(
-    storeId: number,
+    storeId: string,
     q?: string,
     category?: string,
   ): Promise<ProductWithImage[]> {
@@ -69,7 +69,7 @@ export class ProductsService {
     return Promise.all(products.map((product) => this.toDto(product)));
   }
 
-  async findOne(id: number, storeId: number): Promise<ProductWithImage> {
+  async findOne(id: string, storeId: string): Promise<ProductWithImage> {
     const product = await this.prisma.product.findFirst({
       where: { id, storeId },
     });
@@ -80,9 +80,9 @@ export class ProductsService {
   }
 
   async update(
-    id: number,
+    id: string,
     updateProductDto: UpdateProductDto,
-    storeId: number,
+    storeId: string,
   ): Promise<ProductWithImage> {
     const product = await this.prisma.product.updateMany({
       where: { id, storeId },
@@ -94,7 +94,7 @@ export class ProductsService {
     return this.findOne(id, storeId);
   }
 
-  async remove(id: number, storeId: number): Promise<void> {
+  async remove(id: string, storeId: string): Promise<void> {
     const product = await this.prisma.product.findFirst({
       where: { id, storeId },
     });
@@ -117,9 +117,9 @@ export class ProductsService {
   }
 
   async adjustStock(
-    id: number,
+    id: string,
     adjustment: number,
-    storeId: number,
+    storeId: string,
   ): Promise<ProductWithImage> {
     if (!Number.isInteger(adjustment) || adjustment === 0) {
       throw new BadRequestException(
@@ -154,8 +154,8 @@ export class ProductsService {
   }
 
   async uploadImage(
-    id: number,
-    storeId: number,
+    id: string,
+    storeId: string,
     file: Express.Multer.File,
   ): Promise<ProductWithImage> {
     const product = await this.findOne(id, storeId);
@@ -180,7 +180,7 @@ export class ProductsService {
     return this.findOne(id, storeId);
   }
 
-  async getImageKey(id: number): Promise<string | null> {
+  async getImageKey(id: string): Promise<string | null> {
     const product = await this.prisma.product.findUnique({ where: { id } });
     return product?.imageKey ?? null;
   }

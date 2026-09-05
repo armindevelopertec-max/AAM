@@ -1,0 +1,1 @@
+ALTER TABLE "Store" ALTER COLUMN "currency" SET DEFAULT 'BOB';

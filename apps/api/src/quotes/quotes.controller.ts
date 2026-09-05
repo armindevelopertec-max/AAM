@@ -33,7 +33,7 @@ export class QuotesController {
 
   @Get(':id')
   findOne(@Param('id') id: string, @CurrentUser() user: User) {
-    return this.quotesService.findOne(+id, user.storeId);
+    return this.quotesService.findOne(id, user.storeId);
   }
 
   @Patch(':id/status')
@@ -43,7 +43,7 @@ export class QuotesController {
     @CurrentUser() user: User,
   ) {
     return this.quotesService.updateStatus(
-      +id,
+      id,
       updateQuoteStatusDto.status,
       user.storeId,
     );
@@ -51,12 +51,12 @@ export class QuotesController {
 
   @Post(':id/convert')
   convertToSale(@Param('id') id: string, @CurrentUser() user: User) {
-    return this.quotesService.convertToSale(+id, user.storeId, user.name);
+    return this.quotesService.convertToSale(id, user.storeId, user.name);
   }
 
   @Post(':id/pdf')
   generatePdf(@Param('id') id: string, @CurrentUser() user: User) {
-    return this.quotesService.generatePdf(+id, user.storeId);
+    return this.quotesService.generatePdf(id, user.storeId);
   }
 
   @Get(':id/pdf')
@@ -66,14 +66,15 @@ export class QuotesController {
     @Res() res: Response,
   ) {
     try {
+      await this.quotesService.generatePdf(id, user.storeId);
       const { buffer, contentType } = await this.quotesService.getQuotePdf(
-        +id,
+        id,
         user.storeId,
       );
       res.set({
         'Content-Type': contentType,
         'Content-Disposition': 'inline',
-        'Cache-Control': 'public, max-age=86400',
+        'Cache-Control': 'no-store',
       });
       res.end(buffer);
     } catch (err) {

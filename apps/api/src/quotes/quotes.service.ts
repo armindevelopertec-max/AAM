@@ -7,8 +7,12 @@ import { Prisma, QuoteStatus } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import { SalesService } from '../sales/sales.service';
 import { PdfService } from '../pdf/pdf.service';
+import { FilesService } from '../files/files.service';
+import { VentaService } from '../venta/venta.service';
 import { CreateQuoteDto } from './dto/create-quote.dto';
 import { PENDING_STATUSES } from './quote-statuses';
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const sharp = require('sharp');
 
 @Injectable()
 export class QuotesService {
@@ -16,11 +20,13 @@ export class QuotesService {
     private readonly prisma: PrismaService,
     private readonly salesService: SalesService,
     private readonly pdfService: PdfService,
+    private readonly files: FilesService,
+    private readonly venta: VentaService,
   ) {}
 
   async create(
     createQuoteDto: CreateQuoteDto,
-    storeId: number,
+    storeId: string,
     createdByName?: string,
   ) {
     if (!createQuoteDto.items || createQuoteDto.items.length === 0) {
@@ -39,22 +45,56 @@ export class QuotesService {
       if (item.quantity <= 0) {
         throw new BadRequestException(`La cantidad debe ser mayor a cero`);
       }
-      const product = await this.prisma.product.findFirst({
-        where: { id: item.productId, storeId },
-      });
-      if (!product) {
-        throw new NotFoundException(`Producto ${item.productId} no encontrado`);
+
+      if (!item.fuente) {
+        // Línea de servicio (no está en el catálogo maestro)
+        if (item.precio == null) {
+          throw new BadRequestException(
+            'Las líneas de servicio deben incluir un precio',
+          );
+        }
+        const unitPrice = item.precio;
+        const lineSubtotal = unitPrice * item.quantity;
+        subtotal += lineSubtotal;
+        items.push({
+          productId: null,
+          fuente: null,
+          name: item.nombre ?? 'Servicio',
+          sku: item.sku ?? 'SERVICIO',
+          quantity: item.quantity,
+          unitPrice,
+          originalPrice: unitPrice,
+          subtotal: lineSubtotal,
+        });
+        continue;
       }
 
-      const unitPrice = item.price ?? product.price;
-      const originalPrice = item.originalPrice ?? product.regularPrice ?? product.price;
+      if (item.productId == null) {
+        throw new BadRequestException('Falta el código de producto');
+      }
+      const product = await this.venta.findSellableOrThrow(
+        item.fuente,
+        item.productId,
+      );
+      const d = product.datosCrudos;
+      const unitPrice = this.precioVentaDe(d);
+      if (unitPrice == null) {
+        throw new BadRequestException(
+          `El producto ${d.nombre} no tiene precio definido en el catálogo`,
+        );
+      }
+      const originalPrice =
+        typeof d.precioRegular === 'number' && d.precioRegular > 0
+          ? d.precioRegular
+          : unitPrice;
       const lineSubtotal = unitPrice * item.quantity;
       subtotal += lineSubtotal;
 
       items.push({
-        productId: product.id,
-        name: product.name,
-        sku: product.sku,
+        productId: d.idExterno,
+        fuente: product.fuente,
+        name: d.nombre,
+        sku: d.sku,
         quantity: item.quantity,
         unitPrice,
         originalPrice,
@@ -113,7 +153,7 @@ export class QuotesService {
     return this.withEffectiveStatus(quote);
   }
 
-  async findAll(storeId: number) {
+  async findAll(storeId: string) {
     const quotes = await this.prisma.quote.findMany({
       where: { storeId },
       orderBy: { id: 'desc' },
@@ -122,7 +162,7 @@ export class QuotesService {
     return quotes.map((quote) => this.withEffectiveStatus(quote));
   }
 
-  async findOne(id: number, storeId: number) {
+  async findOne(id: string, storeId: string) {
     const quote = await this.prisma.quote.findFirst({
       where: { id, storeId },
       include: { items: true },
@@ -133,7 +173,7 @@ export class QuotesService {
     return this.withEffectiveStatus(quote);
   }
 
-  async updateStatus(id: number, status: QuoteStatus, storeId: number) {
+  async updateStatus(id: string, status: QuoteStatus, storeId: string) {
     const quote = await this.findOne(id, storeId);
     const updated = await this.prisma.quote.update({
       where: { id: quote.id },
@@ -143,7 +183,7 @@ export class QuotesService {
     return this.withEffectiveStatus(updated);
   }
 
-  async convertToSale(id: number, storeId: number, createdByName?: string) {
+  async convertToSale(id: string, storeId: string, createdByName?: string) {
     const quote = await this.findOne(id, storeId);
 
     if (
@@ -161,9 +201,12 @@ export class QuotesService {
         clientId: quote.clientId ?? undefined,
         discount: quote.discount,
         items: quote.items.map((item) => ({
-          productId: item.productId,
+          productId: item.productId ?? undefined,
+          fuente: item.fuente ?? undefined,
           quantity: item.quantity,
-          price: item.unitPrice,
+          ...(item.fuente
+            ? {}
+            : { precio: item.unitPrice, nombre: item.name, sku: item.sku }),
         })),
       },
       storeId,
@@ -179,11 +222,48 @@ export class QuotesService {
     return { sale, quote: this.withEffectiveStatus(updatedQuote) };
   }
 
-  async generatePdf(id: number, storeId: number) {
+  async generatePdf(id: string, storeId: string) {
     const quote = await this.findOne(id, storeId);
+
+    const imageDataCaches = new Map<string, string | null>();
+    for (const item of quote.items) {
+      if (item.productId == null) {
+        imageDataCaches.set(`${item.fuente}:${item.productId}`, null);
+        continue;
+      }
+      const key = `${item.fuente}:${item.productId}`;
+      try {
+        const product = await this.venta.findSellable(
+          item.fuente ?? undefined,
+          item.productId,
+        );
+        const imagen = product?.imagenesDescargadas?.[0];
+        if (!product || !imagen) {
+          imageDataCaches.set(key, null);
+          continue;
+        }
+        const { body } = await this.files.getObject(imagen.key);
+        let imageBuffer = body;
+        try {
+          imageBuffer = await sharp(body)
+            .resize({ width: 144 })
+            .png()
+            .toBuffer();
+        } catch {
+          // si la conversión falla, se usa el buffer original
+        }
+        imageDataCaches.set(
+          key,
+          `data:image/png;base64,${imageBuffer.toString('base64')}`,
+        );
+      } catch {
+        imageDataCaches.set(key, null);
+      }
+    }
 
     const pdfBuffer = await this.pdfService.generateQuotePdf({
       number: quote.number,
+      clientId: quote.clientId,
       clientName: quote.clientName,
       createdBy: quote.createdBy,
       items: quote.items.map((item) => ({
@@ -193,6 +273,7 @@ export class QuotesService {
         unitPrice: item.unitPrice,
         originalPrice: item.originalPrice,
         subtotal: item.subtotal,
+        imageDataUri: imageDataCaches.get(`${item.fuente}:${item.productId}`) ?? null,
       })),
       subtotal: quote.subtotal,
       discount: quote.discount,
@@ -208,8 +289,8 @@ export class QuotesService {
   }
 
   async getQuotePdf(
-    id: number,
-    storeId: number,
+    id: string,
+    storeId: string,
   ): Promise<{ buffer: Buffer; contentType: string }> {
     const quote = await this.findOne(id, storeId);
     const key = `pdfs/quotes/${quote.number}.pdf`;
@@ -224,5 +305,18 @@ export class QuotesService {
       return { ...quote, status: 'vencida' };
     }
     return quote;
+  }
+
+  private precioVentaDe(d: {
+    precioOferta?: number | null;
+    precioRegular?: number | null;
+  }): number | null {
+    if (typeof d.precioOferta === 'number' && d.precioOferta > 0) {
+      return d.precioOferta;
+    }
+    if (typeof d.precioRegular === 'number') {
+      return d.precioRegular;
+    }
+    return null;
   }
 }

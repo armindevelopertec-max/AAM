@@ -5,15 +5,19 @@ import {
 } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
+import { VentaService } from '../venta/venta.service';
 import { CreateSaleDto } from './dto/create-sale.dto';
 
 @Injectable()
 export class SalesService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly venta: VentaService,
+  ) {}
 
   async create(
     createSaleDto: CreateSaleDto,
-    storeId: number,
+    storeId: string,
     createdByName?: string,
   ) {
     if (!createSaleDto.items || createSaleDto.items.length === 0) {
@@ -23,58 +27,95 @@ export class SalesService {
     }
 
     const discount = createSaleDto.discount ?? 0;
+    let subtotal = 0;
+    const items: Prisma.SaleItemUncheckedCreateWithoutSaleInput[] = [];
 
-    return this.prisma.$transaction(async (tx) => {
-      let subtotal = 0;
-      const items: Prisma.SaleItemUncheckedCreateWithoutSaleInput[] = [];
+    for (const item of createSaleDto.items) {
+      if (item.quantity <= 0) {
+        throw new BadRequestException(`La cantidad debe ser mayor a cero`);
+      }
 
-      for (const item of createSaleDto.items) {
-        if (item.quantity <= 0) {
-          throw new BadRequestException(`La cantidad debe ser mayor a cero`);
-        }
-
-        const updated = await tx.product.updateMany({
-          where: { id: item.productId, storeId, stock: { gte: item.quantity } },
-          data: { stock: { decrement: item.quantity } },
-        });
-
-        if (updated.count === 0) {
-          const product = await tx.product.findUnique({
-            where: { id: item.productId },
-          });
-          if (!product || product.storeId !== storeId) {
-            throw new NotFoundException(
-              `Producto ${item.productId} no encontrado`,
-            );
-          }
+      if (!item.fuente) {
+        // Línea de servicio (no está en el catálogo maestro)
+        if (item.precio == null) {
           throw new BadRequestException(
-            `Stock insuficiente para ${product.name}: disponible ${product.stock}`,
+            'Las líneas de servicio deben incluir un precio',
           );
         }
-
-        const product = await tx.product.findUnique({
-          where: { id: item.productId },
-        });
-        const unitPrice = item.price ?? product!.price;
+        const unitPrice = item.precio;
         const lineSubtotal = unitPrice * item.quantity;
         subtotal += lineSubtotal;
-
         items.push({
-          productId: product!.id,
-          name: product!.name,
-          sku: product!.sku,
+          productId: null,
+          fuente: null,
+          name: item.nombre ?? 'Servicio',
+          sku: item.sku ?? 'SERVICIO',
           quantity: item.quantity,
           unitPrice,
           subtotal: lineSubtotal,
         });
+        continue;
       }
 
-      if (discount < 0 || discount > subtotal) {
+      if (item.productId == null) {
+        throw new BadRequestException('Falta el código de producto');
+      }
+      const product = await this.venta.findSellableOrThrow(
+        item.fuente,
+        item.productId,
+      );
+      const d = product.datosCrudos;
+
+      const unitPrice = this.precioVentaDe(d);
+      if (unitPrice == null) {
         throw new BadRequestException(
-          'El descuento no puede ser negativo ni mayor al subtotal',
+          `El producto ${d.nombre} no tiene precio definido en el catálogo`,
         );
       }
 
+      const stockDisponible =
+        typeof d.stockCantidad === 'number' ? d.stockCantidad : null;
+      if (stockDisponible != null && stockDisponible < item.quantity) {
+        throw new BadRequestException(
+          `Stock insuficiente para ${d.nombre}: disponible ${stockDisponible}`,
+        );
+      }
+
+      // Resta el stock del catálogo maestro de forma atómica (solo si hay stock numerico).
+      if (stockDisponible != null) {
+        const ok = await this.venta.decrementStock(
+          item.fuente ?? product.fuente,
+          item.productId,
+          item.quantity,
+        );
+        if (!ok) {
+          throw new BadRequestException(
+            `Stock insuficiente para ${d.nombre}: disponible ${d.stockCantidad}`,
+          );
+        }
+      }
+
+      const lineSubtotal = unitPrice * item.quantity;
+      subtotal += lineSubtotal;
+
+      items.push({
+        productId: d.idExterno,
+        fuente: product.fuente,
+        name: d.nombre,
+        sku: d.sku,
+        quantity: item.quantity,
+        unitPrice,
+        subtotal: lineSubtotal,
+      });
+    }
+
+    if (discount < 0 || discount > subtotal) {
+      throw new BadRequestException(
+        'El descuento no puede ser negativo ni mayor al subtotal',
+      );
+    }
+
+    return this.prisma.$transaction(async (tx) => {
       const seq = await tx.sequence.upsert({
         where: { storeId_name: { storeId, name: 'sale' } },
         create: { storeId, name: 'sale', value: 1 },
@@ -98,7 +139,7 @@ export class SalesService {
     });
   }
 
-  findAll(storeId: number) {
+  findAll(storeId: string) {
     return this.prisma.sale.findMany({
       where: { storeId },
       orderBy: { id: 'desc' },
@@ -106,7 +147,7 @@ export class SalesService {
     });
   }
 
-  async findOne(id: number, storeId: number) {
+  async findOne(id: string, storeId: string) {
     const sale = await this.prisma.sale.findFirst({
       where: { id, storeId },
       include: { items: true },
@@ -115,5 +156,18 @@ export class SalesService {
       throw new NotFoundException(`Venta ${id} no encontrada`);
     }
     return sale;
+  }
+
+  private precioVentaDe(d: {
+    precioOferta?: number | null;
+    precioRegular?: number | null;
+  }): number | null {
+    if (typeof d.precioOferta === 'number' && d.precioOferta > 0) {
+      return d.precioOferta;
+    }
+    if (typeof d.precioRegular === 'number') {
+      return d.precioRegular;
+    }
+    return null;
   }
 }

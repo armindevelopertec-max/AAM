@@ -11,7 +11,7 @@ export class StoresService {
     return this.prisma.store.create({
       data: {
         name: createStoreDto.name,
-        currency: createStoreDto.currency ?? 'MXN',
+        currency: createStoreDto.currency ?? 'BOB',
         taxRate: createStoreDto.taxRate ?? 0,
         lowStockThreshold: createStoreDto.lowStockThreshold ?? 5,
       },
@@ -22,7 +22,7 @@ export class StoresService {
     return this.prisma.store.findMany({ orderBy: { id: 'asc' } });
   }
 
-  async findOne(id: number) {
+  async findOne(id: string) {
     const store = await this.prisma.store.findUnique({ where: { id } });
     if (!store) {
       throw new NotFoundException(`Tienda ${id} no encontrada`);
@@ -30,7 +30,7 @@ export class StoresService {
     return store;
   }
 
-  update(id: number, updateStoreDto: UpdateStoreDto) {
+  update(id: string, updateStoreDto: UpdateStoreDto) {
     return this.prisma.store.update({ where: { id }, data: updateStoreDto });
   }
 }

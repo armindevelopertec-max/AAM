@@ -4,7 +4,7 @@ export const API_URL = "/api";
 
 export type Product = {
   id: number;
-  storeId: number;
+  storeId: string;
   name: string;
   sku: string;
   category: string;
@@ -13,6 +13,9 @@ export type Product = {
   price: number;
   stock: number;
   imageUrl: string | null;
+  fuente?: string;
+  moneda?: string;
+  enStock?: boolean;
 };
 
 export type CatalogoPrecioVentaTipo = "fijo" | "porcentaje";
@@ -25,17 +28,33 @@ export type CatalogoImagen = {
 };
 
 export type Client = {
-  id: number;
-  storeId: number;
+  id: string;
+  storeId: string;
   name: string;
   email: string | null;
   phone: string | null;
   ci: string | null;
 };
 
+export const USER_ROLES = ["admin", "ventas"] as const;
+
+export type UserRole = (typeof USER_ROLES)[number];
+
+export type SystemUser = {
+  id: string;
+  storeId: string;
+  name: string;
+  alias: string | null;
+  phone: string | null;
+  email: string;
+  role: UserRole;
+  createdAt: string | null;
+};
+
 export type SaleItem = {
-  id: number;
-  productId: number;
+  id: string;
+  productId: number | null;
+  fuente: string | null;
   name: string;
   sku: string;
   quantity: number;
@@ -44,10 +63,10 @@ export type SaleItem = {
 };
 
 export type Sale = {
-  id: number;
-  storeId: number;
+  id: string;
+  storeId: string;
   number: string;
-  clientId: number | null;
+  clientId: string | null;
   createdBy: string | null;
   items: SaleItem[];
   subtotal: number;
@@ -57,7 +76,8 @@ export type Sale = {
 };
 
 export type QuoteItem = {
-  productId: number;
+  productId: number | null;
+  fuente: string | null;
   name: string;
   sku: string;
   quantity: number;
@@ -74,10 +94,10 @@ export type QuoteStatus =
   | "vencida";
 
 export type Quote = {
-  id: number;
-  storeId: number;
+  id: string;
+  storeId: string;
   number: string;
-  clientId: number | null;
+  clientId: string | null;
   clientName: string;
   createdBy: string | null;
   items: QuoteItem[];
@@ -91,7 +111,7 @@ export type Quote = {
 };
 
 export type Store = {
-  id: number;
+  id: string;
   name: string;
   currency: string;
   taxRate: number;
@@ -295,7 +315,7 @@ export async function createClient(input: {
 }
 
 export async function updateClient(
-  id: number,
+  id: string,
   input: { name: string; email: string; phone: string; ci?: string },
 ): Promise<Client> {
   return request(`/clients/${id}`, {
@@ -304,18 +324,125 @@ export async function updateClient(
   });
 }
 
-export async function deleteClient(id: number): Promise<void> {
+export async function deleteClient(id: string): Promise<void> {
   await request(`/clients/${id}`, { method: "DELETE" });
+}
+
+export async function getUsers(): Promise<SystemUser[]> {
+  return request("/auth/users");
+}
+
+export async function createUser(input: {
+  name: string;
+  email: string;
+  password: string;
+  role?: UserRole;
+  alias?: string;
+  phone?: string;
+}): Promise<SystemUser> {
+  return request("/auth/users", {
+    method: "POST",
+    body: JSON.stringify(input),
+  });
+}
+
+export async function updateUser(
+  id: string,
+  input: {
+    name?: string;
+    email?: string;
+    role?: UserRole;
+    alias?: string;
+    phone?: string;
+    password?: string;
+  },
+): Promise<SystemUser> {
+  return request(`/auth/users/${id}`, {
+    method: "PATCH",
+    body: JSON.stringify(input),
+  });
+}
+
+export async function deleteUser(id: string): Promise<void> {
+  await request(`/auth/users/${id}`, { method: "DELETE" });
 }
 
 export async function getSales(): Promise<Sale[]> {
   return request("/sales");
 }
 
+export type VentaProducto = {
+  id: number;
+  fuente: string;
+  nombre: string;
+  sku: string;
+  marca: string;
+  categoria: string;
+  precioVenta: number | null;
+  precioRegular: number | null;
+  moneda: string;
+  stock: number | null;
+  enStock: boolean;
+  imagenUrl: string | null;
+};
+
+export type VentaCatalogo = {
+  products: VentaProducto[];
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
+  categorias: string[];
+};
+
+export async function getVentaProductos(params: {
+  buscar?: string;
+  fuente?: string;
+  categoria?: string;
+  conStock?: boolean;
+  page?: number;
+  limit?: number;
+}): Promise<VentaCatalogo> {
+  const searchParams = new URLSearchParams();
+  if (params.buscar) searchParams.set("buscar", params.buscar);
+  if (params.fuente) searchParams.set("fuente", params.fuente);
+  if (params.categoria) searchParams.set("categoria", params.categoria);
+  if (params.conStock) searchParams.set("conStock", "true");
+  if (params.page) searchParams.set("page", String(params.page));
+  if (params.limit) searchParams.set("limit", String(params.limit));
+  const qs = searchParams.toString();
+  return request(`/venta/productos${qs ? `?${qs}` : ""}`);
+}
+
+export function ventaProductoToProduct(vp: VentaProducto): Product {
+  return {
+    id: vp.id,
+    storeId: "",
+    name: vp.nombre,
+    sku: vp.sku,
+    category: vp.categoria,
+    costPrice: vp.precioRegular ?? 0,
+    regularPrice: vp.precioRegular ?? 0,
+    price: vp.precioVenta ?? 0,
+    stock: vp.stock ?? 0,
+    imageUrl: vp.imagenUrl,
+    fuente: vp.fuente,
+    moneda: vp.moneda,
+    enStock: vp.enStock,
+  };
+}
+
 export async function createSale(input: {
-  clientId?: number;
+  clientId?: string;
   discount?: number;
-  items: { productId: number; quantity: number; price?: number }[];
+  items: {
+    productId?: number;
+    fuente?: string;
+    quantity: number;
+    nombre?: string;
+    sku?: string;
+    precio?: number;
+  }[];
 }): Promise<Sale> {
   return request("/sales", {
     method: "POST",
@@ -328,11 +455,18 @@ export async function getQuotes(): Promise<Quote[]> {
 }
 
 export async function createQuote(input: {
-  clientId?: number;
+  clientId?: string;
   clientName?: string;
   discount?: number;
   validDays?: number;
-  items: { productId: number; quantity: number; price?: number; originalPrice?: number }[];
+  items: {
+    productId?: number;
+    fuente?: string;
+    quantity: number;
+    nombre?: string;
+    sku?: string;
+    precio?: number;
+  }[];
 }): Promise<Quote> {
   return request("/quotes", {
     method: "POST",
@@ -341,7 +475,7 @@ export async function createQuote(input: {
 }
 
 export async function updateQuoteStatus(
-  id: number,
+  id: string,
   status: QuoteStatus,
 ): Promise<Quote> {
   return request(`/quotes/${id}/status`, {
@@ -351,18 +485,18 @@ export async function updateQuoteStatus(
 }
 
 export async function convertQuoteToSale(
-  id: number,
+  id: string,
 ): Promise<{ sale: Sale; quote: Quote }> {
   return request(`/quotes/${id}/convert`, { method: "POST" });
 }
 
 export async function generateQuotePdf(
-  id: number,
+  id: string,
 ): Promise<{ key: string; quoteNumber: string }> {
   return request(`/quotes/${id}/pdf`, { method: "POST" });
 }
 
-export async function downloadQuotePdf(id: number): Promise<string> {
+export async function downloadQuotePdf(id: string): Promise<string> {
   const token = getToken();
   const res = await fetch(`${API_URL}/quotes/${id}/pdf`, {
     headers: token ? { Authorization: `Bearer ${token}` } : {},
@@ -499,6 +633,7 @@ export async function getScrapedProducts(params: {
   categoria?: string;
   importado?: string;
   descartado?: string;
+  conStock?: boolean;
   buscar?: string;
   page?: number;
   limit?: number;
@@ -514,6 +649,7 @@ export async function getScrapedProducts(params: {
   if (params.categoria) searchParams.set("categoria", params.categoria);
   if (params.importado) searchParams.set("importado", params.importado);
   if (params.descartado) searchParams.set("descartado", params.descartado);
+  if (params.conStock) searchParams.set("conStock", "true");
   if (params.buscar) searchParams.set("buscar", params.buscar);
   if (params.page) searchParams.set("page", String(params.page));
   if (params.limit) searchParams.set("limit", String(params.limit));
@@ -565,6 +701,16 @@ export async function updateScrapedNotes(
   });
 }
 
+export async function updateScrapedPrecio(
+  id: string,
+  data: { precioOferta?: number; precioRegular?: number; stockCantidad?: number },
+): Promise<ScrapedProduct> {
+  return request(`/scraping/products/${id}/precio`, {
+    method: "PATCH",
+    body: JSON.stringify(data),
+  });
+}
+
 export async function deleteScrapedProduct(id: string): Promise<void> {
   await request(`/scraping/products/${id}`, { method: "DELETE" });
 }
@@ -589,10 +735,15 @@ export function getProductImageUrl(
   return `${API_URL}${imageUrl}`;
 }
 
-export function formatMoney(value: number, currency = "MXN"): string {
-  return new Intl.NumberFormat("es-MX", {
-    style: "currency",
-    currency,
-    minimumFractionDigits: 2,
-  }).format(value);
+export function formatMoney(value: number, currency = "BOB"): string {
+  try {
+    return new Intl.NumberFormat("es-BO", {
+      style: "currency",
+      currency,
+      minimumFractionDigits: 2,
+    }).format(value);
+  } catch {
+    const symbol = currency === "Bs." ? "Bs." : currency;
+    return `${value.toFixed(2)} ${symbol}`.trim();
+  }
 }

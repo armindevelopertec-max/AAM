@@ -11,7 +11,7 @@ export default function SalesManager({
   clients: Client[];
 }) {
   const sales = initialSales;
-  const [expandedId, setExpandedId] = useState<number | null>(null);
+  const [expandedId, setExpandedId] = useState<string | null>(null);
 
   function clientName(sale: Sale): string {
     if (sale.clientId == null) return "Cliente general";

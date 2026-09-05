@@ -52,8 +52,8 @@ export class ScrapedProduct {
   @Prop({ default: false })
   importadoAPostgres!: boolean;
 
-  @Prop({ type: Number, default: null })
-  postgresProductId!: number | null;
+  @Prop({ type: String, default: null })
+  postgresProductId!: string | null;
 
   @Prop({ type: [Object], default: [] })
   historialPrecios!: {

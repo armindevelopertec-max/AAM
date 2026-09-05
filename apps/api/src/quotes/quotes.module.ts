@@ -5,9 +5,10 @@ import { PrismaModule } from '../prisma/prisma.module';
 import { SalesModule } from '../sales/sales.module';
 import { PdfModule } from '../pdf/pdf.module';
 import { FilesModule } from '../files/files.module';
+import { VentaModule } from '../venta/venta.module';
 
 @Module({
-  imports: [PrismaModule, SalesModule, PdfModule, FilesModule],
+  imports: [PrismaModule, SalesModule, PdfModule, FilesModule, VentaModule],
   controllers: [QuotesController],
   providers: [QuotesService],
   exports: [QuotesService],

@@ -11,9 +11,8 @@ const links = [
   { href: "/pos", label: "POS" },
   { href: "/quotes", label: "Cotizaciones" },
   { href: "/seguimiento", label: "Seguimiento" },
-  { href: "/products", label: "Inventario" },
-  { href: "/clients", label: "Clientes" },
-  { href: "/scraping", label: "Scraping" },
+  { href: "/products", label: "Catálogo" },
+  { href: "/users", label: "Usuarios" },
 ];
 
 export default function Navbar() {
@@ -26,7 +25,7 @@ export default function Navbar() {
       <nav className="mx-auto flex w-full max-w-5xl items-center justify-between px-6 py-3">
         <div className="flex items-center gap-8">
           <Link href="/" className="text-lg font-bold" onClick={() => setOpen(false)}>
-            AAM
+            SEGTECAM
           </Link>
           <div className="hidden items-center gap-6 md:flex">
             {links.map((link) => {

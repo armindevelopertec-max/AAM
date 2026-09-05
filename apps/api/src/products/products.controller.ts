@@ -36,7 +36,7 @@ export class ProductsController {
   @Public()
   @Get(':id/image')
   async serveImage(@Param('id') id: string, @Res() res: Response) {
-    const key = await this.productsService.getImageKey(+id);
+    const key = await this.productsService.getImageKey(id);
     if (!key) {
       res.status(404).json({ error: 'Imagen no encontrada' });
       return;
@@ -72,7 +72,7 @@ export class ProductsController {
 
   @Get(':id')
   findOne(@Param('id') id: string, @CurrentUser() user: User) {
-    return this.productsService.findOne(+id, user.storeId);
+    return this.productsService.findOne(id, user.storeId);
   }
 
   @Patch(':id')
@@ -81,7 +81,7 @@ export class ProductsController {
     @Body() updateProductDto: UpdateProductDto,
     @CurrentUser() user: User,
   ) {
-    return this.productsService.update(+id, updateProductDto, user.storeId);
+    return this.productsService.update(id, updateProductDto, user.storeId);
   }
 
   @Patch(':id/stock')
@@ -91,7 +91,7 @@ export class ProductsController {
     @CurrentUser() user: User,
   ) {
     return this.productsService.adjustStock(
-      +id,
+      id,
       adjustStockDto.adjustment,
       user.storeId,
     );
@@ -114,11 +114,11 @@ export class ProductsController {
         'Debes enviar un archivo en el campo "file"',
       );
     }
-    return this.productsService.uploadImage(+id, user.storeId, file);
+    return this.productsService.uploadImage(id, user.storeId, file);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string, @CurrentUser() user: User) {
-    return this.productsService.remove(+id, user.storeId);
+    return this.productsService.remove(id, user.storeId);
   }
 }

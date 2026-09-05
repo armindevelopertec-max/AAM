@@ -1,6 +1,6 @@
 import {
   IsEmail,
-  IsInt,
+  IsIn,
   IsNotEmpty,
   IsOptional,
   IsString,
@@ -24,6 +24,21 @@ export class CreateUserDto {
   password!: string;
 
   @IsOptional()
-  @IsInt()
-  storeId?: number;
+  @IsIn(['admin', 'ventas'])
+  role?: string;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(100)
+  alias?: string;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(50)
+  phone?: string;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(36)
+  storeId?: string;
 }

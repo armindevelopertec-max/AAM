@@ -12,28 +12,40 @@ import {
 } from 'class-validator';
 
 export class CreateQuoteItemDto {
+  @IsOptional()
   @IsInt()
-  productId!: number;
+  productId?: number;
+
+  // Si viene, se resuelve del catálogo maestro (Mongo). Si no, es una línea de servicio.
+  @IsOptional()
+  @IsString()
+  fuente?: string;
 
   @IsInt()
   @Min(1)
   quantity!: number;
 
   @IsOptional()
-  @IsNumber({ allowInfinity: false, allowNaN: false })
-  @Min(0)
-  price?: number;
+  @IsString()
+  @MaxLength(200)
+  nombre?: string;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(60)
+  sku?: string;
 
   @IsOptional()
   @IsNumber({ allowInfinity: false, allowNaN: false })
   @Min(0)
-  originalPrice?: number;
+  precio?: number;
 }
 
 export class CreateQuoteDto {
   @IsOptional()
-  @IsInt()
-  clientId?: number;
+  @IsString()
+  @MaxLength(36)
+  clientId?: string;
 
   @IsOptional()
   @IsString()

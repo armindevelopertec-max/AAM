@@ -17,6 +17,7 @@ import {
 } from '../mongo/schemas/scraping-run.schema';
 import { FilesService } from '../files/files.service';
 import { ImportToPostgresDto } from './dto/import-to-postgres.dto';
+import { PatchPrecioDto } from './dto/patch-precio.dto';
 import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
@@ -184,11 +185,16 @@ export class ScrapingService {
     categoria?: string;
     importado?: string;
     descartado?: string;
+    conStock?: string;
     buscar?: string;
     page?: string;
     limit?: string;
   }) {
     const filter: Record<string, unknown> = {};
+
+    if (query.conStock === 'true') {
+      filter['datosCrudos.stockCantidad'] = { $type: 'number', $gt: 0 };
+    }
 
     if (query.fuente) filter.fuente = query.fuente;
     if (query.categoria) filter.categoriaScrape = query.categoria;
@@ -212,7 +218,7 @@ export class ScrapingService {
     const [items, total] = await Promise.all([
       this.scrapedProductModel
         .find(filter)
-        .sort({ fechaScrape: -1 })
+        .sort({ 'datosCrudos.enStock': -1, fechaScrape: -1 })
         .skip(skip)
         .limit(limit)
         .lean(),
@@ -238,7 +244,7 @@ export class ScrapingService {
   async importToPostgres(
     id: string,
     dto: ImportToPostgresDto,
-    storeId: number,
+    storeId: string,
   ) {
     const product = await this.scrapedProductModel.findById(id);
     if (!product)
@@ -293,6 +299,43 @@ export class ScrapingService {
     const product = await this.scrapedProductModel.findByIdAndUpdate(
       id,
       { notas },
+      { new: true },
+    );
+    if (!product)
+      throw new NotFoundException(`Producto scrapeado ${id} no encontrado`);
+    return product;
+  }
+
+  async updatePrecios(id: string, dto: PatchPrecioDto) {
+    const existing = await this.scrapedProductModel.findById(id);
+    if (!existing)
+      throw new NotFoundException(`Producto scrapeado ${id} no encontrado`);
+
+    const set: Record<string, unknown> = {};
+    if (typeof dto.precioOferta === 'number') {
+      set['datosCrudos.precioOferta'] = dto.precioOferta;
+    }
+    if (typeof dto.precioRegular === 'number') {
+      set['datosCrudos.precioRegular'] = dto.precioRegular;
+    }
+    if (typeof dto.stockCantidad === 'number') {
+      set['datosCrudos.stockCantidad'] = dto.stockCantidad;
+      set['datosCrudos.enStock'] = dto.stockCantidad > 0;
+    }
+
+    const product = await this.scrapedProductModel.findByIdAndUpdate(
+      id,
+      {
+        ...(Object.keys(set).length > 0 ? { $set: set } : {}),
+        $push: {
+          historialPrecios: {
+            fecha: new Date(),
+            precioRegular:
+              dto.precioRegular ?? existing.datosCrudos.precioRegular,
+            precioOferta: dto.precioOferta ?? existing.datosCrudos.precioOferta,
+          },
+        },
+      },
       { new: true },
     );
     if (!product)

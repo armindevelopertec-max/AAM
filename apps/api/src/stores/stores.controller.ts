@@ -19,11 +19,11 @@ export class StoresController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.storesService.findOne(+id);
+    return this.storesService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateStoreDto: UpdateStoreDto) {
-    return this.storesService.update(+id, updateStoreDto);
+    return this.storesService.update(id, updateStoreDto);
   }
 }

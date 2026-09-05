@@ -67,7 +67,7 @@ export default function DashboardPage() {
       label: "Valor de inventario (venta)",
       value: formatMoney(data.products.stockValue, currency),
       sub: `${data.clients.total} clientes`,
-      href: "/clients",
+      href: "/users",
     },
   ];
 

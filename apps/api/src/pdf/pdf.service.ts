@@ -7,6 +7,7 @@ import type {
   TableCell,
 } from 'pdfmake/interfaces.js';
 import { FilesService } from '../files/files.service';
+import { INSTALL_WRENCH_PNG } from './install-wrench';
 
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const pdfMake = require('pdfmake') as {
@@ -58,6 +59,7 @@ export class PdfService {
 
   async generateQuotePdf(quote: {
     number: string;
+    clientId: string | null;
     clientName: string;
     createdBy: string | null;
     items: Array<{
@@ -67,6 +69,7 @@ export class PdfService {
       unitPrice: number;
       originalPrice: number;
       subtotal: number;
+      imageDataUri?: string | null;
     }>;
     subtotal: number;
     discount: number;
@@ -75,7 +78,7 @@ export class PdfService {
     expiresAt: Date;
     createdAt: Date;
   }): Promise<Buffer> {
-    const storeName = process.env.STORE_NAME ?? 'BLUETEL';
+    const storeName = process.env.STORE_NAME ?? 'SEGTECAM';
     const storeSubtitle =
       process.env.STORE_SUBTITLE ?? 'Distribuidor Autorizado';
     const storePhone = process.env.STORE_PHONE ?? '';
@@ -92,136 +95,254 @@ export class PdfService {
     const savingsPct =
       totalOriginal > 0 ? Math.round((savings / totalOriginal) * 100) : 0;
 
+    const randomNumber = `N° ${Math.floor(100000 + Math.random() * 900000)}`;
+
+    const accent = '#141414';
+    const ink = '#111111';
+    const inkSoft = '#555555';
+    const labelGray = '#8f8f8f';
+    const hairline = '#e4e4e4';
+
     const headerContent: Content[] = [
       {
-        columns: [
-          {
-            width: '*',
-            text: [
-              { text: storeName, fontSize: 18, bold: true },
-              { text: '\n' + storeSubtitle, fontSize: 9, color: '#666' },
-              ...(storePhone
-                ? [{ text: '\nTel. ' + storePhone, fontSize: 9, color: '#666' }]
-                : []),
-            ],
-          },
-          {
-            width: 'auto',
-            text: [
-              { text: 'COTIZACIÓN', fontSize: 14, bold: true, alignment: 'right' },
+        table: {
+          widths: ['*', 'auto'],
+          body: [
+            [
               {
-                text: '\n' + quote.number,
-                fontSize: 11,
-                color: '#4f8cff',
-                bold: true,
+                text: [
+                  {
+                    text: storeName.toUpperCase(),
+                    fontSize: 17,
+                    bold: true,
+                    color: '#ffffff',
+                    characterSpacing: 4,
+                  },
+                  {
+                    text: '\n' + storeSubtitle.toUpperCase(),
+                    fontSize: 8,
+                    color: '#a5a5a5',
+                    characterSpacing: 2,
+                  },
+                  ...(storePhone
+                    ? [
+                        {
+                          text: '\nTEL. ' + storePhone.toUpperCase(),
+                          fontSize: 7.5,
+                          color: '#8f8f8f',
+                          characterSpacing: 1.5,
+                        },
+                      ]
+                    : []),
+                ],
+                alignment: 'left',
+              },
+              {
+                text: [
+                  {
+                    text: 'COTIZACIÓN',
+                    fontSize: 12,
+                    bold: true,
+                    color: '#ffffff',
+                    characterSpacing: 3,
+                    alignment: 'right',
+                  },
+                  {
+                    text: '\n' + randomNumber,
+                    fontSize: 9,
+                    color: '#b9b9b9',
+                    alignment: 'right',
+                  },
+                  {
+                    text: '\n' + this.formatDate(quote.createdAt),
+                    fontSize: 7.5,
+                    color: '#8f8f8f',
+                    alignment: 'right',
+                  },
+                ],
                 alignment: 'right',
               },
             ],
+          ],
+        },
+        layout: {
+          fillColor: () => accent,
+          paddingLeft: () => 20,
+          paddingRight: () => 20,
+          paddingTop: () => 16,
+          paddingBottom: () => 16,
+          hLineWidth: () => 0,
+          vLineWidth: () => 0,
+        },
+        margin: [0, 0, 0, 18] as [number, number, number, number],
+      },
+    ];
+
+    const infoRows: TableCell[][] = [];
+
+    const hasRegisteredClient =
+      quote.clientId != null &&
+      (quote.clientName ?? '') !== '' &&
+      (quote.clientName ?? '') !== 'Cliente general';
+
+    if (hasRegisteredClient) {
+      infoRows.push([
+        {
+          text: [
+            {
+              text: 'CLIENTE'.toUpperCase(),
+              fontSize: 7.5,
+              bold: true,
+              color: labelGray,
+              characterSpacing: 2,
+            },
+            {
+              text: '   ' + (quote.clientName || '—'),
+              fontSize: 10,
+              color: ink,
+            },
+          ],
+          colSpan: 2,
+        },
+        {},
+      ]);
+    }
+
+    if (hasInstall && installItem && hasRegisteredClient) {
+      const cleanName = String(installItem.name).replace(
+        /\s*\(\d+\s*punto[s]?\)\s*$/i,
+        '',
+      );
+      infoRows.push([
+        {
+          text: [
+            {
+              text: 'SERVICIO: '.toUpperCase(),
+              fontSize: 7.5,
+              bold: true,
+              color: labelGray,
+              characterSpacing: 2,
+            },
+            { text: cleanName, fontSize: 9, color: inkSoft },
+            {
+              text: `  ·  ${installItem.quantity} ${
+                installItem.quantity === 1 ? "punto" : "puntos"
+              }`,
+              fontSize: 9,
+              bold: true,
+              color: ink,
+            },
+          ],
+          colSpan: 2,
+        },
+        {},
+      ]);
+    }
+
+    infoRows.push([
+      {
+        text: [
+          {
+            text: 'EMISIÓN   ',
+            fontSize: 7.5,
+            bold: true,
+            color: labelGray,
+            characterSpacing: 2,
           },
+          { text: this.formatDate(quote.createdAt), fontSize: 9.5, color: ink },
         ],
-        margin: [0, 0, 0, 10] as [number, number, number, number],
+        alignment: 'left',
       },
       {
-        canvas: [
-          { type: 'line', x1: 0, y1: 0, x2: 515, y2: 0, lineWidth: 1, lineColor: '#4f8cff' },
+        text: [
+          {
+            text: 'VÁLIDA HASTA   ',
+            fontSize: 7.5,
+            bold: true,
+            color: labelGray,
+            characterSpacing: 2,
+          },
+          { text: this.formatDate(quote.expiresAt), fontSize: 9.5, color: ink },
         ],
-        margin: [0, 0, 0, 10] as [number, number, number, number],
+        alignment: 'right',
       },
-    ];
-
-    const infoRows: TableCell[][] = [
-      [
-        { text: [{ text: 'Cliente: ', bold: true }, quote.clientName || '—'], colSpan: 2 },
-        {},
-      ],
-      [
-        {
-          text: [
-            { text: 'Fecha: ', bold: true },
-            quote.createdAt.toLocaleDateString('es-BO'),
-          ],
-        },
-        {
-          text: [
-            { text: 'Válida hasta: ', bold: true },
-            quote.expiresAt.toLocaleDateString('es-BO'),
-          ],
-        },
-      ],
-    ];
-
-    if (quote.createdBy) {
-      infoRows.push([
-        {
-          text: [{ text: 'Atendido por: ', bold: true }, quote.createdBy],
-          colSpan: 2,
-        },
-        {},
-      ]);
-    }
-
-    if (hasInstall && installItem) {
-      infoRows.push([
-        {
-          text: [
-            { text: ' Instalación: ', bold: true, color: '#d97706' },
-            installItem.name,
-          ],
-          colSpan: 2,
-        },
-        {},
-      ]);
-    }
+    ]);
 
     const infoContent: Content[] = [
       {
         table: {
-          widths: ['50%', '50%'],
+          widths: ['*', 'auto'],
           body: infoRows,
         },
         layout: 'noBorders',
-        margin: [0, 0, 0, 10] as [number, number, number, number],
+        margin: [0, 0, 0, 14] as [number, number, number, number],
       },
     ];
 
     const headerRow: TableCell[] = [
       { text: '#', style: 'tableHeader', alignment: 'center' },
-      { text: 'Producto', style: 'tableHeader' },
+      { text: 'IMAGEN', style: 'tableHeader', alignment: 'center' },
+      { text: 'PRODUCTO', style: 'tableHeader' },
       { text: 'SKU', style: 'tableHeader' },
-      { text: 'Cant.', style: 'tableHeader', alignment: 'center' },
-      { text: 'P. Unitario', style: 'tableHeader', alignment: 'right' },
-      { text: 'Dcto.', style: 'tableHeader', alignment: 'center' },
-      { text: 'Subtotal', style: 'tableHeader', alignment: 'right' },
+      { text: 'CANT.', style: 'tableHeader', alignment: 'center' },
+      { text: 'P. UNITARIO', style: 'tableHeader', alignment: 'right' },
+      { text: 'DCTO.', style: 'tableHeader', alignment: 'center' },
+      { text: 'SUBTOTAL', style: 'tableHeader', alignment: 'right' },
     ];
 
     const bodyRows: TableCell[][] = [headerRow];
     quote.items.forEach((item, idx) => {
       const isInstall =
         item.sku === 'SERVICIO' || item.name.toLowerCase().includes('instalaci');
-      const hasDiscount = !isInstall && item.originalPrice > 0 && item.originalPrice > item.unitPrice;
+      const hasDiscount =
+        !isInstall && item.originalPrice > 0 && item.originalPrice > item.unitPrice;
       const discountPct = hasDiscount
         ? Math.round((1 - item.unitPrice / item.originalPrice) * 100)
         : 0;
+      const imageCell: TableCell = item.imageDataUri
+        ? {
+            image: item.imageDataUri,
+            fit: [34, 34],
+            alignment: 'center',
+          }
+        : isInstall
+          ? {
+              image: INSTALL_WRENCH_PNG,
+              fit: [26, 26],
+              alignment: 'center',
+            }
+          : { text: '', alignment: 'center' };
       bodyRows.push([
         {
           text: String(idx + 1),
           alignment: 'center',
-          ...(isInstall ? { color: '#d97706' } : {}),
+          fontSize: 8.5,
+          color: isInstall ? inkSoft : ink,
         },
+        imageCell,
         {
           text: item.name,
-          ...(isInstall ? { color: '#d97706', italics: true } : {}),
+          fontSize: 9.5,
+          color: isInstall ? inkSoft : ink,
+          ...(isInstall ? { italics: true } : {}),
         },
-        { text: item.sku ?? '', fontSize: 8 },
-        { text: String(item.quantity), alignment: 'center' },
-        { text: this.formatMoney(item.unitPrice), alignment: 'right' },
+        { text: item.sku ?? '', fontSize: 8, color: '#666666' },
+        { text: String(item.quantity), fontSize: 9, alignment: 'center' },
+        { text: this.formatMoney(item.unitPrice), fontSize: 9, alignment: 'right' },
         {
-          text: isInstall ? '—' : hasDiscount ? `-${discountPct}%` : '—',
+          text: isInstall ? '—' : hasDiscount ? `−${discountPct}%` : '—',
           alignment: 'center',
-          color: isInstall ? '#999' : hasDiscount ? '#2ecc71' : '#999',
+          color: hasDiscount ? ink : '#bbbbbb',
           fontSize: 8,
+          bold: hasDiscount,
         },
-        { text: this.formatMoney(item.subtotal), alignment: 'right', bold: true },
+        {
+          text: this.formatMoney(item.subtotal),
+          fontSize: 9.5,
+          alignment: 'right',
+          bold: true,
+          color: ink,
+        },
       ]);
     });
 
@@ -229,21 +350,20 @@ export class PdfService {
       {
         table: {
           headerRows: 1,
-          widths: [20, '*', 55, 30, 55, 30, 60],
+          widths: [22, 46, '*', 60, 30, 64, 30, 66],
           body: bodyRows,
         },
         layout: {
-          fillColor: (rowIndex: number) => (rowIndex === 0 ? '#4f8cff' : null),
-          hLineWidth: () => 0.5,
-          vLineWidth: () => 0.5,
-          hLineColor: () => '#e0e0e0',
-          vLineColor: () => '#e0e0e0',
+          hLineWidth: (i: number, node: any) =>
+            i === 1 ? 1.2 : i > 1 && i < node.table.body.length ? 0.5 : 0,
+          hLineColor: (i: number) => (i === 1 ? ink : hairline),
+          vLineWidth: () => 0,
           paddingLeft: () => 4,
           paddingRight: () => 4,
-          paddingTop: () => 4,
-          paddingBottom: () => 4,
+          paddingTop: () => 6,
+          paddingBottom: () => 6,
         },
-        margin: [0, 0, 0, 10] as [number, number, number, number],
+        margin: [0, 0, 0, 16] as [number, number, number, number],
       },
     ];
 
@@ -252,21 +372,34 @@ export class PdfService {
     if (savings > 0) {
       summaryRows.push([
         {
-          text: `Subtotal (precio normal): ${this.formatMoney(totalOriginal)}`,
+          text: [
+            {
+              text: 'SUBTOTAL (NORMAL)  '.toUpperCase(),
+              fontSize: 8,
+              color: labelGray,
+              characterSpacing: 1,
+            },
+            { text: this.formatMoney(totalOriginal), fontSize: 10, color: ink },
+          ],
           alignment: 'right',
           colSpan: 2,
-          fontSize: 9,
-          color: '#999',
         },
         {},
       ]);
       summaryRows.push([
         {
-          text: `Ahorro (${savingsPct}%): -${this.formatMoney(savings)}`,
+          text: [
+            {
+              text: `AHORRO (${savingsPct}%)  `.toUpperCase(),
+              fontSize: 8,
+              bold: true,
+              color: inkSoft,
+              characterSpacing: 1,
+            },
+            { text: '−' + this.formatMoney(savings), fontSize: 10, bold: true, color: ink },
+          ],
           alignment: 'right',
           colSpan: 2,
-          color: '#2ecc71',
-          bold: true,
         },
         {},
       ]);
@@ -275,8 +408,8 @@ export class PdfService {
     summaryRows.push([
       {
         text: [
-          { text: 'TOTAL: ', fontSize: 13, bold: true },
-          { text: this.formatMoney(quote.total), fontSize: 13, bold: true, color: '#4f8cff' },
+          { text: 'TOTAL  ', fontSize: 11, bold: true, color: ink, characterSpacing: 2 },
+          { text: this.formatMoney(quote.total), fontSize: 15, bold: true, color: ink },
         ],
         alignment: 'right',
         colSpan: 2,
@@ -295,18 +428,43 @@ export class PdfService {
           },
         ],
       },
-      { text: '', margin: [0, 15, 0, 0] as [number, number, number, number] },
+      { text: '', margin: [0, 12, 0, 0] as [number, number, number, number] },
       {
         canvas: [
-          { type: 'line', x1: 0, y1: 0, x2: 515, y2: 0, lineWidth: 0.5, lineColor: '#ccc' },
+          { type: 'line', x1: 0, y1: 0, x2: 515, y2: 0, lineWidth: 0.5, lineColor: '#dddddd' },
         ],
-        margin: [0, 0, 0, 5] as [number, number, number, number],
       },
       {
         text: `Esta cotización es válida por ${quote.validDays} días a partir de la fecha de emisión.`,
         fontSize: 8,
-        color: '#999',
+        color: '#9c9c9c',
         alignment: 'center',
+        margin: [0, 8, 0, 0] as [number, number, number, number],
+      },
+      {
+        table: {
+          widths: ['*'],
+          body: [
+            [
+              {
+                text: storeName.toUpperCase(),
+                alignment: 'center',
+                fontSize: 9,
+                bold: true,
+                color: '#ffffff',
+                characterSpacing: 4,
+              },
+            ],
+          ],
+        },
+        layout: {
+          fillColor: () => accent,
+          paddingTop: () => 10,
+          paddingBottom: () => 10,
+          hLineWidth: () => 0,
+          vLineWidth: () => 0,
+        },
+        margin: [0, 10, 0, 0] as [number, number, number, number],
       },
     ];
 
@@ -317,7 +475,15 @@ export class PdfService {
         ...tableContent,
         ...summaryContent,
       ],
-      defaultStyle: { fontSize: 10 },
+      styles: {
+        tableHeader: {
+          fontSize: 7.5,
+          bold: true,
+          color: labelGray,
+          characterSpacing: 1,
+        },
+      },
+      defaultStyle: { fontSize: 10, color: ink },
       pageMargins: [30, 30, 30, 30] as [number, number, number, number],
     };
 
@@ -352,5 +518,14 @@ export class PdfService {
       currency: 'BOB',
       minimumFractionDigits: 2,
     }).format(value);
+  }
+
+  private formatDate(date: Date | string): string {
+    const d = typeof date === 'string' ? new Date(date) : date;
+    return d.toLocaleDateString('es-BO', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+    });
   }
 }

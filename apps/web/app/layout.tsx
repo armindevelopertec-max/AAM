@@ -15,8 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "MiApp",
-  description: "Aplicación de gestión",
+  title: "SEGTECAM",
+  description: "SEGTECAM - Sistema de gestión",
 };
 
 const themeInitScript = `(function(){
