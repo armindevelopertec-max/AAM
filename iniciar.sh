@@ -127,6 +127,30 @@ else
     fi
 fi
 
+# --------------------------------------------
+# 4) Cloudflare Tunnel
+# --------------------------------------------
+# El túnel apunta a localhost:3000 (ver ~/.cloudflared/config.yml).  En
+# instalaciones donde no existe como servicio systemd, arrancarlo aquí evita
+# que el dominio quede caído después de reiniciar la máquina.
+CLOUDFLARED_CONFIG="${CLOUDFLARED_CONFIG:-$HOME/.cloudflared/config.yml}"
+if command -v cloudflared >/dev/null 2>&1 && [ -f "$CLOUDFLARED_CONFIG" ]; then
+    if ! pgrep -f '[c]loudflared.*tunnel' >/dev/null 2>&1; then
+        info "Iniciando túnel Cloudflare..."
+        ( setsid cloudflared --config "$CLOUDFLARED_CONFIG" tunnel run > "$LOG_DIR/cloudflared.log" 2>&1 < /dev/null & )
+        sleep 2
+        if pgrep -f '[c]loudflared.*tunnel' >/dev/null 2>&1; then
+            ok "Túnel Cloudflare iniciado"
+        else
+            info "No se pudo confirmar el túnel; revisa $LOG_DIR/cloudflared.log"
+        fi
+    else
+        ok "Túnel Cloudflare ya estaba corriendo"
+    fi
+else
+    info "cloudflared o su configuración no están disponibles; se omite el túnel"
+fi
+
 echo ""
 echo "==================================================="
 echo "  PROYECTO AAM INICIADO"
