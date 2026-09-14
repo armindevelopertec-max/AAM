@@ -19,6 +19,9 @@ export interface VentaProducto {
   stock: number | null;
   enStock: boolean;
   imagenUrl: string | null;
+  unidad: string | null;
+  metros: number | null;
+  precioMetro: number | null;
 }
 
 @Injectable()
@@ -53,13 +56,20 @@ export class VentaService {
     if (query.categoria) filter.categoriaScrape = query.categoria;
 
     const page = Math.max(1, parseInt(query.page ?? '1', 10));
-    const limit = Math.min(1000, Math.max(1, parseInt(query.limit ?? '100', 10)));
+    const limit = Math.min(
+      1000,
+      Math.max(1, parseInt(query.limit ?? '100', 10)),
+    );
     const skip = (page - 1) * limit;
 
     const [items, total, categorias] = await Promise.all([
       this.model
         .find(filter)
-        .sort({ 'datosCrudos.enStock': -1, fuente: 1, 'datosCrudos.idExterno': 1 })
+        .sort({
+          'datosCrudos.enStock': -1,
+          fuente: 1,
+          'datosCrudos.idExterno': 1,
+        })
         .skip(skip)
         .limit(limit)
         .lean(),
@@ -96,6 +106,15 @@ export class VentaService {
     return doc;
   }
 
+  async getImageUrl(fuente: string | undefined, idExterno: number) {
+    const product = await this.findSellable(fuente, idExterno);
+    const imagen = product?.imagenesDescargadas?.[0];
+    if (!product || !imagen) {
+      return { imageUrl: null };
+    }
+    return { imageUrl: `/scraping/images/${encodeURIComponent(imagen.key)}` };
+  }
+
   /** Resta stock del catálogo maestro de forma atómica. */
   async decrementStock(
     fuente: string,
@@ -106,6 +125,7 @@ export class VentaService {
       this.model.findOneAndUpdate as unknown as (
         filter: Record<string, unknown>,
         update: Record<string, unknown>[],
+        options: Record<string, unknown>,
       ) => Promise<unknown>
     )(
       {
@@ -125,25 +145,45 @@ export class VentaService {
           },
         },
       ],
+      { updatePipeline: true },
     );
     return res != null;
   }
 
-  private proyectar(doc: ScrapedProductDocument | Record<string, unknown>): VentaProducto {
-    const d = (doc as Record<string, unknown>).datosCrudos as Record<string, unknown>;
+  private proyectar(
+    doc: ScrapedProductDocument | Record<string, unknown>,
+  ): VentaProducto {
+    const d = (doc as Record<string, unknown>).datosCrudos as Record<
+      string,
+      unknown
+    >;
     const precioOferta = d.precioOferta as number | null | undefined;
     const precioRegular = d.precioRegular as number | null | undefined;
     const stockCantidad = d.stockCantidad as number | null | undefined;
+    const unidad = (d.unidad as string | null | undefined) ?? null;
+    const metros = (d.metros as number | null | undefined) ?? null;
+    const precioMetro = (d.precioMetro as number | null | undefined) ?? null;
 
-    const precioVenta =
-      typeof precioOferta === 'number' && precioOferta > 0
+    // Producto vendido por metro (cable/rollo): el precio de venta es por metro.
+    const esPorMetro =
+      unidad === 'metro' && typeof precioMetro === 'number' && precioMetro > 0;
+
+    const precioVenta = esPorMetro
+      ? precioMetro
+      : typeof precioOferta === 'number' && precioOferta > 0
         ? precioOferta
         : typeof precioRegular === 'number'
           ? precioRegular
           : null;
 
-    const imagenes = (doc as Record<string, unknown>)
-      .imagenesDescargadas as Array<{ key: string }> | null | undefined;
+    const precioRegularFinal = esPorMetro
+      ? precioMetro
+      : typeof precioRegular === 'number'
+        ? precioRegular
+        : null;
+
+    const imagenes = (doc as Record<string, unknown>).imagenesDescargadas as
+      Array<{ key: string }> | null | undefined;
     const primera = imagenes?.[0];
 
     return {
@@ -154,7 +194,7 @@ export class VentaService {
       marca: (d.marca as string) ?? '',
       categoria: (doc as Record<string, unknown>).categoriaScrape as string,
       precioVenta,
-      precioRegular: typeof precioRegular === 'number' ? precioRegular : null,
+      precioRegular: precioRegularFinal,
       moneda: (d.moneda as string) ?? 'BOB',
       stock: typeof stockCantidad === 'number' ? stockCantidad : null,
       enStock:
@@ -164,6 +204,9 @@ export class VentaService {
       imagenUrl: primera
         ? `/scraping/images/${encodeURIComponent(primera.key)}`
         : null,
+      unidad,
+      metros,
+      precioMetro: esPorMetro ? precioMetro : null,
     };
   }
 }

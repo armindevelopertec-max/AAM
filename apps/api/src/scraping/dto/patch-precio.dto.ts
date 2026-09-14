@@ -15,4 +15,9 @@ export class PatchPrecioDto {
   @IsNumber({ allowInfinity: false, allowNaN: false })
   @Min(0)
   stockCantidad?: number;
+
+  @IsOptional()
+  @IsNumber({ allowInfinity: false, allowNaN: false })
+  @Min(0)
+  precioMetro?: number;
 }

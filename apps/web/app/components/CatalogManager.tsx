@@ -4,9 +4,36 @@ import { useState, useEffect, useCallback } from "react";
 import {
   getScrapedProducts,
   updateScrapedPrecio,
+  createScrapedProduct,
+  uploadScrapedImages,
+  deleteScrapedImage,
   getScrapedImageUrl,
   type ScrapedProduct,
 } from "../lib/api";
+
+const emptyManual = () => ({
+  nombre: "",
+  categoria: "",
+  marca: "",
+  sku: "",
+  precioRegular: "",
+  precioOferta: "",
+  stockCantidad: "0",
+  moneda: "BOB",
+  unidad: "unidad",
+  precioMetro: "",
+  metros: "",
+  descripcionCorta: "",
+});
+
+type ManualDraft = ReturnType<typeof emptyManual>;
+
+const toNum = (v: string) => {
+  const n = Number(v);
+  return Number.isFinite(n) && n >= 0 ? n : 0;
+};
+
+const toStr = (v: string) => (v.trim() ? v.trim() : undefined);
 
 export default function CatalogManager() {
   const [items, setItems] = useState<ScrapedProduct[]>([]);
@@ -17,6 +44,13 @@ export default function CatalogManager() {
   const [filtroFuente, setFiltroFuente] = useState("");
   const [loading, setLoading] = useState(true);
   const [expandedId, setExpandedId] = useState<string | null>(null);
+  const [creando, setCreando] = useState(false);
+  const [guardando, setGuardando] = useState(false);
+  const [newProducto, setNewProducto] = useState<ManualDraft>(emptyManual);
+  const [createMsg, setCreateMsg] = useState<string | null>(null);
+  const [imagenesFiles, setImagenesFiles] = useState<File[]>([]);
+  const [uploadingImgsId, setUploadingImgsId] = useState<string | null>(null);
+  const [removingImgKey, setRemovingImgKey] = useState<string | null>(null);
 
   const fetchData = useCallback(async () => {
     setLoading(true);
@@ -41,14 +75,292 @@ export default function CatalogManager() {
     void fetchData();
   }, [fetchData]);
 
+  async function handleCrear() {
+    setCreateMsg(null);
+    if (!newProducto.nombre.trim()) {
+      setCreateMsg("El nombre es obligatorio.");
+      return;
+    }
+    setGuardando(true);
+    try {
+      const esMetro = newProducto.unidad === "metro";
+      const nombre = newProducto.nombre.trim();
+      const created = await createScrapedProduct({
+        nombre,
+        categoria: toStr(newProducto.categoria),
+        marca: toStr(newProducto.marca),
+        sku: toStr(newProducto.sku),
+        moneda: toStr(newProducto.moneda),
+        precioRegular: toNum(newProducto.precioRegular),
+        precioOferta: toNum(newProducto.precioOferta),
+        stockCantidad: Math.floor(toNum(newProducto.stockCantidad)),
+        unidad: newProducto.unidad,
+        ...(esMetro
+          ? {
+              precioMetro: toNum(newProducto.precioMetro),
+              metros: toNum(newProducto.metros),
+            }
+          : {}),
+        descripcionCorta: toStr(newProducto.descripcionCorta),
+      });
+      if (imagenesFiles.length > 0) {
+        await uploadScrapedImages(created._id, imagenesFiles);
+      }
+      setCreando(false);
+      setNewProducto(emptyManual());
+      setImagenesFiles([]);
+      setBuscar(nombre);
+      setPage(1);
+      setCreateMsg(`Producto "${nombre}" agregado al catálogo.`);
+    } catch (err) {
+      setCreateMsg(err instanceof Error ? err.message : "No se pudo agregar el producto");
+    } finally {
+      setGuardando(false);
+    }
+  }
+
+  async function handleSubirImagenes(id: string, fileList?: FileList | null) {
+    const files = fileList ? Array.from(fileList) : [];
+    if (files.length === 0) return;
+    setCreateMsg(null);
+    setUploadingImgsId(id);
+    try {
+      await uploadScrapedImages(id, files);
+      await fetchData();
+    } catch (err) {
+      setCreateMsg(err instanceof Error ? err.message : "No se pudieron subir las imágenes");
+    } finally {
+      setUploadingImgsId(null);
+    }
+  }
+
+  async function handleQuitarImagen(id: string, key: string) {
+    if (!confirm("¿Eliminar esta imagen?")) return;
+    setCreateMsg(null);
+    setRemovingImgKey(key);
+    try {
+      await deleteScrapedImage(id, key);
+      await fetchData();
+    } catch (err) {
+      setCreateMsg(err instanceof Error ? err.message : "No se pudo eliminar la imagen");
+    } finally {
+      setRemovingImgKey(null);
+    }
+  }
+
   return (
     <div className="flex flex-col gap-6">
-      <div>
-        <h1 className="text-2xl font-bold">Catálogo de productos</h1>
-        <p className="mt-1 text-sm text-neutral-500 dark:text-neutral-400">
-          Productos desde el catálogo compartido (Mongo). Edita precio y stock directamente.
-        </p>
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <h1 className="text-2xl font-bold">Catálogo de productos</h1>
+          <p className="mt-1 text-sm text-neutral-500 dark:text-neutral-400">
+            Productos desde el catálogo compartido (Mongo). Edita precio y stock directamente.
+          </p>
+        </div>
+        <button
+          onClick={() => {
+            setCreando((c) => !c);
+            setCreateMsg(null);
+            setImagenesFiles([]);
+          }}
+          className="w-fit rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-blue-700"
+        >
+          {creando ? "Cancelar" : "Agregar producto"}
+        </button>
       </div>
+
+      {creando && (
+        <div className="rounded-lg border border-blue-200 bg-blue-50/40 p-4 dark:border-blue-900 dark:bg-blue-950/20">
+          <h2 className="mb-3 text-lg font-semibold text-neutral-900 dark:text-white">
+            Nuevo producto manual
+          </h2>
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            <label className="flex flex-col gap-1 text-xs text-neutral-500 dark:text-neutral-400">
+              Nombre *
+              <input
+                value={newProducto.nombre}
+                onChange={(e) => setNewProducto((d) => ({ ...d, nombre: e.target.value }))}
+                placeholder="Ej. Cámara IP 2MP"
+                className="rounded-md border border-neutral-300 px-2 py-1.5 dark:border-neutral-700 dark:bg-neutral-800"
+              />
+            </label>
+            <label className="flex flex-col gap-1 text-xs text-neutral-500 dark:text-neutral-400">
+              Categoría
+              <input
+                value={newProducto.categoria}
+                onChange={(e) => setNewProducto((d) => ({ ...d, categoria: e.target.value }))}
+                placeholder="Ej. Cámaras"
+                className="rounded-md border border-neutral-300 px-2 py-1.5 dark:border-neutral-700 dark:bg-neutral-800"
+              />
+            </label>
+            <label className="flex flex-col gap-1 text-xs text-neutral-500 dark:text-neutral-400">
+              Marca
+              <input
+                value={newProducto.marca}
+                onChange={(e) => setNewProducto((d) => ({ ...d, marca: e.target.value }))}
+                placeholder="Ej. Dahua"
+                className="rounded-md border border-neutral-300 px-2 py-1.5 dark:border-neutral-700 dark:bg-neutral-800"
+              />
+            </label>
+            <label className="flex flex-col gap-1 text-xs text-neutral-500 dark:text-neutral-400">
+              SKU
+              <input
+                value={newProducto.sku}
+                onChange={(e) => setNewProducto((d) => ({ ...d, sku: e.target.value }))}
+                placeholder="Ej. IPC-2MP"
+                className="rounded-md border border-neutral-300 px-2 py-1.5 dark:border-neutral-700 dark:bg-neutral-800"
+              />
+            </label>
+            <label className="flex flex-col gap-1 text-xs text-neutral-500 dark:text-neutral-400">
+              Precio regular
+              <input
+                type="number"
+                min="0"
+                step="0.01"
+                value={newProducto.precioRegular}
+                onChange={(e) => setNewProducto((d) => ({ ...d, precioRegular: e.target.value }))}
+                className="rounded-md border border-neutral-300 px-2 py-1.5 dark:border-neutral-700 dark:bg-neutral-800"
+              />
+            </label>
+            <label className="flex flex-col gap-1 text-xs text-neutral-500 dark:text-neutral-400">
+              Precio de venta (oferta)
+              <input
+                type="number"
+                min="0"
+                step="0.01"
+                value={newProducto.precioOferta}
+                onChange={(e) => setNewProducto((d) => ({ ...d, precioOferta: e.target.value }))}
+                className="rounded-md border border-neutral-300 px-2 py-1.5 dark:border-neutral-700 dark:bg-neutral-800"
+              />
+            </label>
+            <label className="flex flex-col gap-1 text-xs text-neutral-500 dark:text-neutral-400">
+              Stock
+              <input
+                type="number"
+                min="0"
+                step="1"
+                value={newProducto.stockCantidad}
+                onChange={(e) => setNewProducto((d) => ({ ...d, stockCantidad: e.target.value }))}
+                className="rounded-md border border-neutral-300 px-2 py-1.5 dark:border-neutral-700 dark:bg-neutral-800"
+              />
+            </label>
+            <label className="flex flex-col gap-1 text-xs text-neutral-500 dark:text-neutral-400">
+              Moneda
+              <input
+                value={newProducto.moneda}
+                onChange={(e) => setNewProducto((d) => ({ ...d, moneda: e.target.value }))}
+                placeholder="BOB"
+                className="rounded-md border border-neutral-300 px-2 py-1.5 dark:border-neutral-700 dark:bg-neutral-800"
+              />
+            </label>
+            <label className="flex flex-col gap-1 text-xs text-neutral-500 dark:text-neutral-400">
+              Unidad
+              <select
+                value={newProducto.unidad}
+                onChange={(e) => setNewProducto((d) => ({ ...d, unidad: e.target.value }))}
+                className="rounded-md border border-neutral-300 px-2 py-1.5 dark:border-neutral-700 dark:bg-neutral-800"
+              >
+                <option value="unidad">Unidad</option>
+                <option value="metro">Metro</option>
+              </select>
+            </label>
+            {newProducto.unidad === "metro" && (
+              <>
+                <label className="flex flex-col gap-1 text-xs text-blue-600 dark:text-blue-400">
+                  Precio por metro (Bs/m)
+                  <input
+                    type="number"
+                    min="0"
+                    step="0.01"
+                    value={newProducto.precioMetro}
+                    onChange={(e) => setNewProducto((d) => ({ ...d, precioMetro: e.target.value }))}
+                    className="rounded-md border border-neutral-300 px-2 py-1.5 dark:border-neutral-700 dark:bg-neutral-800"
+                  />
+                </label>
+                <label className="flex flex-col gap-1 text-xs text-neutral-500 dark:text-neutral-400">
+                  Metros por rollo
+                  <input
+                    type="number"
+                    min="0"
+                    step="0.01"
+                    value={newProducto.metros}
+                    onChange={(e) => setNewProducto((d) => ({ ...d, metros: e.target.value }))}
+                    className="rounded-md border border-neutral-300 px-2 py-1.5 dark:border-neutral-700 dark:bg-neutral-800"
+                  />
+                </label>
+              </>
+            )}
+            <label className="flex flex-col gap-1 text-xs text-neutral-500 dark:text-neutral-400 sm:col-span-2 lg:col-span-4">
+              Descripción corta
+              <input
+                value={newProducto.descripcionCorta}
+                onChange={(e) => setNewProducto((d) => ({ ...d, descripcionCorta: e.target.value }))}
+                className="rounded-md border border-neutral-300 px-2 py-1.5 dark:border-neutral-700 dark:bg-neutral-800"
+              />
+            </label>
+            <div className="sm:col-span-2 lg:col-span-4">
+              <label className="flex flex-col gap-1 text-xs text-neutral-500 dark:text-neutral-400">
+                Imágenes (opcional)
+                <input
+                  type="file"
+                  accept="image/*"
+                  multiple
+                  onChange={(e) => {
+                    setImagenesFiles(Array.from(e.currentTarget.files ?? []));
+                    e.currentTarget.value = "";
+                  }}
+                  className="block w-full text-xs file:mr-3 file:cursor-pointer file:rounded-md file:border-0 file:bg-blue-600 file:px-3 file:py-1.5 file:text-sm file:font-medium file:text-white hover:file:bg-blue-700"
+                />
+              </label>
+              {imagenesFiles.length > 0 && (
+                <ul className="mt-2 flex flex-wrap gap-2">
+                  {imagenesFiles.map((f, i) => (
+                    <li
+                      key={i}
+                      className="flex items-center gap-1.5 rounded-md bg-white px-2 py-1 text-xs text-neutral-700 shadow-sm dark:bg-neutral-800 dark:text-neutral-200"
+                    >
+                      {f.name}
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setImagenesFiles((prev) => prev.filter((_, j) => j !== i))
+                        }
+                        className="text-red-500 hover:text-red-400"
+                        title="Quitar"
+                      >
+                        ✕
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          </div>
+          <div className="mt-4 flex items-center gap-3">
+            <button
+              onClick={handleCrear}
+              disabled={guardando}
+              className="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-blue-700 disabled:opacity-50"
+            >
+              {guardando ? "Guardando..." : "Guardar producto"}
+            </button>
+            <button
+              onClick={() => { setCreando(false); setCreateMsg(null); setImagenesFiles([]); }}
+              disabled={guardando}
+              className="rounded-md border border-neutral-300 px-4 py-2 text-sm transition hover:border-neutral-400 disabled:opacity-50 dark:border-neutral-700"
+            >
+              Cancelar
+            </button>
+            {createMsg && (
+              <span
+                className={`text-sm ${createMsg.includes("obligatorio") || /Error|No se pudo/.test(createMsg) ? "text-red-600 dark:text-red-400" : "text-green-600 dark:text-green-400"}`}
+              >
+                {createMsg}
+              </span>
+            )}
+          </div>
+        </div>
+      )}
 
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
         <input
@@ -128,6 +440,13 @@ export default function CatalogManager() {
                         Oferta: {item.datosCrudos.precioOferta} {item.datosCrudos.moneda}
                       </span>
                     )}
+                    {item.datosCrudos.unidad === "metro" &&
+                      (item.datosCrudos.precioMetro ?? 0) > 0 && (
+                        <span className="font-medium text-blue-600 dark:text-blue-400">
+                          Precio/m: {item.datosCrudos.precioMetro} {item.datosCrudos.moneda}
+                          {item.datosCrudos.metros ? ` (rollo de ${item.datosCrudos.metros} m)` : ""}
+                        </span>
+                      )}
                     <span
                       className={`rounded-full px-2 py-0.5 text-[10px] font-bold sm:text-xs ${
                         hasStock(item.datosCrudos)
@@ -167,22 +486,51 @@ export default function CatalogManager() {
                       </div>
                     </div>
                     <div>
-                      <p className="text-sm font-medium">Imágenes:</p>
+                      <div className="flex items-center justify-between gap-2">
+                        <p className="text-sm font-medium">Imágenes:</p>
+                        <label
+                          htmlFor={`scraped-files-${item._id}`}
+                          className="cursor-pointer rounded-md border border-neutral-300 px-2 py-1 text-xs transition hover:border-neutral-400 dark:border-neutral-700"
+                        >
+                          {uploadingImgsId === item._id ? "Subiendo..." : "Subir imagen(es)"}
+                        </label>
+                        <input
+                          id={`scraped-files-${item._id}`}
+                          type="file"
+                          accept="image/*"
+                          multiple
+                          className="hidden"
+                          onChange={(e) => {
+                            void handleSubirImagenes(item._id, e.currentTarget.files);
+                            e.currentTarget.value = "";
+                          }}
+                        />
+                      </div>
                       <div className="mt-1 flex flex-wrap gap-2">
                         {item.imagenesDescargadas.map((img) => (
-                          <a
-                            key={img.key}
-                            href={getScrapedImageUrl(img.key)}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            <img
-                              src={getScrapedImageUrl(img.key)}
-                              alt={item.datosCrudos.nombre}
-                              className="h-16 w-16 rounded border border-neutral-200 object-cover sm:h-20 sm:w-20 dark:border-neutral-700"
-                              loading="lazy"
-                            />
-                          </a>
+                          <div key={img.key} className="relative">
+                            <a
+                              href={getScrapedImageUrl(img.key)}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              <img
+                                src={getScrapedImageUrl(img.key)}
+                                alt={item.datosCrudos.nombre}
+                                className="h-16 w-16 rounded border border-neutral-200 object-cover sm:h-20 sm:w-20 dark:border-neutral-700"
+                                loading="lazy"
+                              />
+                            </a>
+                            <button
+                              type="button"
+                              onClick={() => void handleQuitarImagen(item._id, img.key)}
+                              disabled={removingImgKey === img.key}
+                              className="absolute -right-1.5 -top-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-black/70 text-[10px] font-bold text-white transition hover:bg-black disabled:opacity-60"
+                              title="Quitar imagen"
+                            >
+                              {removingImgKey === img.key ? "…" : "✕"}
+                            </button>
+                          </div>
                         ))}
                         {item.imagenesDescargadas.length === 0 && (
                           <span className="text-xs text-neutral-400">Sin imágenes</span>
@@ -257,6 +605,10 @@ function PrecioEditor({
   const [oferta, setOferta] = useState(String(product.datosCrudos.precioOferta ?? 0));
   const [regular, setRegular] = useState(String(product.datosCrudos.precioRegular ?? 0));
   const [stock, setStock] = useState(String(product.datosCrudos.stockCantidad ?? 0));
+  const [precioMetro, setPrecioMetro] = useState(
+    String(product.datosCrudos.precioMetro ?? 0),
+  );
+  const esPorMetro = product.datosCrudos.unidad === "metro";
   const [loading, setLoading] = useState(false);
   const [msg, setMsg] = useState<string | null>(null);
 
@@ -268,6 +620,9 @@ function PrecioEditor({
         precioOferta: parseFloat(oferta) || 0,
         precioRegular: parseFloat(regular) || 0,
         stockCantidad: parseInt(stock, 10) || 0,
+        ...(esPorMetro
+          ? { precioMetro: parseFloat(precioMetro) || 0 }
+          : {}),
       });
       setMsg("Guardado (precio y stock en el catálogo Mongo)");
       onSaved();
@@ -315,6 +670,19 @@ function PrecioEditor({
             className="rounded-md border border-neutral-300 px-2 py-1.5 dark:border-neutral-700 dark:bg-neutral-800"
           />
         </label>
+        {esPorMetro && (
+          <label className="flex flex-col gap-1 text-xs text-blue-600 dark:text-blue-400">
+            Precio por metro (Bs/m)
+            <input
+              type="number"
+              step="0.01"
+              min="0"
+              value={precioMetro}
+              onChange={(e) => setPrecioMetro(e.target.value)}
+              className="rounded-md border border-neutral-300 px-2 py-1.5 dark:border-neutral-700 dark:bg-neutral-800"
+            />
+          </label>
+        )}
       </div>
       <div className="mt-2 flex items-center gap-2">
         <button

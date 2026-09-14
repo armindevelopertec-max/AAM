@@ -39,10 +39,7 @@ export class PdfService {
 
     const vfs = sandbox.vfs as Record<string, string>;
     Object.entries(vfs).forEach(([name, data]) => {
-      pdfMake.virtualfs.writeFileSync(
-        '/' + name,
-        Buffer.from(data, 'base64'),
-      );
+      pdfMake.virtualfs.writeFileSync('/' + name, Buffer.from(data, 'base64'));
     });
 
     pdfMake.setFonts({
@@ -57,27 +54,34 @@ export class PdfService {
     this.logger.log('PDF fonts loaded');
   }
 
-  async generateQuotePdf(quote: {
-    number: string;
-    clientId: string | null;
-    clientName: string;
-    createdBy: string | null;
-    items: Array<{
-      name: string;
-      sku: string;
-      quantity: number;
-      unitPrice: number;
-      originalPrice: number;
+  async generateQuotePdf(
+    quote: {
+      number: string;
+      clientId: string | null;
+      clientName: string;
+      createdBy: string | null;
+      items: Array<{
+        name: string;
+        sku: string;
+        quantity: number;
+        unitPrice: number;
+        originalPrice: number;
+        subtotal: number;
+        imageDataUri?: string | null;
+      }>;
       subtotal: number;
-      imageDataUri?: string | null;
-    }>;
-    subtotal: number;
-    discount: number;
-    total: number;
-    validDays: number;
-    expiresAt: Date;
-    createdAt: Date;
-  }): Promise<Buffer> {
+      discount: number;
+      total: number;
+      validDays: number;
+      expiresAt: Date;
+      createdAt: Date;
+    },
+    opts?: {
+      label?: string;
+      footerNote?: string;
+      showExpiry?: boolean;
+    },
+  ): Promise<Buffer> {
     const storeName = process.env.STORE_NAME ?? 'SEGTECAM';
     const storeSubtitle =
       process.env.STORE_SUBTITLE ?? 'Distribuidor Autorizado';
@@ -90,12 +94,7 @@ export class PdfService {
       (i) => i.sku === 'SERVICIO' || i.name.toLowerCase().includes('instalaci'),
     );
 
-    const savings = quote.discount;
-    const totalOriginal = quote.subtotal + savings;
-    const savingsPct =
-      totalOriginal > 0 ? Math.round((savings / totalOriginal) * 100) : 0;
-
-    const randomNumber = `N° ${Math.floor(100000 + Math.random() * 900000)}`;
+    const displayedNumber = `N° ${Math.floor(100000 + Math.random() * 900000)}`;
 
     const accent = '#141414';
     const ink = '#111111';
@@ -140,7 +139,7 @@ export class PdfService {
               {
                 text: [
                   {
-                    text: 'COTIZACIÓN',
+                    text: opts?.label ?? 'COTIZACIÓN',
                     fontSize: 12,
                     bold: true,
                     color: '#ffffff',
@@ -148,7 +147,7 @@ export class PdfService {
                     alignment: 'right',
                   },
                   {
-                    text: '\n' + randomNumber,
+                    text: '\n' + displayedNumber,
                     fontSize: 9,
                     color: '#b9b9b9',
                     alignment: 'right',
@@ -226,7 +225,7 @@ export class PdfService {
             { text: cleanName, fontSize: 9, color: inkSoft },
             {
               text: `  ·  ${installItem.quantity} ${
-                installItem.quantity === 1 ? "punto" : "puntos"
+                installItem.quantity === 1 ? 'punto' : 'puntos'
               }`,
               fontSize: 9,
               bold: true,
@@ -239,34 +238,68 @@ export class PdfService {
       ]);
     }
 
-    infoRows.push([
-      {
-        text: [
-          {
-            text: 'EMISIÓN   ',
-            fontSize: 7.5,
-            bold: true,
-            color: labelGray,
-            characterSpacing: 2,
-          },
-          { text: this.formatDate(quote.createdAt), fontSize: 9.5, color: ink },
-        ],
-        alignment: 'left',
-      },
-      {
-        text: [
-          {
-            text: 'VÁLIDA HASTA   ',
-            fontSize: 7.5,
-            bold: true,
-            color: labelGray,
-            characterSpacing: 2,
-          },
-          { text: this.formatDate(quote.expiresAt), fontSize: 9.5, color: ink },
-        ],
-        alignment: 'right',
-      },
-    ]);
+    const showExpiry = opts?.showExpiry !== false;
+
+    if (showExpiry && quote.expiresAt) {
+      infoRows.push([
+        {
+          text: [
+            {
+              text: 'EMISIÓN   ',
+              fontSize: 7.5,
+              bold: true,
+              color: labelGray,
+              characterSpacing: 2,
+            },
+            {
+              text: this.formatDate(quote.createdAt),
+              fontSize: 9.5,
+              color: ink,
+            },
+          ],
+          alignment: 'left',
+        },
+        {
+          text: [
+            {
+              text: 'VÁLIDA HASTA   ',
+              fontSize: 7.5,
+              bold: true,
+              color: labelGray,
+              characterSpacing: 2,
+            },
+            {
+              text: this.formatDate(quote.expiresAt),
+              fontSize: 9.5,
+              color: ink,
+            },
+          ],
+          alignment: 'right',
+        },
+      ]);
+    } else {
+      infoRows.push([
+        {
+          text: [
+            {
+              text: 'EMISIÓN   ',
+              fontSize: 7.5,
+              bold: true,
+              color: labelGray,
+              characterSpacing: 2,
+            },
+            {
+              text: this.formatDate(quote.createdAt),
+              fontSize: 9.5,
+              color: ink,
+            },
+          ],
+          colSpan: 2,
+          alignment: 'left',
+        },
+        {},
+      ]);
+    }
 
     const infoContent: Content[] = [
       {
@@ -286,19 +319,14 @@ export class PdfService {
       { text: 'SKU', style: 'tableHeader' },
       { text: 'CANT.', style: 'tableHeader', alignment: 'center' },
       { text: 'P. UNITARIO', style: 'tableHeader', alignment: 'right' },
-      { text: 'DCTO.', style: 'tableHeader', alignment: 'center' },
       { text: 'SUBTOTAL', style: 'tableHeader', alignment: 'right' },
     ];
 
     const bodyRows: TableCell[][] = [headerRow];
     quote.items.forEach((item, idx) => {
       const isInstall =
-        item.sku === 'SERVICIO' || item.name.toLowerCase().includes('instalaci');
-      const hasDiscount =
-        !isInstall && item.originalPrice > 0 && item.originalPrice > item.unitPrice;
-      const discountPct = hasDiscount
-        ? Math.round((1 - item.unitPrice / item.originalPrice) * 100)
-        : 0;
+        item.sku === 'SERVICIO' ||
+        item.name.toLowerCase().includes('instalaci');
       const imageCell: TableCell = item.imageDataUri
         ? {
             image: item.imageDataUri,
@@ -328,13 +356,10 @@ export class PdfService {
         },
         { text: item.sku ?? '', fontSize: 8, color: '#666666' },
         { text: String(item.quantity), fontSize: 9, alignment: 'center' },
-        { text: this.formatMoney(item.unitPrice), fontSize: 9, alignment: 'right' },
         {
-          text: isInstall ? '—' : hasDiscount ? `−${discountPct}%` : '—',
-          alignment: 'center',
-          color: hasDiscount ? ink : '#bbbbbb',
-          fontSize: 8,
-          bold: hasDiscount,
+          text: this.formatMoney(item.unitPrice),
+          fontSize: 9,
+          alignment: 'right',
         },
         {
           text: this.formatMoney(item.subtotal),
@@ -350,7 +375,7 @@ export class PdfService {
       {
         table: {
           headerRows: 1,
-          widths: [22, 46, '*', 60, 30, 64, 30, 66],
+          widths: [22, 46, '*', 60, 30, 64, 66],
           body: bodyRows,
         },
         layout: {
@@ -369,47 +394,22 @@ export class PdfService {
 
     const summaryRows: TableCell[][] = [];
 
-    if (savings > 0) {
-      summaryRows.push([
-        {
-          text: [
-            {
-              text: 'SUBTOTAL (NORMAL)  '.toUpperCase(),
-              fontSize: 8,
-              color: labelGray,
-              characterSpacing: 1,
-            },
-            { text: this.formatMoney(totalOriginal), fontSize: 10, color: ink },
-          ],
-          alignment: 'right',
-          colSpan: 2,
-        },
-        {},
-      ]);
-      summaryRows.push([
-        {
-          text: [
-            {
-              text: `AHORRO (${savingsPct}%)  `.toUpperCase(),
-              fontSize: 8,
-              bold: true,
-              color: inkSoft,
-              characterSpacing: 1,
-            },
-            { text: '−' + this.formatMoney(savings), fontSize: 10, bold: true, color: ink },
-          ],
-          alignment: 'right',
-          colSpan: 2,
-        },
-        {},
-      ]);
-    }
-
     summaryRows.push([
       {
         text: [
-          { text: 'TOTAL  ', fontSize: 11, bold: true, color: ink, characterSpacing: 2 },
-          { text: this.formatMoney(quote.total), fontSize: 15, bold: true, color: ink },
+          {
+            text: 'TOTAL  ',
+            fontSize: 11,
+            bold: true,
+            color: ink,
+            characterSpacing: 2,
+          },
+          {
+            text: this.formatMoney(quote.total),
+            fontSize: 15,
+            bold: true,
+            color: ink,
+          },
         ],
         alignment: 'right',
         colSpan: 2,
@@ -431,11 +431,21 @@ export class PdfService {
       { text: '', margin: [0, 12, 0, 0] as [number, number, number, number] },
       {
         canvas: [
-          { type: 'line', x1: 0, y1: 0, x2: 515, y2: 0, lineWidth: 0.5, lineColor: '#dddddd' },
+          {
+            type: 'line',
+            x1: 0,
+            y1: 0,
+            x2: 515,
+            y2: 0,
+            lineWidth: 0.5,
+            lineColor: '#dddddd',
+          },
         ],
       },
       {
-        text: `Esta cotización es válida por ${quote.validDays} días a partir de la fecha de emisión.`,
+        text:
+          opts?.footerNote ??
+          `Esta cotización es válida por ${quote.validDays} días a partir de la fecha de emisión.`,
         fontSize: 8,
         color: '#9c9c9c',
         alignment: 'center',
@@ -490,6 +500,40 @@ export class PdfService {
     const pdfDoc = pdfMake.createPdf(docDefinition);
     const buffer = await pdfDoc.getBuffer();
     return Buffer.from(buffer);
+  }
+
+  async generateSalePdf(sale: {
+    number: string;
+    clientId: string | null;
+    clientName: string;
+    createdBy: string | null;
+    items: Array<{
+      name: string;
+      sku: string;
+      quantity: number;
+      unitPrice: number;
+      originalPrice: number;
+      subtotal: number;
+      imageDataUri?: string | null;
+    }>;
+    subtotal: number;
+    discount: number;
+    total: number;
+    createdAt: Date;
+  }): Promise<Buffer> {
+    return this.generateQuotePdf(
+      {
+        ...sale,
+        validDays: 0,
+        expiresAt: sale.createdAt,
+      },
+      {
+        label: 'RECIBO DE VENTA',
+        showExpiry: false,
+        footerNote:
+          '¡Gracias por su compra! Esta es su constancia de venta realizada.',
+      },
+    );
   }
 
   async uploadQuotePdf(

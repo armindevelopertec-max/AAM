@@ -25,4 +25,15 @@ export class VentaController {
       limit,
     });
   }
+
+  @Get('imagen')
+  getImagen(
+    @Query('fuente') fuente?: string,
+    @Query('idExterno') idExterno?: string,
+  ) {
+    return this.ventaService.getImageUrl(
+      fuente || undefined,
+      Number(idExterno) || 0,
+    );
+  }
 }

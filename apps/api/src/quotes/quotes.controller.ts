@@ -5,6 +5,7 @@ import {
   Body,
   Patch,
   Param,
+  Query,
   UseGuards,
   Res,
 } from '@nestjs/common';
@@ -27,8 +28,23 @@ export class QuotesController {
   }
 
   @Get()
-  findAll(@CurrentUser() user: User) {
-    return this.quotesService.findAll(user.storeId);
+  findAll(
+    @CurrentUser() user: User,
+    @Query() query: { page?: string; limit?: string; search?: string },
+  ) {
+    const page =
+      query.page != null
+        ? Math.max(1, parseInt(query.page, 10) || 1)
+        : undefined;
+    const limitRaw =
+      query.limit != null ? parseInt(query.limit, 10) || 10 : undefined;
+    const limit =
+      limitRaw != null ? Math.min(100, Math.max(1, limitRaw)) : undefined;
+    return this.quotesService.findAll(user.storeId, {
+      ...(page != null ? { page } : {}),
+      ...(page != null && limit != null ? { limit } : {}),
+      search: query.search,
+    });
   }
 
   @Get(':id')

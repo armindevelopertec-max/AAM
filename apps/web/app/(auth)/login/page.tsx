@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { useAuth } from "../../components/AuthProvider";
 
 export default function LoginPage() {
@@ -24,7 +25,23 @@ export default function LoginPage() {
 
   return (
     <div className="rounded-lg border border-neutral-200 bg-white p-8 dark:border-neutral-800 dark:bg-neutral-900">
-      <h1 className="text-2xl font-bold">Iniciar sesión</h1>
+      <div className="flex justify-center">
+        <Image
+          src="/brand/logo-black.png"
+          width={600}
+          height={600}
+          alt="SEGTECAM"
+          className="h-32 w-auto dark:hidden"
+        />
+        <Image
+          src="/brand/logo-white.png"
+          width={600}
+          height={600}
+          alt="SEGTECAM"
+          className="hidden h-32 w-auto dark:block"
+        />
+      </div>
+      <h1 className="mt-6 text-2xl font-bold">Iniciar sesión</h1>
       <p className="mt-1 text-sm text-neutral-600 dark:text-neutral-400">
         Accede a tu cuenta para continuar
       </p>

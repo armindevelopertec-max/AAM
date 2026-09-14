@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   Delete,
@@ -9,8 +10,12 @@ import {
   Query,
   Res,
   SetMetadata,
+  UploadedFiles,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
+import { FilesInterceptor } from '@nestjs/platform-express';
+import { memoryStorage } from 'multer';
 import type { Response } from 'express';
 import type { User } from '@prisma/client';
 import { ScrapingService } from './scraping.service';
@@ -19,6 +24,7 @@ import { CurrentUser } from '../auth/current-user.decorator';
 import { SaveScrapedProductsDto } from './dto/save-scraped-products.dto';
 import { ImportToPostgresDto } from './dto/import-to-postgres.dto';
 import { PatchPrecioDto } from './dto/patch-precio.dto';
+import { CreateManualProductDto } from './dto/create-manual-product.dto';
 import { FilesService } from '../files/files.service';
 import { Public } from '../auth/jwt-auth.guard';
 
@@ -33,6 +39,11 @@ export class ScrapingController {
   @Post('save')
   saveProducts(@Body() dto: SaveScrapedProductsDto) {
     return this.scrapingService.saveScrapedProducts(dto);
+  }
+
+  @Post('manual')
+  createManual(@Body() dto: CreateManualProductDto) {
+    return this.scrapingService.createManual(dto);
   }
 
   @Get('products')
@@ -88,6 +99,31 @@ export class ScrapingController {
   @Patch('products/:id/precio')
   updatePrecio(@Param('id') id: string, @Body() dto: PatchPrecioDto) {
     return this.scrapingService.updatePrecios(id, dto);
+  }
+
+  @Post('products/:id/images')
+  @UseInterceptors(
+    FilesInterceptor('files', 10, {
+      storage: memoryStorage(),
+      limits: { fileSize: 15 * 1024 * 1024 },
+    }),
+  )
+  uploadImages(
+    @Param('id') id: string,
+    @UploadedFiles() files?: Express.Multer.File[],
+  ) {
+    if (!files || files.length === 0) {
+      throw new BadRequestException(
+        'Debes enviar al menos un archivo en el campo "files"',
+      );
+    }
+    return this.scrapingService.uploadImages(id, files);
+  }
+
+  @Delete('products/:id/images')
+  removeImage(@Param('id') id: string, @Query('key') key?: string) {
+    if (!key) throw new BadRequestException('Debes enviar el parámetro "key"');
+    return this.scrapingService.removeImage(id, key);
   }
 
   @Delete('products/:id')

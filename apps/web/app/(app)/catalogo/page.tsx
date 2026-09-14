@@ -9,6 +9,7 @@ import {
   deleteCatalogoImagen,
   uploadCatalogoImagenes,
   importCatalogoFromJson,
+  createProducto,
   type CatalogoProducto,
   type CatalogoPrecioVentaTipo,
   type CatalogoImagen,
@@ -74,6 +75,21 @@ function toDraft(p: CatalogoProducto): Draft {
   };
 }
 
+function emptyDraft(): Draft {
+  return {
+    nombre: "",
+    descripcion: "",
+    marca: "",
+    modelo: "",
+    categoria: "",
+    canales: "",
+    precio: "",
+    precioVentaTipo: "",
+    precioVentaValor: "",
+    moneda: "BOB",
+  };
+}
+
 const str = (v: string) => (v.trim() ? v : null);
 const num = (v: string) => (v.trim() ? Number(v) : null);
 const saleType = (v: string): CatalogoPrecioVentaTipo | null =>
@@ -118,6 +134,10 @@ export default function CatalogoPage() {
   const [removingImageKey, setRemovingImageKey] = useState<string | null>(null);
   const [rowError, setRowError] = useState<string | null>(null);
   const [importing, setImporting] = useState(false);
+  const [creando, setCreando] = useState(false);
+  const [guardando, setGuardando] = useState(false);
+  const [newDraft, setNewDraft] = useState<Draft>(emptyDraft);
+  const [createMsg, setCreateMsg] = useState<string | null>(null);
 
   useEffect(() => {
     let active = true;
@@ -225,6 +245,40 @@ export default function CatalogoPage() {
     }
   };
 
+  const handleCreate = async () => {
+    setRowError(null);
+    setCreateMsg(null);
+    if (!newDraft.nombre.trim()) {
+      setRowError("El nombre es obligatorio.");
+      return;
+    }
+    const hasSaleType = Boolean(newDraft.precioVentaTipo.trim());
+    const hasSaleValue = Boolean(newDraft.precioVentaValor.trim());
+    if (hasSaleType !== hasSaleValue) {
+      setRowError("Completa el tipo y el valor del precio de venta, o deja ambos vacíos.");
+      return;
+    }
+    if (newDraft.precioVentaTipo === "porcentaje" && !newDraft.precio.trim()) {
+      setRowError("Para calcular un porcentaje de venta necesitas un precio de compra.");
+      return;
+    }
+    setGuardando(true);
+    try {
+      await createProducto({ ...toPatch(newDraft), nombre: newDraft.nombre.trim() });
+      setCreando(false);
+      setNewDraft(emptyDraft());
+      setCreateMsg(`Producto "${newDraft.nombre.trim()}" creado correctamente.`);
+      const data = await getCatalogo(query || undefined, undefined, undefined, 1, 20);
+      setTotal(data.catalogo.total);
+      setTotalPages(data.catalogo.totalPages);
+      setPage(data.catalogo.totalPages);
+    } catch (err) {
+      setRowError(err instanceof Error ? err.message : "No se pudo crear el producto");
+    } finally {
+      setGuardando(false);
+    }
+  };
+
   const handleImport = async () => {
     setImporting(true);
     try {
@@ -257,14 +311,167 @@ export default function CatalogoPage() {
             también puedes definir una venta fija o un porcentaje sobre ese costo.
           </p>
         </div>
-        <button
-          onClick={handleImport}
-          disabled={importing}
-          className="w-fit rounded-md border border-neutral-300 px-4 py-2 text-sm transition hover:border-neutral-400 disabled:opacity-50 dark:border-neutral-700"
-        >
-          {importing ? "Importando..." : "Importar desde JSON"}
-        </button>
+        <div className="flex flex-wrap gap-2">
+          <button
+            onClick={() => {
+              setCreando((c) => !c);
+              setCreateMsg(null);
+              setRowError(null);
+            }}
+            className="w-fit rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-blue-700"
+          >
+            {creando ? "Cancelar" : "Agregar producto"}
+          </button>
+          <button
+            onClick={handleImport}
+            disabled={importing}
+            className="w-fit rounded-md border border-neutral-300 px-4 py-2 text-sm transition hover:border-neutral-400 disabled:opacity-50 dark:border-neutral-700"
+          >
+            {importing ? "Importando..." : "Importar desde JSON"}
+          </button>
+        </div>
       </header>
+
+      {creando && (
+        <div className="rounded-lg border border-blue-200 bg-blue-50/40 p-4 dark:border-blue-900 dark:bg-blue-950/20">
+          <h2 className="mb-3 text-lg font-semibold text-neutral-900 dark:text-white">
+            Nuevo producto
+          </h2>
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            <label className="flex flex-col gap-1 text-xs text-neutral-500 dark:text-neutral-400">
+              Nombre *
+              <input
+                value={newDraft.nombre}
+                onChange={(e) => setNewDraft((d) => ({ ...d, nombre: e.target.value }))}
+                placeholder="Ej. Cámara IP exterior 2MP"
+                className={inputCls}
+              />
+            </label>
+            <label className="flex flex-col gap-1 text-xs text-neutral-500 dark:text-neutral-400">
+              Marca
+              <input
+                value={newDraft.marca}
+                onChange={(e) => setNewDraft((d) => ({ ...d, marca: e.target.value }))}
+                placeholder="Ej. Dahua"
+                className={inputCls}
+              />
+            </label>
+            <label className="flex flex-col gap-1 text-xs text-neutral-500 dark:text-neutral-400">
+              Modelo
+              <input
+                value={newDraft.modelo}
+                onChange={(e) => setNewDraft((d) => ({ ...d, modelo: e.target.value }))}
+                placeholder="Ej. IPC-HFW2431TP"
+                className={inputCls}
+              />
+            </label>
+            <label className="flex flex-col gap-1 text-xs text-neutral-500 dark:text-neutral-400">
+              Categoría
+              <input
+                value={newDraft.categoria}
+                onChange={(e) => setNewDraft((d) => ({ ...d, categoria: e.target.value }))}
+                placeholder="Ej. Cámaras"
+                className={inputCls}
+              />
+            </label>
+            <label className="flex flex-col gap-1 text-xs text-neutral-500 dark:text-neutral-400">
+              Canales
+              <input
+                type="number"
+                min="0"
+                value={newDraft.canales}
+                onChange={(e) => setNewDraft((d) => ({ ...d, canales: e.target.value }))}
+                className={inputCls}
+              />
+            </label>
+            <label className="flex flex-col gap-1 text-xs text-neutral-500 dark:text-neutral-400">
+              Precio de compra (Bs)
+              <input
+                type="number"
+                min="0"
+                step="0.01"
+                value={newDraft.precio}
+                onChange={(e) => setNewDraft((d) => ({ ...d, precio: e.target.value }))}
+                className={inputCls}
+              />
+            </label>
+            <label className="flex flex-col gap-1 text-xs text-neutral-500 dark:text-neutral-400">
+              Moneda
+              <input
+                value={newDraft.moneda}
+                onChange={(e) => setNewDraft((d) => ({ ...d, moneda: e.target.value }))}
+                placeholder="BOB"
+                className={inputCls}
+              />
+            </label>
+          </div>
+          <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-3">
+            <label className="flex flex-col gap-1 text-xs text-neutral-500 dark:text-neutral-400">
+              Tipo de precio de venta
+              <select
+                value={newDraft.precioVentaTipo}
+                onChange={(e) => setNewDraft((d) => ({ ...d, precioVentaTipo: e.target.value }))}
+                className={inputCls}
+              >
+                <option value="">Sin definir</option>
+                <option value="fijo">Fijo</option>
+                <option value="porcentaje">Porcentaje sobre compra</option>
+              </select>
+            </label>
+            <label className="flex flex-col gap-1 text-xs text-neutral-500 dark:text-neutral-400">
+              {newDraft.precioVentaTipo === "porcentaje" ? "Porcentaje" : "Valor"}
+              <input
+                type="number"
+                min="0"
+                step="0.01"
+                value={newDraft.precioVentaValor}
+                onChange={(e) => setNewDraft((d) => ({ ...d, precioVentaValor: e.target.value }))}
+                placeholder={newDraft.precioVentaTipo === "porcentaje" ? "Ej. 25" : "Ej. 1200"}
+                className={inputCls}
+              />
+            </label>
+            <div className="flex flex-col justify-end pb-1">
+              <span className="text-xs text-neutral-500 dark:text-neutral-400">Venta calculada</span>
+              <span className="mt-0.5 text-sm font-medium text-neutral-900 dark:text-neutral-100">
+                {getPrecioVentaPreview(newDraft.precio, newDraft.precioVentaTipo, newDraft.precioVentaValor) != null
+                  ? formatMoney(getPrecioVentaPreview(newDraft.precio, newDraft.precioVentaTipo, newDraft.precioVentaValor)!, newDraft.moneda || "BOB")
+                  : "—"}
+              </span>
+            </div>
+          </div>
+          <div className="mt-3">
+            <label className="flex flex-col gap-1 text-xs text-neutral-500 dark:text-neutral-400">
+              Descripción
+              <textarea
+                value={newDraft.descripcion}
+                onChange={(e) => setNewDraft((d) => ({ ...d, descripcion: e.target.value }))}
+                rows={3}
+                placeholder="Descripción del producto"
+                className={inputCls}
+              />
+            </label>
+          </div>
+          <div className="mt-4 flex items-center gap-3">
+            <button
+              onClick={handleCreate}
+              disabled={guardando}
+              className="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-blue-700 disabled:opacity-50"
+            >
+              {guardando ? "Guardando..." : "Guardar producto"}
+            </button>
+            <button
+              onClick={() => { setCreando(false); setRowError(null); }}
+              disabled={guardando}
+              className="rounded-md border border-neutral-300 px-4 py-2 text-sm transition hover:border-neutral-400 disabled:opacity-50 dark:border-neutral-700"
+            >
+              Cancelar
+            </button>
+            {createMsg && (
+              <span className="text-sm text-green-600 dark:text-green-400">{createMsg}</span>
+            )}
+          </div>
+        </div>
+      )}
 
       <div className="flex flex-col gap-4 sm:flex-row sm:items-end">
         <div className="flex-1">

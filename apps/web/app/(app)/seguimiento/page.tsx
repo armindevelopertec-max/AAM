@@ -4,22 +4,27 @@ import { useEffect, useState } from "react";
 import SeguimientoManager from "../../components/SeguimientoManager";
 import {
   getClients,
-  getQuotes,
-  getSales,
+  getQuotesPage,
+  getSalesPage,
   type Client,
+  type Paginated,
   type Quote,
   type Sale,
 } from "../../lib/api";
 
 export default function SeguimientoPage() {
-  const [quotes, setQuotes] = useState<Quote[] | null>(null);
-  const [sales, setSales] = useState<Sale[] | null>(null);
+  const [quotes, setQuotes] = useState<Paginated<Quote> | null>(null);
+  const [sales, setSales] = useState<Paginated<Sale> | null>(null);
   const [clients, setClients] = useState<Client[]>([]);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     let active = true;
-    Promise.all([getQuotes(), getSales(), getClients()])
+    Promise.all([
+      getQuotesPage({ page: 1, limit: 5 }),
+      getSalesPage({ page: 1, limit: 5 }),
+      getClients(),
+    ])
       .then(([quotesResult, salesResult, clientsResult]) => {
         if (active) {
           setQuotes(quotesResult);

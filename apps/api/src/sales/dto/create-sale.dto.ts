@@ -1,5 +1,15 @@
 import { Type } from 'class-transformer';
-import { ArrayNotEmpty, IsArray, IsInt, IsNumber, IsOptional, IsString, MaxLength, Min, ValidateNested } from 'class-validator';
+import {
+  ArrayNotEmpty,
+  IsArray,
+  IsInt,
+  IsNumber,
+  IsOptional,
+  IsString,
+  MaxLength,
+  Min,
+  ValidateNested,
+} from 'class-validator';
 
 export class CreateSaleItemDto {
   @IsOptional()

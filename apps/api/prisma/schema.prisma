@@ -87,19 +87,21 @@ model Client {
 }
 
 model Sale {
-  id        String     @id @default(uuid())
-  storeId   String
-  store     Store      @relation(fields: [storeId], references: [id])
-  number    String
-  clientId  String?
-  createdBy String?
-  items     SaleItem[]
-  subtotal  Float
-  discount  Float      @default(0)
-  total     Float
-  createdAt DateTime   @default(now())
+  id           String     @id @default(uuid())
+  storeId      String
+  store        Store      @relation(fields: [storeId], references: [id])
+  number       String
+  followNumber Int?
+  clientId     String?
+  createdBy    String?
+  items        SaleItem[]
+  subtotal     Float
+  discount     Float      @default(0)
+  total        Float
+  createdAt    DateTime   @default(now())
 
   @@unique([storeId, number])
+  @@unique([storeId, followNumber])
 }
 
 model SaleItem {
@@ -120,23 +122,25 @@ model SaleItem {
 }
 
 model Quote {
-  id         String      @id @default(uuid())
-  storeId    String
-  store      Store       @relation(fields: [storeId], references: [id])
-  number     String
-  clientId   String?
-  clientName String      @default("Cliente general")
-  createdBy  String?
-  items      QuoteItem[]
-  subtotal   Float
-  discount   Float       @default(0)
-  total      Float
-  validDays  Int         @default(7)
-  expiresAt  DateTime
-  status     QuoteStatus @default(borrador)
-  createdAt  DateTime    @default(now())
+  id           String      @id @default(uuid())
+  storeId      String
+  store        Store       @relation(fields: [storeId], references: [id])
+  number       String
+  followNumber Int?
+  clientId     String?
+  clientName   String      @default("Cliente general")
+  createdBy    String?
+  items        QuoteItem[]
+  subtotal     Float
+  discount     Float       @default(0)
+  total        Float
+  validDays    Int         @default(7)
+  expiresAt    DateTime
+  status       QuoteStatus @default(borrador)
+  createdAt    DateTime    @default(now())
 
   @@unique([storeId, number])
+  @@unique([storeId, followNumber])
 }
 
 model QuoteItem {

@@ -19,6 +19,7 @@ export type CartLine = {
 type Props = {
   open: boolean;
   setOpen: (open: boolean) => void;
+  buttonless?: boolean;
   title: string;
   lines: CartLine[];
   emptyMessage: string;
@@ -43,6 +44,7 @@ type Props = {
 export default function CartDrawer({
   open,
   setOpen,
+  buttonless = false,
   title,
   lines,
   emptyMessage,
@@ -69,30 +71,32 @@ export default function CartDrawer({
   return (
     <>
       {/* ── Botón flotante ── */}
-      <button
-        onClick={() => setOpen(true)}
-        aria-label={title}
-        className="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-green-600 text-white shadow-xl shadow-green-600/30 transition hover:bg-green-700 active:scale-95 dark:bg-green-600"
-      >
-        <svg
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.8"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="h-6 w-6"
+      {!buttonless && (
+        <button
+          onClick={() => setOpen(true)}
+          aria-label={title}
+          className="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-green-600 text-white shadow-xl shadow-green-600/30 transition hover:bg-green-700 active:scale-95 dark:bg-green-600"
         >
-          <circle cx="9" cy="21" r="1.5" />
-          <circle cx="19" cy="21" r="1.5" />
-          <path d="M2 2h2l2.4 12.5a2 2 0 0 0 2 1.5h8.7a2 2 0 0 0 2-1.6L21 7H6" />
-        </svg>
-        {totalItems > 0 && (
-          <span className="absolute -right-1 -top-1 flex h-6 min-w-6 items-center justify-center rounded-full border-2 border-white bg-red-500 px-1.5 text-xs font-bold text-white">
-            {totalItems}
-          </span>
-        )}
-      </button>
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.8"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="h-6 w-6"
+          >
+            <circle cx="9" cy="21" r="1.5" />
+            <circle cx="19" cy="21" r="1.5" />
+            <path d="M2 2h2l2.4 12.5a2 2 0 0 0 2 1.5h8.7a2 2 0 0 0 2-1.6L21 7H6" />
+          </svg>
+          {totalItems > 0 && (
+            <span className="absolute -right-1 -top-1 flex h-6 min-w-6 items-center justify-center rounded-full border-2 border-white bg-red-500 px-1.5 text-xs font-bold text-white">
+              {totalItems}
+            </span>
+          )}
+        </button>
+      )}
 
       {/* ── Fondo oscuro ── */}
       {open && (
@@ -220,7 +224,7 @@ export default function CartDrawer({
                             </span>
                           </div>
                         )}
-                        {isInstall ? (
+                        {onPriceChange ? (
                           <div className="flex items-center gap-1">
                             <input
                               type="number"
@@ -228,7 +232,7 @@ export default function CartDrawer({
                               min="0"
                               value={line.unitPrice}
                               onChange={(e) =>
-                                onPriceChange?.(
+                                onPriceChange(
                                   line.productId,
                                   Math.max(Number(e.target.value) || 0, 0),
                                 )

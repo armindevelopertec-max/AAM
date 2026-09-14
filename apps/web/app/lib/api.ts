@@ -16,6 +16,9 @@ export type Product = {
   fuente?: string;
   moneda?: string;
   enStock?: boolean;
+  unidad?: string;
+  metros?: number;
+  precioMetro?: number;
 };
 
 export type CatalogoPrecioVentaTipo = "fijo" | "porcentaje";
@@ -66,6 +69,7 @@ export type Sale = {
   id: string;
   storeId: string;
   number: string;
+  followNumber: number | null;
   clientId: string | null;
   createdBy: string | null;
   items: SaleItem[];
@@ -97,6 +101,7 @@ export type Quote = {
   id: string;
   storeId: string;
   number: string;
+  followNumber: number | null;
   clientId: string | null;
   clientName: string;
   createdBy: string | null;
@@ -185,7 +190,7 @@ export type ScrapingStats = {
 };
 
 export type ScrapingRun = {
-  id: number;
+  _id: string;
   fuente: string;
   categoria: string;
   status: string;
@@ -371,6 +376,28 @@ export async function getSales(): Promise<Sale[]> {
   return request("/sales");
 }
 
+export type Paginated<T> = {
+  items: T[];
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
+};
+
+export async function getSalesPage(input?: {
+  page?: number;
+  limit?: number;
+  search?: string;
+}): Promise<Paginated<Sale>> {
+  const params = new URLSearchParams();
+  if (input?.page != null) params.set("page", String(input.page));
+  if (input?.limit != null) params.set("limit", String(input.limit));
+  if (input?.search != null && input.search.trim() !== "") {
+    params.set("search", input.search.trim());
+  }
+  return request(`/sales?${params.toString()}`);
+}
+
 export type VentaProducto = {
   id: number;
   fuente: string;
@@ -384,6 +411,9 @@ export type VentaProducto = {
   stock: number | null;
   enStock: boolean;
   imagenUrl: string | null;
+  unidad: string | null;
+  metros: number | null;
+  precioMetro: number | null;
 };
 
 export type VentaCatalogo = {
@@ -429,6 +459,9 @@ export function ventaProductoToProduct(vp: VentaProducto): Product {
     fuente: vp.fuente,
     moneda: vp.moneda,
     enStock: vp.enStock,
+    unidad: vp.unidad ?? undefined,
+    metros: vp.metros ?? undefined,
+    precioMetro: vp.precioMetro ?? undefined,
   };
 }
 
@@ -452,6 +485,20 @@ export async function createSale(input: {
 
 export async function getQuotes(): Promise<Quote[]> {
   return request("/quotes");
+}
+
+export async function getQuotesPage(input?: {
+  page?: number;
+  limit?: number;
+  search?: string;
+}): Promise<Paginated<Quote>> {
+  const params = new URLSearchParams();
+  if (input?.page != null) params.set("page", String(input.page));
+  if (input?.limit != null) params.set("limit", String(input.limit));
+  if (input?.search != null && input.search.trim() !== "") {
+    params.set("search", input.search.trim());
+  }
+  return request(`/quotes?${params.toString()}`);
 }
 
 export async function createQuote(input: {
@@ -499,6 +546,24 @@ export async function generateQuotePdf(
 export async function downloadQuotePdf(id: string): Promise<string> {
   const token = getToken();
   const res = await fetch(`${API_URL}/quotes/${id}/pdf`, {
+    headers: token ? { Authorization: `Bearer ${token}` } : {},
+  });
+  if (!res.ok) {
+    throw new Error("No se pudo descargar el PDF");
+  }
+  const blob = await res.blob();
+  return URL.createObjectURL(blob);
+}
+
+export async function generateSalePdf(
+  id: string,
+): Promise<{ key: string; saleNumber: string }> {
+  return request(`/sales/${id}/pdf`, { method: "POST" });
+}
+
+export async function downloadSalePdf(id: string): Promise<string> {
+  const token = getToken();
+  const res = await fetch(`${API_URL}/sales/${id}/pdf`, {
     headers: token ? { Authorization: `Bearer ${token}` } : {},
   });
   if (!res.ok) {
@@ -566,6 +631,24 @@ export async function importCatalogoFromJson(): Promise<{
   total: number;
 }> {
   return request("/catalogo/import", { method: "POST" });
+}
+
+export async function createProducto(input: Partial<{
+  nombre: string;
+  descripcion: string | null;
+  marca: string | null;
+  modelo: string | null;
+  categoria: string | null;
+  canales: number | null;
+  precio: number | null;
+  precioVentaTipo: CatalogoPrecioVentaTipo | null;
+  precioVentaValor: number | null;
+  moneda: string | null;
+}>): Promise<CatalogoProducto> {
+  return request("/catalogo/productos", {
+    method: "POST",
+    body: JSON.stringify(input),
+  });
 }
 
 export async function updateProducto(
@@ -663,6 +746,26 @@ export async function getScrapedProduct(
   return request(`/scraping/products/${id}`);
 }
 
+export async function createScrapedProduct(input: {
+  nombre: string;
+  sku?: string;
+  marca?: string;
+  categoria?: string;
+  precioRegular?: number;
+  precioOferta?: number;
+  precioMetro?: number;
+  unidad?: string;
+  metros?: number;
+  moneda?: string;
+  stockCantidad?: number;
+  descripcionCorta?: string;
+}): Promise<ScrapedProduct> {
+  return request("/scraping/manual", {
+    method: "POST",
+    body: JSON.stringify(input),
+  });
+}
+
 export async function importScrapedToPostgres(
   id: string,
   overrides?: {
@@ -703,7 +806,12 @@ export async function updateScrapedNotes(
 
 export async function updateScrapedPrecio(
   id: string,
-  data: { precioOferta?: number; precioRegular?: number; stockCantidad?: number },
+  data: {
+    precioOferta?: number;
+    precioRegular?: number;
+    stockCantidad?: number;
+    precioMetro?: number;
+  },
 ): Promise<ScrapedProduct> {
   return request(`/scraping/products/${id}/precio`, {
     method: "PATCH",
@@ -713,6 +821,49 @@ export async function updateScrapedPrecio(
 
 export async function deleteScrapedProduct(id: string): Promise<void> {
   await request(`/scraping/products/${id}`, { method: "DELETE" });
+}
+
+export async function uploadScrapedImages(
+  id: string,
+  files: File[],
+): Promise<ScrapedProduct> {
+  const token = getToken();
+  const form = new FormData();
+  for (const file of files) {
+    form.append("files", file);
+  }
+  const res = await fetch(`${API_URL}/scraping/products/${id}/images`, {
+    method: "POST",
+    headers: token ? { Authorization: `Bearer ${token}` } : {},
+    body: form,
+  });
+  if (!res.ok) {
+    const body = await res.text();
+    const message = body ? JSON.parse(body).message : res.statusText;
+    throw new Error(message);
+  }
+  return res.json();
+}
+
+export async function deleteScrapedImage(
+  id: string,
+  key: string,
+): Promise<ScrapedProduct> {
+  const params = new URLSearchParams();
+  params.set("key", key);
+  return request(`/scraping/products/${id}/images?${params.toString()}`, {
+    method: "DELETE",
+  });
+}
+
+export async function getProductImage(
+  fuente: string | null,
+  idExterno: number,
+): Promise<{ imageUrl: string | null }> {
+  const params = new URLSearchParams();
+  params.set("fuente", fuente ?? "");
+  params.set("idExterno", String(idExterno));
+  return request(`/venta/imagen?${params.toString()}`);
 }
 
 export async function getScrapingStats(): Promise<ScrapingStats> {

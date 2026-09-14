@@ -12,7 +12,11 @@ import {
   CatalogoProductDocument,
 } from '../mongo/schemas/catalogo-product.schema';
 import { FilesService } from '../files/files.service';
-import { UpdateProductoDto } from './dto/update-producto.dto';
+import { optimizeImage } from '../files/image-optimizer';
+import {
+  UpdateProductoDto,
+  CreateProductoDto,
+} from './dto/update-producto.dto';
 
 @Injectable()
 export class CatalogoService {
@@ -137,6 +141,49 @@ export class CatalogoService {
     };
   }
 
+  async createProducto(dto: CreateProductoDto) {
+    const hasTipo =
+      dto.precioVentaTipo === 'fijo' || dto.precioVentaTipo === 'porcentaje';
+    const hasValor = typeof dto.precioVentaValor === 'number';
+    if (hasTipo !== hasValor) {
+      throw new BadRequestException(
+        'El tipo de venta y su valor deben guardarse juntos',
+      );
+    }
+    if (
+      dto.precioVentaTipo === 'porcentaje' &&
+      typeof dto.precio !== 'number'
+    ) {
+      throw new BadRequestException(
+        'Para calcular una venta por porcentaje necesitas un precio de compra',
+      );
+    }
+
+    const last = await this.catalogoModel
+      .findOne({}, { catalogoId: 1 })
+      .sort({ catalogoId: -1 })
+      .lean();
+    const nextId = (last?.catalogoId ?? 0) + 1;
+
+    const product = await this.catalogoModel.create({
+      catalogoId: nextId,
+      nombre: dto.nombre ?? null,
+      descripcion: dto.descripcion ?? null,
+      marca: dto.marca ?? null,
+      modelo: dto.modelo ?? null,
+      categoria: dto.categoria ?? null,
+      canales: dto.canales ?? null,
+      precio: dto.precio ?? null,
+      precioVentaTipo: dto.precioVentaTipo ?? null,
+      precioVentaValor: dto.precioVentaValor ?? null,
+      moneda: dto.moneda ?? 'BOB',
+      imagenes: [],
+      fuente: null,
+      ocr: null,
+    });
+    return this.decorateProducto(product.toObject());
+  }
+
   async updateProducto(id: number, patch: UpdateProductoDto) {
     const product = await this.catalogoModel.findOne({ catalogoId: id });
     if (!product) throw new NotFoundException(`Producto ${id} no encontrado`);
@@ -182,9 +229,16 @@ export class CatalogoService {
 
     try {
       for (const file of files) {
-        const ext = (file.originalname.split('.').pop() ?? 'bin').toLowerCase();
+        const optimized = await optimizeImage(file.buffer, file.mimetype);
+        const ext =
+          optimized.ext ||
+          (file.originalname.split('.').pop() ?? 'bin').toLowerCase();
         const key = `catalogo/${product.catalogoId}/${randomUUID()}.${ext}`;
-        await this.files.uploadObject(key, file.buffer, file.mimetype);
+        await this.files.uploadObject(
+          key,
+          optimized.buffer,
+          optimized.contentType,
+        );
         uploadedKeys.push(key);
         uploadedImages.push({
           key,

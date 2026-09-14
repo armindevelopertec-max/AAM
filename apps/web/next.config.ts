@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  allowedDevOrigins: ["segtecam.space", "www.segtecam.space", "*.segtecam.space"],
   async rewrites() {
     return [
       {

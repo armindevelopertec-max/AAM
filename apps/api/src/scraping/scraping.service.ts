@@ -16,8 +16,10 @@ import {
   ScrapingRunDocument,
 } from '../mongo/schemas/scraping-run.schema';
 import { FilesService } from '../files/files.service';
+import { optimizeImage } from '../files/image-optimizer';
 import { ImportToPostgresDto } from './dto/import-to-postgres.dto';
 import { PatchPrecioDto } from './dto/patch-precio.dto';
+import { CreateManualProductDto } from './dto/create-manual-product.dto';
 import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
@@ -169,9 +171,14 @@ export class ScrapingService {
         if (!res.ok) continue;
         const contentType = res.headers.get('content-type') ?? 'image/jpeg';
         const buffer = Buffer.from(await res.arrayBuffer());
-        const ext = contentType.includes('png') ? 'png' : 'jpg';
+        const optimized = await optimizeImage(buffer, contentType);
+        const ext = optimized.ext;
         const key = `scraping/${fuente}/${sku}/${randomUUID()}.${ext}`;
-        await this.files.uploadObject(key, buffer, contentType);
+        await this.files.uploadObject(
+          key,
+          optimized.buffer,
+          optimized.contentType,
+        );
         results.push({ key, originalUrl: url });
       } catch {
         this.logger.warn(`No se pudo descargar imagen: ${url}`);
@@ -232,6 +239,65 @@ export class ScrapingService {
       limit,
       totalPages: Math.ceil(total / limit),
     };
+  }
+
+  async createManual(dto: CreateManualProductDto) {
+    const nombre = dto.nombre.trim();
+    const categoria = dto.categoria?.trim() || 'General';
+    const marca = dto.marca?.trim() || '';
+    const moneda = dto.moneda?.trim() || 'BOB';
+    const unidad = dto.unidad?.trim() || 'unidad';
+    const stock = dto.stockCantidad ?? 0;
+    const precioOferta = dto.precioOferta ?? 0;
+    const precioRegular = dto.precioRegular ?? 0;
+    const esPorMetro = unidad === 'metro';
+    const sku = dto.sku?.trim() || `MANUAL-${Date.now()}`;
+
+    const last = await this.scrapedProductModel
+      .findOne({}, { 'datosCrudos.idExterno': 1 })
+      .sort({ 'datosCrudos.idExterno': -1 })
+      .lean();
+    const prevId = (last?.datosCrudos as { idExterno?: number } | undefined)
+      ?.idExterno;
+    const idExterno = (typeof prevId === 'number' ? prevId : 0) + 1;
+
+    return this.scrapedProductModel.create({
+      fuente: 'manual',
+      categoriaScrape: categoria,
+      fechaScrape: new Date(),
+      urlOriginal: `manual://${sku}`,
+      datosCrudos: {
+        idExterno,
+        nombre,
+        sku,
+        precioRegular,
+        precioOferta,
+        ...(esPorMetro
+          ? {
+              precioMetro: dto.precioMetro ?? 0,
+              metros: dto.metros ?? 0,
+            }
+          : {}),
+        unidad,
+        moneda,
+        enStock: stock > 0,
+        stockCantidad: stock,
+        stockTexto: stock > 0 ? `Stock: ${stock}` : 'Sin stock',
+        marca,
+        categorias: categoria !== 'General' ? [categoria] : [],
+        tags: [],
+        descripcionCorta: dto.descripcionCorta?.trim() ?? '',
+        descripcionLarga: '',
+      },
+      imagenesDescargadas: [],
+      historialPrecios: [
+        {
+          fecha: new Date(),
+          precioRegular,
+          precioOferta,
+        },
+      ],
+    });
   }
 
   async findOne(id: string) {
@@ -322,6 +388,9 @@ export class ScrapingService {
       set['datosCrudos.stockCantidad'] = dto.stockCantidad;
       set['datosCrudos.enStock'] = dto.stockCantidad > 0;
     }
+    if (typeof dto.precioMetro === 'number') {
+      set['datosCrudos.precioMetro'] = dto.precioMetro;
+    }
 
     const product = await this.scrapedProductModel.findByIdAndUpdate(
       id,
@@ -340,6 +409,80 @@ export class ScrapingService {
     );
     if (!product)
       throw new NotFoundException(`Producto scrapeado ${id} no encontrado`);
+    return product;
+  }
+
+  async uploadImages(id: string, files: Express.Multer.File[]) {
+    if (files.length === 0) {
+      throw new BadRequestException('Debes enviar al menos un archivo');
+    }
+
+    const product = await this.scrapedProductModel.findById(id);
+    if (!product)
+      throw new NotFoundException(`Producto scrapeado ${id} no encontrado`);
+
+    const sku =
+      product.datosCrudos.sku?.trim() || `producto-${product._id.toString()}`;
+    const uploaded: Array<{ key: string; originalUrl: string }> = [];
+    const uploadedKeys: string[] = [];
+
+    try {
+      for (const file of files) {
+        const optimized = await optimizeImage(file.buffer, file.mimetype);
+        const ext =
+          optimized.ext ||
+          (file.originalname.split('.').pop() ?? 'bin')
+            .toLowerCase()
+            .replace(/[^a-z0-9]/g, '');
+        const key = `scraping/manual/${sku}/${randomUUID()}.${ext || 'bin'}`;
+        await this.files.uploadObject(
+          key,
+          optimized.buffer,
+          optimized.contentType,
+        );
+        uploadedKeys.push(key);
+        uploaded.push({ key, originalUrl: `manual://${sku}` });
+      }
+    } catch (err) {
+      for (const key of uploadedKeys) {
+        try {
+          await this.files.deleteObject(key);
+        } catch {
+          // best-effort cleanup
+        }
+      }
+      throw err;
+    }
+
+    product.imagenesDescargadas = [
+      ...(product.imagenesDescargadas ?? []),
+      ...uploaded,
+    ];
+    await product.save();
+    return product;
+  }
+
+  async removeImage(id: string, key: string) {
+    const product = await this.scrapedProductModel.findById(id);
+    if (!product)
+      throw new NotFoundException(`Producto scrapeado ${id} no encontrado`);
+
+    const images = product.imagenesDescargadas ?? [];
+    const next = images.filter((img) => img.key !== key);
+    if (next.length === images.length) {
+      throw new NotFoundException(
+        `Imagen ${key} no encontrada en el producto ${id}`,
+      );
+    }
+
+    try {
+      await this.files.deleteObject(key);
+    } catch {
+      // object may not exist
+    }
+
+    product.imagenesDescargadas = next;
+    await product.save();
     return product;
   }
 

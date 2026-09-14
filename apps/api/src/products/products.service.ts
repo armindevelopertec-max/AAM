@@ -7,6 +7,7 @@ import { randomUUID } from 'node:crypto';
 import { Prisma, Product } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import { FilesService } from '../files/files.service';
+import { optimizeImage } from '../files/image-optimizer';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 
@@ -159,10 +160,13 @@ export class ProductsService {
     file: Express.Multer.File,
   ): Promise<ProductWithImage> {
     const product = await this.findOne(id, storeId);
-    const ext = (file.originalname.split('.').pop() ?? 'bin').toLowerCase();
+    const optimized = await optimizeImage(file.buffer, file.mimetype);
+    const ext =
+      optimized.ext ||
+      (file.originalname.split('.').pop() ?? 'bin').toLowerCase();
     const key = `productos/${product.id}/${randomUUID()}.${ext}`;
 
-    await this.files.uploadObject(key, file.buffer, file.mimetype);
+    await this.files.uploadObject(key, optimized.buffer, optimized.contentType);
 
     if (product.imageKey) {
       try {

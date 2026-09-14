@@ -70,9 +70,7 @@ export class FilesService implements OnModuleInit {
     return getSignedUrl(this.s3, command, { expiresIn });
   }
 
-  async getObject(
-    key: string,
-  ): Promise<{ body: Buffer; contentType: string }> {
+  async getObject(key: string): Promise<{ body: Buffer; contentType: string }> {
     const resp = await this.s3.send(
       new GetObjectCommand({ Bucket: this.bucket, Key: key }),
     );

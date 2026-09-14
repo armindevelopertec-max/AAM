@@ -473,12 +473,11 @@ function renderGrid() {
         <div class="prod-nombre">${escHtml(p.nombre)}</div>
         <span class="prod-sku">${escHtml(p.sku || "-")}</span>
         <span class="badge-stock ${enStock ? "in-stock" : "out-stock"}">${enStock ? "Disponible" : "Agotado"}</span>
-        <div class="prod-foot">
+<div class="prod-foot">
           <span class="prod-precio">${money(precioBase(p))}${p.unidad === "metro" ? '<small style="font-size:10px; color:var(--muted); font-weight:600">/m</small>' : ""}</span>
           <button class="btn-add" title="Agregar al carrito">+</button>
         </div>
-        ${p.unidad === "metro" && p.metros ? `<span style="font-size:10px; color:var(--muted); padding:0 12px 8px">Rollo de ${p.metros} m &middot; Bs ${(p.precio_oferta ?? p.precio_regular ?? 0).toLocaleString("es-BO", {minimumFractionDigits: 2, maximumFractionDigits: 2})} c/u</span>` : ""}
-      </div>
+</div>
     `;
     const thumb = card.querySelector(".prod-img");
     if (img) thumb.addEventListener("click", () => {

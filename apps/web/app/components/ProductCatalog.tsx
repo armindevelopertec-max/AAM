@@ -200,7 +200,17 @@ export default function ProductCatalog({
                         )}
                       <span className="text-base font-bold text-green-600 dark:text-green-400">
                         {formatMoney(product.price, product.moneda)}
+                        {product.unidad === "metro" && (
+                          <small className="ml-1 align-middle text-[11px] font-bold text-neutral-500 dark:text-neutral-400">
+                            /m
+                          </small>
+                        )}
                       </span>
+                      {product.unidad === "metro" && product.metros ? (
+                        <span className="block text-[10px] text-neutral-400">
+                          Rollo de {product.metros} m
+                        </span>
+                      ) : null}
                     </div>
                     <button
                       onClick={() => onAdd(product)}

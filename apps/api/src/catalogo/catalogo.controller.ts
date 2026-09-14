@@ -17,7 +17,10 @@ import { memoryStorage } from 'multer';
 import path from 'node:path';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { CatalogoService } from './catalogo.service';
-import { UpdateProductoDto } from './dto/update-producto.dto';
+import {
+  CreateProductoDto,
+  UpdateProductoDto,
+} from './dto/update-producto.dto';
 
 @Controller('catalogo')
 export class CatalogoController {
@@ -55,6 +58,12 @@ export class CatalogoController {
     return this.catalogoService.importFromJson(jsonPath);
   }
 
+  @Post('productos')
+  @UseGuards(JwtAuthGuard)
+  createProducto(@Body() dto: CreateProductoDto) {
+    return this.catalogoService.createProducto(dto);
+  }
+
   @Patch('productos/:id')
   @UseGuards(JwtAuthGuard)
   updateProducto(@Param('id') id: string, @Body() dto: UpdateProductoDto) {
@@ -66,7 +75,7 @@ export class CatalogoController {
   @UseInterceptors(
     FilesInterceptor('files', 10, {
       storage: memoryStorage(),
-      limits: { fileSize: 5 * 1024 * 1024 },
+      limits: { fileSize: 15 * 1024 * 1024 },
     }),
   )
   uploadImagenes(

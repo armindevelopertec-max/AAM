@@ -77,16 +77,21 @@ export class QuotesService {
         item.productId,
       );
       const d = product.datosCrudos;
-      const unitPrice = this.precioVentaDe(d);
-      if (unitPrice == null) {
+      const catalogPrice = this.precioVentaDe(d);
+      if (catalogPrice == null) {
         throw new BadRequestException(
           `El producto ${d.nombre} no tiene precio definido en el catálogo`,
         );
       }
+      const unitPrice = item.precio != null ? item.precio : catalogPrice;
       const originalPrice =
-        typeof d.precioRegular === 'number' && d.precioRegular > 0
-          ? d.precioRegular
-          : unitPrice;
+        d.unidad === 'metro' &&
+        typeof d.precioMetro === 'number' &&
+        d.precioMetro > 0
+          ? d.precioMetro
+          : typeof d.precioRegular === 'number' && d.precioRegular > 0
+            ? d.precioRegular
+            : unitPrice;
       const lineSubtotal = unitPrice * item.quantity;
       subtotal += lineSubtotal;
 
@@ -103,9 +108,7 @@ export class QuotesService {
     }
 
     if (discount < 0) {
-      throw new BadRequestException(
-        'El descuento no puede ser negativo',
-      );
+      throw new BadRequestException('El descuento no puede ser negativo');
     }
 
     let clientName = 'Cliente general';
@@ -129,6 +132,13 @@ export class QuotesService {
     });
     const number = `C-${String(seq.value).padStart(4, '0')}`;
 
+    const folioSeq = await this.prisma.sequence.upsert({
+      where: { storeId_name: { storeId, name: 'folio' } },
+      create: { storeId, name: 'folio', value: 100000 },
+      update: { value: { increment: 1 } },
+    });
+    const followNumber = folioSeq.value;
+
     const createdAt = new Date();
     const expiresAt = new Date(createdAt);
     expiresAt.setDate(expiresAt.getDate() + validDays);
@@ -137,6 +147,7 @@ export class QuotesService {
       data: {
         storeId,
         number,
+        followNumber,
         clientId: createQuoteDto.clientId ?? null,
         clientName,
         createdBy: createdByName ?? null,
@@ -153,13 +164,51 @@ export class QuotesService {
     return this.withEffectiveStatus(quote);
   }
 
-  async findAll(storeId: string) {
-    const quotes = await this.prisma.quote.findMany({
-      where: { storeId },
-      orderBy: { id: 'desc' },
-      include: { items: true },
-    });
-    return quotes.map((quote) => this.withEffectiveStatus(quote));
+  async findAll(
+    storeId: string,
+    opts?: { page?: number; limit?: number; search?: string },
+  ) {
+    const page = opts?.page;
+    const limit = opts?.limit;
+
+    if (page == null || limit == null) {
+      const quotes = await this.prisma.quote.findMany({
+        where: { storeId },
+        orderBy: { id: 'desc' },
+        include: { items: true },
+      });
+      return quotes.map((quote) => this.withEffectiveStatus(quote));
+    }
+
+    const search = opts?.search?.trim();
+    const where: Prisma.QuoteWhereInput = { storeId };
+    if (search) {
+      const folioNum = /^\d+$/.test(search) ? Number(search) : null;
+      where.OR = [
+        { number: { contains: search, mode: 'insensitive' } },
+        { clientName: { contains: search, mode: 'insensitive' } },
+        ...(folioNum != null ? [{ followNumber: folioNum }] : []),
+      ];
+    }
+
+    const [total, quotes] = await Promise.all([
+      this.prisma.quote.count({ where }),
+      this.prisma.quote.findMany({
+        where,
+        orderBy: { createdAt: 'desc' },
+        skip: (page - 1) * limit,
+        take: limit,
+        include: { items: true },
+      }),
+    ]);
+
+    return {
+      items: quotes.map((quote) => this.withEffectiveStatus(quote)),
+      total,
+      page,
+      limit,
+      totalPages: Math.ceil(total / limit),
+    };
   }
 
   async findOne(id: string, storeId: string) {
@@ -199,14 +248,13 @@ export class QuotesService {
     const sale = await this.salesService.create(
       {
         clientId: quote.clientId ?? undefined,
-        discount: quote.discount,
+        discount: 0,
         items: quote.items.map((item) => ({
           productId: item.productId ?? undefined,
           fuente: item.fuente ?? undefined,
           quantity: item.quantity,
-          ...(item.fuente
-            ? {}
-            : { precio: item.unitPrice, nombre: item.name, sku: item.sku }),
+          precio: item.unitPrice,
+          ...(item.fuente ? {} : { nombre: item.name, sku: item.sku }),
         })),
       },
       storeId,
@@ -273,7 +321,8 @@ export class QuotesService {
         unitPrice: item.unitPrice,
         originalPrice: item.originalPrice,
         subtotal: item.subtotal,
-        imageDataUri: imageDataCaches.get(`${item.fuente}:${item.productId}`) ?? null,
+        imageDataUri:
+          imageDataCaches.get(`${item.fuente}:${item.productId}`) ?? null,
       })),
       subtotal: quote.subtotal,
       discount: quote.discount,
@@ -310,7 +359,17 @@ export class QuotesService {
   private precioVentaDe(d: {
     precioOferta?: number | null;
     precioRegular?: number | null;
+    precioMetro?: number | null;
+    unidad?: string | null;
   }): number | null {
+    // Producto vendido por metro (cable/rollo): el precio es por metro.
+    if (
+      d.unidad === 'metro' &&
+      typeof d.precioMetro === 'number' &&
+      d.precioMetro > 0
+    ) {
+      return d.precioMetro;
+    }
     if (typeof d.precioOferta === 'number' && d.precioOferta > 0) {
       return d.precioOferta;
     }
