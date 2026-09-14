@@ -4,6 +4,11 @@
 
 # Backups (dumps de BD, imágenes, PDFs) - no se versionan
 backups/
+20260914/
+AAM-data-*.tar.gz
+
+# Override local de compose (puertos laptop)
+docker-compose.local.yml
 
 # Scripts temporales puntuales (a menudo contienen credenciales)
 apps/api/prisma/create-admin.ts
