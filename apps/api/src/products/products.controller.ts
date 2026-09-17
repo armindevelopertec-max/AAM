@@ -38,6 +38,7 @@ export class ProductsController {
   async serveImage(@Param('id') id: string, @Res() res: Response) {
     const key = await this.productsService.getImageKey(id);
     if (!key) {
+      res.set('Cache-Control', 'no-store');
       res.status(404).json({ error: 'Imagen no encontrada' });
       return;
     }
@@ -49,6 +50,7 @@ export class ProductsController {
       });
       res.end(data.body);
     } catch {
+      res.set('Cache-Control', 'no-store');
       res.status(404).json({ error: 'Imagen no encontrada' });
     }
   }

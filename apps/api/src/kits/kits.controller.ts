@@ -36,6 +36,7 @@ export class KitsController {
   async serveImage(@Param('id') id: string, @Res() res: Response) {
     const key = await this.kitsService.getImageKey(id);
     if (!key) {
+      res.set('Cache-Control', 'no-store');
       res.status(404).json({ error: 'Imagen no encontrada' });
       return;
     }
@@ -47,6 +48,7 @@ export class KitsController {
       });
       res.end(data.body);
     } catch {
+      res.set('Cache-Control', 'no-store');
       res.status(404).json({ error: 'Imagen no encontrada' });
     }
   }

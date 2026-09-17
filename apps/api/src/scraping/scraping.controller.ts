@@ -152,6 +152,7 @@ export class ScrapingController {
       });
       res.end(data.body);
     } catch {
+      res.set('Cache-Control', 'no-store');
       res.status(404).json({ error: 'Imagen no encontrada' });
     }
   }
