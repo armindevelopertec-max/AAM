@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback, type ReactNode } from "react";
+import { useRouter } from "next/navigation";
 import { useCartStore } from "./CartStore";
 import type { CartLine } from "./CartDrawer";
 import {
@@ -117,6 +118,16 @@ function ConvertIcon(props: IconProps) {
       <path d="M8 16H3v-5" />
       <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" />
       <path d="M16 8h5v5" />
+    </IconBase>
+  );
+}
+
+function KitIcon(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <path d="M21 8l-9-5-9 5v8l9 5 9-5V8z" />
+      <path d="M3 8l9 5 9-5" />
+      <path d="M12 13v8" />
     </IconBase>
   );
 }
@@ -315,6 +326,7 @@ export default function SeguimientoManager({
   const [error, setError] = useState<string | null>(null);
 
   const { setPosLines, setQuoteLines, openDock } = useCartStore();
+  const router = useRouter();
 
   // Debounce de búsquedas
   useEffect(() => {
@@ -733,6 +745,13 @@ export default function SeguimientoManager({
                         <CartIcon className="h-4 w-4" />
                         Cargar a cotización
                       </button>
+                      <button
+                        onClick={() => router.push(`/kits?desde=quote:${quote.id}`)}
+                        className="inline-flex items-center gap-1.5 rounded-lg border border-neutral-300 px-3 py-1.5 text-sm font-semibold text-neutral-700 transition hover:bg-neutral-50 dark:border-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-800"
+                      >
+                        <KitIcon className="h-4 w-4" />
+                        Crear kit
+                      </button>
                       {quote.status === "borrador" && (
                         <button
                           onClick={() => handleStatus(quote.id, "enviada")}
@@ -868,6 +887,13 @@ export default function SeguimientoManager({
                         Cargar al carrito POS
                       </button>
                       <button
+                        onClick={() => router.push(`/kits?desde=sale:${sale.id}`)}
+                        className="inline-flex items-center gap-1.5 rounded-lg border border-neutral-300 px-3 py-1.5 text-sm font-semibold text-neutral-700 transition hover:bg-neutral-50 dark:border-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-800"
+                      >
+                        <KitIcon className="h-4 w-4" />
+                        Crear kit
+                      </button>
+                      <button
                         onClick={() => handleSalePdf(sale.id)}
                         className="inline-flex items-center gap-1.5 rounded-lg border border-neutral-300 px-3 py-1.5 text-sm font-medium transition hover:border-neutral-400 hover:bg-neutral-50 dark:border-neutral-700 dark:hover:bg-neutral-800"
                       >
@@ -885,7 +911,7 @@ export default function SeguimientoManager({
 
                     {/* Detalle */}
                     {expandedSaleId === sale.id && (
-                      <div className="overflow-hidden rounded-lg border border-neutral-200 dark:border-neutral-800">
+                      <div className="overflow-x-auto rounded-lg border border-neutral-200 dark:border-neutral-800">
                         <table className="w-full text-left text-sm">
                           <thead className="bg-neutral-50 dark:bg-neutral-800/60">
                             <tr className="border-b border-neutral-200 dark:border-neutral-800">

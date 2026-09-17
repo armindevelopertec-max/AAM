@@ -77,7 +77,7 @@ export default function UsersManager() {
   return (
     <div className="flex w-full flex-col gap-8">
       <div className="flex flex-col gap-4">
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           {isAdmin && (
             <button
               type="button"
@@ -148,7 +148,7 @@ function UsuariosSection(props: {
 
   return (
     <section className="rounded-lg border border-neutral-200 bg-white p-6 dark:border-neutral-800 dark:bg-neutral-900">
-      <div className="mb-4 flex items-center justify-between">
+      <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <h3 className="text-base font-semibold">Usuarios del sistema</h3>
         <button
           onClick={() => setModal({ mode: "create" })}
@@ -500,7 +500,7 @@ function ClientesSection(props: {
 
   return (
     <section className="rounded-lg border border-neutral-200 bg-white p-6 dark:border-neutral-800 dark:bg-neutral-900">
-      <div className="mb-4 flex items-center justify-between">
+      <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <h3 className="text-base font-semibold">Clientes de la tienda</h3>
         <button
           onClick={openModal}

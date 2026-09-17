@@ -107,8 +107,8 @@ export default function DashboardPage() {
           ) : (
             <ul className="flex flex-col divide-y divide-neutral-100 dark:divide-neutral-800">
               {data.recentSales.map((sale) => (
-                <li key={sale.id} className="flex items-center justify-between py-2">
-                  <div>
+                <li key={sale.id} className="flex items-center justify-between gap-3 py-2">
+                  <div className="min-w-0">
                     <span className="font-mono text-sm font-medium">{sale.number}</span>
                     <span className="ml-2 text-sm text-neutral-500 dark:text-neutral-400">
                       {sale.items.length} ítems
@@ -133,8 +133,8 @@ export default function DashboardPage() {
           ) : (
             <ul className="flex flex-col divide-y divide-neutral-100 dark:divide-neutral-800">
               {data.recentQuotes.map((quote) => (
-                <li key={quote.id} className="flex items-center justify-between py-2">
-                  <div>
+                <li key={quote.id} className="flex items-center justify-between gap-3 py-2">
+                  <div className="min-w-0">
                     <span className="font-mono text-sm font-medium">{quote.number}</span>
                     <span className="ml-2 text-sm text-neutral-500 dark:text-neutral-400">
                       {quote.clientName}
@@ -162,8 +162,8 @@ export default function DashboardPage() {
         ) : (
           <ul className="flex flex-col divide-y divide-neutral-100 dark:divide-neutral-800">
             {data.lowStockProducts.map((product) => (
-              <li key={product.id} className="flex items-center justify-between py-2">
-                <div>
+              <li key={product.id} className="flex items-center justify-between gap-3 py-2">
+                <div className="min-w-0">
                   <span className="text-sm font-medium">{product.name}</span>
                   <span className="ml-2 font-mono text-xs text-neutral-500 dark:text-neutral-400">
                     {product.sku}

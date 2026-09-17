@@ -336,7 +336,7 @@ export default function CatalogManager() {
               )}
             </div>
           </div>
-          <div className="mt-4 flex items-center gap-3">
+          <div className="mt-4 flex flex-wrap items-center gap-3">
             <button
               onClick={handleCrear}
               disabled={guardando}

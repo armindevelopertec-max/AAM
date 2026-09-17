@@ -10,6 +10,7 @@ const links = [
   { href: "/", label: "Dashboard" },
   { href: "/pos", label: "POS" },
   { href: "/quotes", label: "Cotizaciones" },
+  { href: "/kits", label: "Kits" },
   { href: "/seguimiento", label: "Seguimiento" },
   { href: "/products", label: "Catálogo" },
   { href: "/users", label: "Usuarios" },
@@ -56,7 +57,7 @@ export default function Navbar() {
         </div>
         <button
           onClick={() => setOpen(!open)}
-          className="md:hidden"
+          className="-mr-2 flex h-10 w-10 items-center justify-center rounded-md md:hidden"
           aria-label="Abrir menú"
         >
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">

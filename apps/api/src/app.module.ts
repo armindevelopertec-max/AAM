@@ -13,6 +13,7 @@ import { MongoModule } from './mongo/mongo.module';
 import { ScrapingModule } from './scraping/scraping.module';
 import { VentaModule } from './venta/venta.module';
 import { PdfModule } from './pdf/pdf.module';
+import { KitsModule } from './kits/kits.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { PdfModule } from './pdf/pdf.module';
     ScrapingModule,
     VentaModule,
     PdfModule,
+    KitsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

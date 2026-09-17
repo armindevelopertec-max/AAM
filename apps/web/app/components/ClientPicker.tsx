@@ -117,7 +117,7 @@ export default function ClientPicker({
       </button>
 
       {open && (
-        <div className="absolute z-20 mt-2 w-full min-w-64 rounded-md border border-neutral-200 bg-white shadow-lg dark:border-neutral-800 dark:bg-neutral-900">
+        <div className="absolute z-20 mt-2 w-full min-w-0 rounded-md border border-neutral-200 bg-white shadow-lg sm:min-w-64 dark:border-neutral-800 dark:bg-neutral-900">
           <div className="border-b border-neutral-100 p-2 dark:border-neutral-800">
             <input
               autoFocus

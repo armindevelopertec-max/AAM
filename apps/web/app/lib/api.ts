@@ -115,6 +115,34 @@ export type Quote = {
   createdAt: string;
 };
 
+export type KitItem = {
+  id: string;
+  kitId: string;
+  productId: number | null;
+  fuente: string | null;
+  name: string;
+  sku: string;
+  quantity: number;
+  unitPrice: number;
+  originalPrice: number;
+  moneda: string;
+  unidad: string | null;
+};
+
+export type Kit = {
+  id: string;
+  storeId: string;
+  name: string;
+  description: string | null;
+  imageKey: string | null;
+  imageUrl: string | null;
+  priceOverride: number | null;
+  items: KitItem[];
+  subtotal: number;
+  createdAt: string;
+  updatedAt: string;
+};
+
 export type Store = {
   id: string;
   name: string;
@@ -376,6 +404,10 @@ export async function getSales(): Promise<Sale[]> {
   return request("/sales");
 }
 
+export async function getSale(id: string): Promise<Sale> {
+  return request(`/sales/${id}`);
+}
+
 export type Paginated<T> = {
   items: T[];
   total: number;
@@ -487,6 +519,10 @@ export async function getQuotes(): Promise<Quote[]> {
   return request("/quotes");
 }
 
+export async function getQuote(id: string): Promise<Quote> {
+  return request(`/quotes/${id}`);
+}
+
 export async function getQuotesPage(input?: {
   page?: number;
   limit?: number;
@@ -571,6 +607,69 @@ export async function downloadSalePdf(id: string): Promise<string> {
   }
   const blob = await res.blob();
   return URL.createObjectURL(blob);
+}
+
+// --- Kits ---
+
+export type KitItemInput = {
+  productId?: number;
+  fuente?: string;
+  quantity: number;
+  nombre?: string;
+  sku?: string;
+  precio?: number;
+};
+
+export async function getKits(): Promise<Kit[]> {
+  return request("/kits");
+}
+
+export async function createKit(input: {
+  name: string;
+  description?: string;
+  priceOverride?: number;
+  items: KitItemInput[];
+}): Promise<Kit> {
+  return request("/kits", {
+    method: "POST",
+    body: JSON.stringify(input),
+  });
+}
+
+export async function updateKit(
+  id: string,
+  input: Partial<{
+    name: string;
+    description: string | null;
+    priceOverride: number | null;
+    items: KitItemInput[];
+  }>,
+): Promise<Kit> {
+  return request(`/kits/${id}`, {
+    method: "PATCH",
+    body: JSON.stringify(input),
+  });
+}
+
+export async function deleteKit(id: string): Promise<void> {
+  await request(`/kits/${id}`, { method: "DELETE" });
+}
+
+export async function uploadKitImage(id: string, file: File): Promise<Kit> {
+  const token = getToken();
+  const form = new FormData();
+  form.append("file", file);
+  const res = await fetch(`${API_URL}/kits/${id}/image`, {
+    method: "POST",
+    headers: token ? { Authorization: `Bearer ${token}` } : {},
+    body: form,
+  });
+  if (!res.ok) {
+    const body = await res.text();
+    const message = body ? JSON.parse(body).message : res.statusText;
+    throw new Error(message);
+  }
+  return res.json();
 }
 
 export async function getDashboard(): Promise<DashboardSummary> {
@@ -881,6 +980,12 @@ export function getScrapedImageUrl(key: string): string {
 export function getProductImageUrl(
   imageUrl: string | null,
 ): string | null {
+  if (!imageUrl) return null;
+  if (imageUrl.startsWith("http")) return imageUrl;
+  return `${API_URL}${imageUrl}`;
+}
+
+export function getKitImageUrl(imageUrl: string | null): string | null {
   if (!imageUrl) return null;
   if (imageUrl.startsWith("http")) return imageUrl;
   return `${API_URL}${imageUrl}`;

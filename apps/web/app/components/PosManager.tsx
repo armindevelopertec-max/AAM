@@ -39,6 +39,7 @@ export default function PosManager() {
             originalPrice: product.regularPrice || product.price,
             costPrice: product.costPrice,
             imageUrl: product.imageUrl,
+            unidad: product.unidad ?? null,
           },
         ];
       });

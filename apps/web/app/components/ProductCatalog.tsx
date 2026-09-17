@@ -96,7 +96,7 @@ export default function ProductCatalog({
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Buscar producto, SKU o categoría…"
-          className="flex-1 rounded-lg border border-neutral-300 bg-white px-4 py-2.5 text-sm outline-none focus:border-blue-500 dark:border-neutral-700 dark:bg-neutral-900"
+          className="min-w-0 flex-1 rounded-lg border border-neutral-300 bg-white px-4 py-2.5 text-sm outline-none focus:border-blue-500 dark:border-neutral-700 dark:bg-neutral-900"
         />
         <div className="flex flex-wrap gap-2">
           <button
@@ -143,7 +143,7 @@ export default function ProductCatalog({
           Sin productos.
         </p>
       ) : (
-        <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5">
+        <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-3 sm:gap-3 md:grid-cols-4 xl:grid-cols-5">
           {products.map((product) => {
             const inCartQtyVal = inCartQty?.(product.id) ?? 0;
             const available = product.stock - inCartQtyVal;
@@ -166,7 +166,7 @@ export default function ProductCatalog({
                 ) : (
                   <div className="aspect-square w-full bg-neutral-100 dark:bg-neutral-800" />
                 )}
-                <div className="flex flex-1 flex-col gap-1 p-3">
+                <div className="flex flex-1 flex-col gap-1 p-2 sm:p-3">
                   <span className="text-[10px] font-bold uppercase tracking-wider text-blue-500">
                     {product.category || "General"}
                   </span>
@@ -189,7 +189,7 @@ export default function ProductCatalog({
                       Agotado
                     </span>
                   )}
-                  <div className="mt-auto flex items-center justify-between pt-1">
+                  <div className="mt-auto flex flex-wrap items-center justify-between gap-1 pt-1">
                     <div>
                       {showOriginalPrice &&
                         product.regularPrice > 0 &&
@@ -198,7 +198,7 @@ export default function ProductCatalog({
                             {formatMoney(product.regularPrice, product.moneda)}
                           </span>
                         )}
-                      <span className="text-base font-bold text-green-600 dark:text-green-400">
+                      <span className="text-sm font-bold text-green-600 sm:text-base dark:text-green-400">
                         {formatMoney(product.price, product.moneda)}
                         {product.unidad === "metro" && (
                           <small className="ml-1 align-middle text-[11px] font-bold text-neutral-500 dark:text-neutral-400">
@@ -215,7 +215,7 @@ export default function ProductCatalog({
                     <button
                       onClick={() => onAdd(product)}
                       disabled={available <= 0}
-                      className="rounded-lg bg-blue-500 px-3 py-1.5 text-sm font-bold text-white transition hover:bg-blue-600 disabled:cursor-not-allowed disabled:opacity-40"
+                      className="rounded-lg bg-blue-500 px-2.5 py-1.5 text-sm font-bold text-white transition hover:bg-blue-600 disabled:cursor-not-allowed disabled:opacity-40"
                     >
                       +
                     </button>
@@ -230,7 +230,7 @@ export default function ProductCatalog({
       {/* ── Paginación ── */}
       {totalPages > 1 && (
         <div className="mt-6 flex flex-col items-center gap-2">
-          <div className="flex items-center gap-1">
+          <div className="flex flex-wrap items-center justify-center gap-1">
             <button
               onClick={() => goTo(page - 1)}
               disabled={page <= 1}

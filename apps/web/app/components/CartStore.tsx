@@ -11,6 +11,7 @@ import {
   type SetStateAction,
 } from "react";
 import type { CartLine } from "./CartDrawer";
+import type { Kit } from "../lib/api";
 
 export type PosCart = {
   lines: CartLine[];
@@ -44,6 +45,24 @@ const DEFAULT_POS: PosCart = {
   installPricePerPoint: "100",
 };
 
+export type KitCart = {
+  lines: CartLine[];
+  name: string;
+  description: string;
+  priceOverride: string;
+  editingId: string | null;
+  imageUrl: string | null;
+};
+
+export const defaultKitCart = (): KitCart => ({
+  lines: [],
+  name: "",
+  description: "",
+  priceOverride: "",
+  editingId: null,
+  imageUrl: null,
+});
+
 export const defaultQuoteCart = (): QuoteCart => ({
   lines: [],
   clientId: null,
@@ -58,6 +77,7 @@ export const defaultQuoteCart = (): QuoteCart => ({
 
 const POS_KEY = "segtecam_pos_cart_v1";
 const QUOTE_KEY = "segtecam_quote_cart_v1";
+const KIT_KEY = "segtecam_kit_cart_v1";
 
 function load<T>(key: string, fallback: () => T): T {
   if (typeof window === "undefined") return fallback();
@@ -83,8 +103,18 @@ type CartContextValue = {
   setQuoteClientId: (id: string | null) => void;
   setQuoteField: <K extends keyof QuoteCart>(key: K, value: QuoteCart[K]) => void;
   resetQuote: () => void;
-  dockOpen: "pos" | "quote" | null;
-  openDock: (tipo: "pos" | "quote") => void;
+  kit: KitCart;
+  setKitLines: React.Dispatch<SetStateAction<CartLine[]>>;
+  setKitName: (value: string) => void;
+  setKitDescription: (value: string) => void;
+  setKitPriceOverride: (value: string) => void;
+  setKitImageUrl: (value: string | null) => void;
+  loadKit: (kit: Kit) => void;
+  resetKit: () => void;
+  kitRevision: number;
+  bumpKitRevision: () => void;
+  dockOpen: "pos" | "quote" | "kit" | null;
+  openDock: (tipo: "pos" | "quote" | "kit") => void;
   closeDock: () => void;
 };
 
@@ -93,9 +123,12 @@ const CartContext = createContext<CartContextValue | null>(null);
 export function CartProvider({ children }: { children: ReactNode }) {
   const [pos, setPos] = useState<PosCart>(() => load(POS_KEY, () => ({ ...DEFAULT_POS })));
   const [quote, setQuote] = useState<QuoteCart>(() => load(QUOTE_KEY, defaultQuoteCart));
+  const [kit, setKit] = useState<KitCart>(() => load(KIT_KEY, defaultKitCart));
+  const [kitRevision, setKitRevision] = useState(0);
 
   const hydratedPos = useRef(false);
   const hydratedQuote = useRef(false);
+  const hydratedKit = useRef(false);
   useEffect(() => {
     if (hydratedPos.current) localStorage.setItem(POS_KEY, JSON.stringify(pos));
     hydratedPos.current = true;
@@ -104,6 +137,10 @@ export function CartProvider({ children }: { children: ReactNode }) {
     if (hydratedQuote.current) localStorage.setItem(QUOTE_KEY, JSON.stringify(quote));
     hydratedQuote.current = true;
   }, [quote]);
+  useEffect(() => {
+    if (hydratedKit.current) localStorage.setItem(KIT_KEY, JSON.stringify(kit));
+    hydratedKit.current = true;
+  }, [kit]);
 
   const setPosLines = useCallback((updater: SetStateAction<CartLine[]>) => {
     setPos((prev) => ({
@@ -145,8 +182,54 @@ export function CartProvider({ children }: { children: ReactNode }) {
     setQuote(defaultQuoteCart());
   }, []);
 
-  const [dockOpen, setDockOpen] = useState<"pos" | "quote" | null>(null);
-  const openDock = useCallback((tipo: "pos" | "quote") => setDockOpen(tipo), []);
+  const setKitLines = useCallback((updater: SetStateAction<CartLine[]>) => {
+    setKit((prev) => ({
+      ...prev,
+      lines: typeof updater === "function" ? updater(prev.lines) : updater,
+    }));
+  }, []);
+
+  const setKitName = useCallback((value: string) => {
+    setKit((prev) => ({ ...prev, name: value }));
+  }, []);
+
+  const setKitDescription = useCallback((value: string) => {
+    setKit((prev) => ({ ...prev, description: value }));
+  }, []);
+
+  const setKitPriceOverride = useCallback((value: string) => {
+    setKit((prev) => ({ ...prev, priceOverride: value }));
+  }, []);
+
+  const setKitImageUrl = useCallback((value: string | null) => {
+    setKit((prev) => ({ ...prev, imageUrl: value }));
+  }, []);
+
+  const loadKit = useCallback((source: Kit) => {
+    setKit({
+      lines: [],
+      name: source.name,
+      description: source.description ?? "",
+      priceOverride:
+        source.priceOverride != null ? String(source.priceOverride) : "",
+      editingId: source.id,
+      imageUrl: source.imageUrl,
+    });
+  }, []);
+
+  const resetKit = useCallback(() => {
+    setKit(defaultKitCart());
+  }, []);
+
+  const bumpKitRevision = useCallback(() => {
+    setKitRevision((current) => current + 1);
+  }, []);
+
+  const [dockOpen, setDockOpen] = useState<"pos" | "quote" | "kit" | null>(null);
+  const openDock = useCallback(
+    (tipo: "pos" | "quote" | "kit") => setDockOpen(tipo),
+    [],
+  );
   const closeDock = useCallback(() => setDockOpen(null), []);
 
   return (
@@ -161,6 +244,16 @@ export function CartProvider({ children }: { children: ReactNode }) {
         setQuoteClientId,
         setQuoteField,
         resetQuote,
+        kit,
+        setKitLines,
+        setKitName,
+        setKitDescription,
+        setKitPriceOverride,
+        setKitImageUrl,
+        loadKit,
+        resetKit,
+        kitRevision,
+        bumpKitRevision,
         dockOpen,
         openDock,
         closeDock,

@@ -549,7 +549,7 @@ export default function CatalogoPage() {
                   )}
                 </header>
 
-                <div className="grid grid-cols-2 gap-x-4 gap-y-2">
+                <div className="grid grid-cols-1 gap-x-4 gap-y-2 sm:grid-cols-2">
                   {FIELDS.filter((f) => f.key !== "nombre").map((f) => (
                     <div key={f.key}>
                       <dt className="text-xs text-neutral-500 dark:text-neutral-400">{f.label}</dt>
@@ -681,7 +681,7 @@ export default function CatalogoPage() {
       )}
 
       {totalPages > 1 && (
-        <div className="flex items-center justify-center gap-2 text-sm">
+        <div className="flex flex-wrap items-center justify-center gap-2 text-sm">
           <button onClick={() => setPage((p) => Math.max(1, p - 1))} disabled={page === 1}
             className="rounded-md border border-neutral-300 px-3 py-1 text-sm transition hover:border-neutral-400 disabled:cursor-default disabled:opacity-50 dark:border-neutral-700">Anterior</button>
           <span className="text-neutral-600 dark:text-neutral-300">Página {page} de {totalPages}</span>

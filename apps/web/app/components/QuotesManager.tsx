@@ -40,6 +40,7 @@ export default function QuotesManager() {
             costPrice: product.costPrice,
             imageUrl: product.imageUrl,
             isInstall: false,
+            unidad: product.unidad ?? null,
           },
         ];
       });

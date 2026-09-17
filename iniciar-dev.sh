@@ -42,7 +42,7 @@ echo
 echo "AAM en desarrollo"
 echo "  Web: http://localhost:3000"
 echo "  API: http://localhost:3001"
-echo "  MinIO: http://localhost:9001"
+echo "  MinIO: http://localhost:9101"
 echo "  Ctrl+C detiene API y web; los contenedores permanecen activos."
 echo
 

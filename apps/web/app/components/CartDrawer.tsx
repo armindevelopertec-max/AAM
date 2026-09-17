@@ -14,7 +14,13 @@ export type CartLine = {
   costPrice: number;
   imageUrl: string | null;
   isInstall?: boolean;
+  unidad?: string | null;
 };
+
+/** Los productos por metro (cable) cuentan como un solo ítem, sin importar los metros. */
+export function cartItemCount(line: CartLine): number {
+  return line.unidad === "metro" ? 1 : line.quantity;
+}
 
 type Props = {
   open: boolean;
@@ -160,7 +166,7 @@ export default function CartDrawer({
                   return (
                     <div
                       key={line.productId}
-                      className={`grid grid-cols-[42px_1fr_auto] items-center gap-2 rounded-lg border p-2 ${
+                      className={`grid grid-cols-[42px_1fr] items-center gap-2 rounded-lg border p-2 sm:grid-cols-[42px_1fr_auto] ${
                         isInstall
                           ? "border-amber-200 bg-amber-50 dark:border-amber-800 dark:bg-amber-950"
                           : "border-neutral-200 bg-neutral-50 dark:border-neutral-700 dark:bg-neutral-800"
@@ -192,9 +198,25 @@ export default function CartDrawer({
                           >
                             −
                           </button>
-                          <span className="min-w-[20px] text-center text-xs font-bold">
-                            {line.quantity}
-                          </span>
+                          <input
+                            type="number"
+                            min="1"
+                            step="1"
+                            inputMode="numeric"
+                            value={line.quantity}
+                            onChange={(e) => {
+                              const v = Number(e.target.value);
+                              if (Number.isFinite(v) && v > 0) {
+                                onSetQuantity(line.productId, v);
+                              }
+                            }}
+                            className="w-12 rounded-md border border-neutral-300 px-1 py-0.5 text-center text-xs font-bold dark:border-neutral-600 dark:bg-neutral-900"
+                          />
+                          {line.unidad === "metro" && (
+                            <span className="text-[10px] text-neutral-400">
+                              m
+                            </span>
+                          )}
                           <button
                             onClick={() =>
                               onSetQuantity(line.productId, line.quantity + 1)
@@ -205,7 +227,7 @@ export default function CartDrawer({
                           </button>
                         </div>
                       </div>
-                      <div className="flex flex-col items-end gap-1">
+                      <div className="col-span-2 mt-1 flex flex-wrap items-center gap-1 sm:col-span-1 sm:mt-0 sm:flex-col sm:items-end">
                         {hasDiscount && (
                           <div className="flex items-center gap-1">
                             <span className="text-[11px] text-neutral-400 line-through">
@@ -237,7 +259,7 @@ export default function CartDrawer({
                                   Math.max(Number(e.target.value) || 0, 0),
                                 )
                               }
-                              className="w-[70px] rounded-md border border-neutral-300 px-1.5 py-1 text-right text-xs dark:border-neutral-600 dark:bg-neutral-900"
+                              className="w-14 rounded-md border border-neutral-300 px-1.5 py-1 text-right text-xs sm:w-[70px] dark:border-neutral-600 dark:bg-neutral-900"
                             />
                             <span className="text-[10px] text-neutral-400">
                               ×{line.quantity}

@@ -25,6 +25,7 @@ model Store {
   clients          Client[]
   sales            Sale[]
   quotes           Quote[]
+  kits             Kit[]
   users            User[]
   sequences        Sequence[]
   createdAt        DateTime   @default(now())
@@ -158,5 +159,39 @@ model QuoteItem {
   subtotal      Float
 
   @@index([quoteId])
+  @@index([productId, fuente])
+}
+
+model Kit {
+  id            String     @id @default(uuid())
+  storeId       String
+  store         Store      @relation(fields: [storeId], references: [id])
+  name          String
+  description   String?
+  imageKey      String?
+  priceOverride Float?
+  items         KitItem[]
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+
+  @@index([storeId])
+}
+
+model KitItem {
+  id            String @id @default(uuid())
+  kitId         String
+  kit           Kit    @relation(fields: [kitId], references: [id])
+  // Código de producto del catálogo maestro (Mongo): idExterno + fuente
+  productId     Int?
+  fuente        String?
+  name          String
+  sku           String
+  quantity      Int
+  unitPrice     Float
+  originalPrice Float  @default(0)
+  moneda        String @default("BOB")
+  unidad        String?
+
+  @@index([kitId])
   @@index([productId, fuente])
 }
