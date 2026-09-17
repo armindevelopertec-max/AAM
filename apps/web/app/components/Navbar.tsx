@@ -9,7 +9,7 @@ import { useTheme } from "./ThemeProvider";
 type NavLink = { href: string; label: string; roles?: string[] };
 
 const links: NavLink[] = [
-  { href: "/", label: "Dashboard" },
+  { href: "/dashboard", label: "Dashboard" },
   { href: "/pos", label: "POS" },
   { href: "/quotes", label: "Cotizaciones" },
   { href: "/kits", label: "Kits" },
@@ -32,7 +32,7 @@ export default function Navbar() {
     <header className="sticky top-0 z-10 border-b border-neutral-200 bg-white/80 backdrop-blur dark:border-neutral-800 dark:bg-neutral-900/80">
       <nav className="mx-auto flex w-full max-w-5xl items-center justify-between px-6 py-3">
         <div className="flex items-center gap-8">
-          <Link href="/" className="text-lg font-bold" onClick={() => setOpen(false)}>
+          <Link href="/dashboard" className="text-lg font-bold" onClick={() => setOpen(false)}>
             SEGTECAM
           </Link>
           <div className="hidden items-center gap-6 md:flex">

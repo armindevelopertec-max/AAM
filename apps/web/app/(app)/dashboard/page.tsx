@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { formatMoney, getDashboard, type DashboardSummary } from "../lib/api";
+import { formatMoney, getDashboard, type DashboardSummary } from "../../lib/api";
 
 export default function DashboardPage() {
   const [data, setData] = useState<DashboardSummary | null>(null);

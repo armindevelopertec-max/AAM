@@ -58,6 +58,19 @@ export class KitsService {
     return kits.map((kit) => this.toDto(kit));
   }
 
+  async findAllPublic(): Promise<KitWithItems[]> {
+    const store = await this.prisma.store.findFirst({
+      orderBy: { createdAt: 'asc' },
+      select: { id: true },
+    });
+
+    if (!store) {
+      return [];
+    }
+
+    return this.findAll(store.id);
+  }
+
   async findOne(id: string, storeId: string): Promise<KitWithItems> {
     const kit = await this.prisma.kit.findFirst({
       where: { id, storeId },

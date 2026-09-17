@@ -1116,3 +1116,43 @@ export function formatMoney(value: number, currency = "BOB"): string {
     return `${value.toFixed(2)} ${symbol}`.trim();
   }
 }
+
+// --- Public API (no auth required) ---
+
+export interface PublicStoreInfo {
+  name: string;
+  currency: string;
+  phone?: string;
+  email?: string;
+  address?: string;
+  description?: string;
+  subtitle?: string;
+}
+
+export interface ContactFormInput {
+  name: string;
+  email: string;
+  phone?: string;
+  message: string;
+  type: 'instalacion' | 'cotizacion' | 'otro';
+}
+
+export interface ContactFormResponse {
+  success: boolean;
+  message: string;
+}
+
+export async function getPublicStoreInfo(): Promise<PublicStoreInfo> {
+  return request('/public/store');
+}
+
+export async function getPublicKits(): Promise<Kit[]> {
+  return request('/public/kits');
+}
+
+export async function submitContactForm(input: ContactFormInput): Promise<ContactFormResponse> {
+  return request('/public/contact', {
+    method: 'POST',
+    body: JSON.stringify(input),
+  });
+}
