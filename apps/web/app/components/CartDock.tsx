@@ -587,7 +587,7 @@ export default function CartDock() {
     try {
       const q = await createQuote({
         clientId: quoteClient?.id,
-        discount: quoteTotalSavings,
+        discount: Math.max(0, quoteTotalSavings),
         validDays: validDaysNum,
         items: quote.lines.map((line) =>
           line.productId === INSTALL_ID
