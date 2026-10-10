@@ -21,6 +21,10 @@ export type PosCart = {
   installTime: string;
   installPoints: string;
   installPricePerPoint: string;
+  withMaintenance: boolean;
+  maintenanceDate: string;
+  maintenanceTime: string;
+  maintenancePrice: string;
 };
 
 export type QuoteCart = {
@@ -33,6 +37,10 @@ export type QuoteCart = {
   installTime: string;
   installPoints: string;
   installPricePerPoint: string;
+  withMaintenance: boolean;
+  maintenanceDate: string;
+  maintenanceTime: string;
+  maintenancePrice: string;
 };
 
 const DEFAULT_POS: PosCart = {
@@ -43,6 +51,10 @@ const DEFAULT_POS: PosCart = {
   installTime: "",
   installPoints: "1",
   installPricePerPoint: "100",
+  withMaintenance: false,
+  maintenanceDate: "",
+  maintenanceTime: "",
+  maintenancePrice: "0",
 };
 
 export type KitCart = {
@@ -73,6 +85,10 @@ export const defaultQuoteCart = (): QuoteCart => ({
   installTime: "",
   installPoints: "1",
   installPricePerPoint: "100",
+  withMaintenance: false,
+  maintenanceDate: "",
+  maintenanceTime: "",
+  maintenancePrice: "0",
 });
 
 const POS_KEY = "segtecam_pos_cart_v1";

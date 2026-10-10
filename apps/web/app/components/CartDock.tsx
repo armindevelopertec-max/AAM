@@ -17,6 +17,7 @@ import {
 } from "../lib/api";
 
 const INSTALL_ID = -1;
+const MAINTENANCE_ID = -2;
 
 function computeExpiresLabel(days: number): string {
   const date = new Date(Date.now() + Math.max(1, days) * 24 * 60 * 60 * 1000);
@@ -31,6 +32,22 @@ function makeInstallLine(puntos: number, precio: number): CartLine {
     name: "Instalación de cámaras",
     sku: "SERVICIO",
     quantity: Math.max(1, puntos),
+    unitPrice: Math.max(0, precio),
+    originalPrice: Math.max(0, precio),
+    costPrice: 0,
+    imageUrl: null,
+    isInstall: true,
+  };
+}
+
+function makeMaintenanceLine(precio: number): CartLine {
+  return {
+    productId: MAINTENANCE_ID,
+    fuente: "",
+    moneda: "BOB",
+    name: "Mantenimiento",
+    sku: "SERVICIO",
+    quantity: 1,
     unitPrice: Math.max(0, precio),
     originalPrice: Math.max(0, precio),
     costPrice: 0,
@@ -153,6 +170,78 @@ function InstallationBlock({
                 onField("installPricePerPoint", e.target.value);
                 if (withInstallation) onSyncPrice(Number(e.target.value));
               }}
+              className="w-full rounded-md border border-neutral-300 px-2 py-1.5 text-xs dark:border-neutral-700 dark:bg-neutral-900"
+            />
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function MaintenanceBlock({
+  withMaintenance,
+  maintenanceDate,
+  maintenanceTime,
+  maintenancePrice,
+  onToggle,
+  onField,
+}: {
+  withMaintenance: boolean;
+  maintenanceDate: string;
+  maintenanceTime: string;
+  maintenancePrice: string;
+  onToggle: (checked: boolean) => void;
+  onField: (
+    key: "maintenanceDate" | "maintenanceTime" | "maintenancePrice",
+    value: string,
+  ) => void;
+}) {
+  return (
+    <div className="mt-3 rounded-lg border border-neutral-200 bg-neutral-50 p-3 dark:border-neutral-700 dark:bg-neutral-800">
+      <label className="flex cursor-pointer items-center gap-2 text-sm font-medium">
+        <input
+          type="checkbox"
+          checked={withMaintenance}
+          onChange={(e) => onToggle(e.target.checked)}
+          className="h-4 w-4 rounded accent-blue-500"
+        />
+        Incluye mantenimiento
+      </label>
+      {withMaintenance && (
+        <div className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2">
+          <div>
+            <label className="mb-1 block text-[10px] font-semibold uppercase tracking-wider text-neutral-400">
+              Fecha
+            </label>
+            <input
+              type="date"
+              value={maintenanceDate}
+              onChange={(e) => onField("maintenanceDate", e.target.value)}
+              className="w-full rounded-md border border-neutral-300 px-2 py-1.5 text-xs dark:border-neutral-700 dark:bg-neutral-900"
+            />
+          </div>
+          <div>
+            <label className="mb-1 block text-[10px] font-semibold uppercase tracking-wider text-neutral-400">
+              Hora
+            </label>
+            <input
+              type="time"
+              value={maintenanceTime}
+              onChange={(e) => onField("maintenanceTime", e.target.value)}
+              className="w-full rounded-md border border-neutral-300 px-2 py-1.5 text-xs dark:border-neutral-700 dark:bg-neutral-900"
+            />
+          </div>
+          <div className="sm:col-span-2">
+            <label className="mb-1 block text-[10px] font-semibold uppercase tracking-wider text-neutral-400">
+              Precio
+            </label>
+            <input
+              type="number"
+              step="0.01"
+              min="0"
+              value={maintenancePrice}
+              onChange={(e) => onField("maintenancePrice", e.target.value)}
               className="w-full rounded-md border border-neutral-300 px-2 py-1.5 text-xs dark:border-neutral-700 dark:bg-neutral-900"
             />
           </div>
@@ -295,11 +384,44 @@ export default function CartDock() {
     [setPosField, setPosLines],
   );
 
+  // ── POS: mantenimiento ──
+  const togglePosMaintenance = useCallback(
+    (checked: boolean) => {
+      setPosField("withMaintenance", checked);
+      setPosLines((current) =>
+        checked
+          ? [
+              ...current.filter((l) => l.productId !== MAINTENANCE_ID),
+              makeMaintenanceLine(Math.max(0, Number(pos.maintenancePrice) || 0)),
+            ]
+          : current.filter((l) => l.productId !== MAINTENANCE_ID),
+      );
+    },
+    [setPosField, setPosLines, pos.maintenancePrice],
+  );
+
+  const handlePosMaintenancePrice = useCallback(
+    (price: number) => {
+      const v = Math.max(price, 0);
+      setPosField("maintenancePrice", String(v));
+      setPosLines((current) =>
+        current.map((l) =>
+          l.productId === MAINTENANCE_ID ? { ...l, unitPrice: v, originalPrice: v } : l,
+        ),
+      );
+    },
+    [setPosField, setPosLines],
+  );
+
   const handlePosLinePrice = useCallback(
     (productId: number, price: number) => {
       const v = Math.max(price, 0);
       if (productId === INSTALL_ID) {
         handlePosInstallPrice(v);
+        return;
+      }
+      if (productId === MAINTENANCE_ID) {
+        handlePosMaintenancePrice(v);
         return;
       }
       setPosLines((current) =>
@@ -308,7 +430,7 @@ export default function CartDock() {
         ),
       );
     },
-    [setPosLines, handlePosInstallPrice],
+    [setPosLines, handlePosInstallPrice, handlePosMaintenancePrice],
   );
 
   const setPosQuantity = useCallback(
@@ -319,6 +441,15 @@ export default function CartDock() {
         setPosLines((current) =>
           current.map((l) =>
             l.productId === INSTALL_ID ? { ...l, quantity: next } : l,
+          ),
+        );
+        return;
+      }
+      if (productId === MAINTENANCE_ID) {
+        const next = Math.max(1, qty);
+        setPosLines((current) =>
+          current.map((l) =>
+            l.productId === MAINTENANCE_ID ? { ...l, quantity: next } : l,
           ),
         );
         return;
@@ -338,6 +469,9 @@ export default function CartDock() {
     (productId: number) => {
       if (productId === INSTALL_ID) {
         setPosField("withInstallation", false);
+      }
+      if (productId === MAINTENANCE_ID) {
+        setPosField("withMaintenance", false);
       }
       setPosLines((current) => current.filter((l) => l.productId !== productId));
     },
@@ -394,11 +528,44 @@ export default function CartDock() {
     [setQuoteField, setQuoteLines],
   );
 
+  // ── Cotización: mantenimiento ──
+  const toggleQuoteMaintenance = useCallback(
+    (checked: boolean) => {
+      setQuoteField("withMaintenance", checked);
+      setQuoteLines((current) =>
+        checked
+          ? [
+              ...current.filter((l) => l.productId !== MAINTENANCE_ID),
+              makeMaintenanceLine(Math.max(0, Number(quote.maintenancePrice) || 0)),
+            ]
+          : current.filter((l) => l.productId !== MAINTENANCE_ID),
+      );
+    },
+    [setQuoteField, setQuoteLines, quote.maintenancePrice],
+  );
+
+  const handleQuoteMaintenancePrice = useCallback(
+    (price: number) => {
+      const v = Math.max(price, 0);
+      setQuoteField("maintenancePrice", String(v));
+      setQuoteLines((current) =>
+        current.map((l) =>
+          l.productId === MAINTENANCE_ID ? { ...l, unitPrice: v, originalPrice: v } : l,
+        ),
+      );
+    },
+    [setQuoteField, setQuoteLines],
+  );
+
   const handleQuoteLinePrice = useCallback(
     (productId: number, price: number) => {
       const v = Math.max(price, 0);
       if (productId === INSTALL_ID) {
         handleQuoteInstallPrice(v);
+        return;
+      }
+      if (productId === MAINTENANCE_ID) {
+        handleQuoteMaintenancePrice(v);
         return;
       }
       setQuoteLines((current) =>
@@ -407,7 +574,7 @@ export default function CartDock() {
         ),
       );
     },
-    [setQuoteLines, handleQuoteInstallPrice],
+    [setQuoteLines, handleQuoteInstallPrice, handleQuoteMaintenancePrice],
   );
 
   const setQuoteQuantity = useCallback(
@@ -418,6 +585,15 @@ export default function CartDock() {
         setQuoteLines((current) =>
           current.map((l) =>
             l.productId === INSTALL_ID ? { ...l, quantity: next } : l,
+          ),
+        );
+        return;
+      }
+      if (productId === MAINTENANCE_ID) {
+        const next = Math.max(1, qty);
+        setQuoteLines((current) =>
+          current.map((l) =>
+            l.productId === MAINTENANCE_ID ? { ...l, quantity: next } : l,
           ),
         );
         return;
@@ -437,6 +613,9 @@ export default function CartDock() {
     (productId: number) => {
       if (productId === INSTALL_ID) {
         setQuoteField("withInstallation", false);
+      }
+      if (productId === MAINTENANCE_ID) {
+        setQuoteField("withMaintenance", false);
       }
       setQuoteLines((current) => current.filter((l) => l.productId !== productId));
     },
@@ -549,7 +728,7 @@ export default function CartDock() {
         clientId: posClient?.id,
         discount: 0,
         items: pos.lines.map((l) =>
-          l.productId === INSTALL_ID
+          l.productId === INSTALL_ID || l.productId === MAINTENANCE_ID
             ? {
                 quantity: l.quantity,
                 precio: l.unitPrice,
@@ -572,6 +751,10 @@ export default function CartDock() {
       setPosField("installTime", "");
       setPosField("installPoints", "1");
       setPosField("installPricePerPoint", "100");
+      setPosField("withMaintenance", false);
+      setPosField("maintenanceDate", "");
+      setPosField("maintenanceTime", "");
+      setPosField("maintenancePrice", "0");
       closeDock();
     } catch (err) {
       setError(err instanceof Error ? err.message : "Error desconocido");
@@ -590,7 +773,7 @@ export default function CartDock() {
         discount: Math.max(0, quoteTotalSavings),
         validDays: validDaysNum,
         items: quote.lines.map((line) =>
-          line.productId === INSTALL_ID
+          line.productId === INSTALL_ID || line.productId === MAINTENANCE_ID
             ? {
                 quantity: line.quantity,
                 precio: line.unitPrice,
@@ -732,6 +915,14 @@ export default function CartDock() {
                 onSyncPoints={(puntos) => syncPosInstallation(puntos)}
                 onSyncPrice={(precio) => syncPosInstallation(undefined, precio)}
               />
+              <MaintenanceBlock
+                withMaintenance={pos.withMaintenance}
+                maintenanceDate={pos.maintenanceDate}
+                maintenanceTime={pos.maintenanceTime}
+                maintenancePrice={pos.maintenancePrice}
+                onToggle={togglePosMaintenance}
+                onField={(key, value) => setPosField(key, value)}
+              />
             </>
           ) : undefined
         }
@@ -782,6 +973,14 @@ export default function CartDock() {
                 onField={(key, value) => setQuoteField(key, value)}
                 onSyncPoints={(puntos) => syncQuoteInstallation(puntos)}
                 onSyncPrice={(precio) => syncQuoteInstallation(undefined, precio)}
+              />
+              <MaintenanceBlock
+                withMaintenance={quote.withMaintenance}
+                maintenanceDate={quote.maintenanceDate}
+                maintenanceTime={quote.maintenanceTime}
+                maintenancePrice={quote.maintenancePrice}
+                onToggle={toggleQuoteMaintenance}
+                onField={(key, value) => setQuoteField(key, value)}
               />
               <div className="mt-3 flex flex-wrap items-end justify-between gap-2">
                 <div className="flex items-end gap-2">
