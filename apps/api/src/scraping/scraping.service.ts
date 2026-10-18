@@ -19,6 +19,7 @@ import { FilesService } from '../files/files.service';
 import { optimizeImage } from '../files/image-optimizer';
 import { ImportToPostgresDto } from './dto/import-to-postgres.dto';
 import { PatchPrecioDto } from './dto/patch-precio.dto';
+import { PatchProductoDto } from './dto/patch-product.dto';
 import { CreateManualProductDto } from './dto/create-manual-product.dto';
 import { PrismaService } from '../prisma/prisma.service';
 
@@ -85,10 +86,16 @@ export class ScrapingService {
       if (existing) {
         existing.datosCrudos = {
           idExterno: prod.id,
-          nombre: prod.nombre,
+          // si el usuario editó el nombre, se conserva al re-scrapear
+          nombre: existing.datosCrudos.nombreEditado
+            ? existing.datosCrudos.nombre
+            : prod.nombre,
+          nombreEditado: existing.datosCrudos.nombreEditado ?? false,
           sku: prod.sku,
           precioRegular: prod.precio_regular,
           precioOferta: prod.precio_oferta,
+          // precioProveedor lo define el usuario, se conserva al re-scrapear
+          precioProveedor: existing.datosCrudos.precioProveedor ?? 0,
           precioMetro: prod.precio_metro,
           unidad: prod.unidad,
           metros: prod.metros,
@@ -250,6 +257,7 @@ export class ScrapingService {
     const stock = dto.stockCantidad ?? 0;
     const precioOferta = dto.precioOferta ?? 0;
     const precioRegular = dto.precioRegular ?? 0;
+    const precioProveedor = dto.precioProveedor ?? 0;
     const esPorMetro = unidad === 'metro';
     const sku = dto.sku?.trim() || `MANUAL-${Date.now()}`;
 
@@ -272,6 +280,7 @@ export class ScrapingService {
         sku,
         precioRegular,
         precioOferta,
+        precioProveedor,
         ...(esPorMetro
           ? {
               precioMetro: dto.precioMetro ?? 0,
@@ -338,6 +347,11 @@ export class ScrapingService {
           product.datosCrudos.precioOferta ??
           product.datosCrudos.precioRegular ??
           0,
+        precioProveedor:
+          dto.precioProveedor ??
+          ((product.datosCrudos.precioProveedor ?? 0) > 0
+            ? product.datosCrudos.precioProveedor
+            : product.datosCrudos.precioRegular ?? 0),
         stock: dto.stock ?? product.datosCrudos.stockCantidad ?? 0,
         imageKey: product.imagenesDescargadas[0]?.key ?? null,
       },
@@ -372,6 +386,32 @@ export class ScrapingService {
     return product;
   }
 
+  async updateProducto(id: string, dto: PatchProductoDto) {
+    const existing = await this.scrapedProductModel.findById(id);
+    if (!existing)
+      throw new NotFoundException(`Producto scrapeado ${id} no encontrado`);
+
+    const set: Record<string, unknown> = {};
+    if (dto.nombre !== undefined) {
+      const nombre = dto.nombre.trim();
+      if (!nombre) {
+        throw new BadRequestException('El nombre no puede estar vacío');
+      }
+      set['datosCrudos.nombre'] = nombre;
+      // marca el nombre como editado para conservarlo al re-scrapear
+      set['datosCrudos.nombreEditado'] = true;
+    }
+
+    const product = await this.scrapedProductModel.findByIdAndUpdate(
+      id,
+      { $set: set },
+      { new: true },
+    );
+    if (!product)
+      throw new NotFoundException(`Producto scrapeado ${id} no encontrado`);
+    return product;
+  }
+
   async updatePrecios(id: string, dto: PatchPrecioDto) {
     const existing = await this.scrapedProductModel.findById(id);
     if (!existing)
@@ -383,6 +423,9 @@ export class ScrapingService {
     }
     if (typeof dto.precioRegular === 'number') {
       set['datosCrudos.precioRegular'] = dto.precioRegular;
+    }
+    if (typeof dto.precioProveedor === 'number') {
+      set['datosCrudos.precioProveedor'] = dto.precioProveedor;
     }
     if (typeof dto.stockCantidad === 'number') {
       set['datosCrudos.stockCantidad'] = dto.stockCantidad;

@@ -10,6 +10,7 @@ export type Product = {
   category: string;
   costPrice: number;
   regularPrice: number;
+  precioProveedor?: number;
   price: number;
   stock: number;
   imageUrl: string | null;
@@ -39,7 +40,7 @@ export type Client = {
   ci: string | null;
 };
 
-export const USER_ROLES = ["admin", "ventas"] as const;
+export const USER_ROLES = ["root", "admin", "ventas"] as const;
 
 export type UserRole = (typeof USER_ROLES)[number];
 
@@ -181,9 +182,11 @@ export type ScrapedProduct = {
   datosCrudos: {
     idExterno: number;
     nombre: string;
+    nombreEditado?: boolean;
     sku: string;
     precioRegular: number;
     precioOferta: number;
+    precioProveedor?: number;
     precioMetro?: number;
     unidad?: string;
     metros?: number;
@@ -268,6 +271,7 @@ export async function createProduct(input: {
   name: string;
   price: number;
   regularPrice?: number;
+  precioProveedor?: number;
   sku?: string;
   category?: string;
   costPrice?: number;
@@ -285,6 +289,7 @@ export async function updateProduct(
     name: string;
     price: number;
     regularPrice: number;
+    precioProveedor: number;
     sku: string;
     category: string;
     costPrice: number;
@@ -900,6 +905,7 @@ export async function createScrapedProduct(input: {
   categoria?: string;
   precioRegular?: number;
   precioOferta?: number;
+  precioProveedor?: number;
   precioMetro?: number;
   unidad?: string;
   metros?: number;
@@ -921,6 +927,7 @@ export async function importScrapedToPostgres(
     category?: string;
     costPrice?: number;
     regularPrice?: number;
+    precioProveedor?: number;
     price?: number;
     stock?: number;
   },
@@ -956,6 +963,7 @@ export async function updateScrapedPrecio(
   data: {
     precioOferta?: number;
     precioRegular?: number;
+    precioProveedor?: number;
     stockCantidad?: number;
     precioMetro?: number;
   },
@@ -968,6 +976,16 @@ export async function updateScrapedPrecio(
 
 export async function deleteScrapedProduct(id: string): Promise<void> {
   await request(`/scraping/products/${id}`, { method: "DELETE" });
+}
+
+export async function updateScrapedNombre(
+  id: string,
+  nombre: string,
+): Promise<ScrapedProduct> {
+  return request(`/scraping/products/${id}`, {
+    method: "PATCH",
+    body: JSON.stringify({ nombre }),
+  });
 }
 
 export async function uploadScrapedImages(
@@ -1037,6 +1055,45 @@ export function getKitImageUrl(imageUrl: string | null): string | null {
   if (!imageUrl) return null;
   if (imageUrl.startsWith("http")) return imageUrl;
   return `${API_URL}${imageUrl}`;
+}
+
+export type AuditEntry = {
+  id: string;
+  actorId: string | null;
+  actorName: string;
+  action: string;
+  entity: string;
+  entityId: string | null;
+  details: string | null;
+  createdAt: string;
+};
+
+export type AuditActor = {
+  actorId: string | null;
+  actorName: string;
+};
+
+export type AuditResult = {
+  total: number;
+  page: number;
+  limit: number;
+  items: AuditEntry[];
+  actors: AuditActor[];
+};
+
+export async function getAuditoria(params?: {
+  actorId?: string;
+  action?: string;
+  page?: number;
+  limit?: number;
+}): Promise<AuditResult> {
+  const query = new URLSearchParams();
+  if (params?.actorId) query.set("actorId", params.actorId);
+  if (params?.action) query.set("action", params.action);
+  if (params?.page) query.set("page", String(params.page));
+  if (params?.limit) query.set("limit", String(params.limit));
+  const qs = query.toString();
+  return request(`/auditoria${qs ? `?${qs}` : ""}`);
 }
 
 export function formatMoney(value: number, currency = "BOB"): string {

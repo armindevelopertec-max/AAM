@@ -95,10 +95,32 @@ const POS_KEY = "segtecam_pos_cart_v1";
 const QUOTE_KEY = "segtecam_quote_cart_v1";
 const KIT_KEY = "segtecam_kit_cart_v1";
 
+/** Cada usuario tiene sus propios carritos (clave de localStorage por usuario). */
+function currentUserId(): string {
+  if (typeof window === "undefined") return "anon";
+  try {
+    const raw = window.localStorage.getItem("auth_user");
+    if (raw) {
+      const parsed = JSON.parse(raw) as { id?: string };
+      if (parsed?.id) return parsed.id;
+    }
+  } catch {
+    // sesión ilegible: se usa la clave compartida de respaldo
+  }
+  return "anon";
+}
+
+function userKey(base: string): string {
+  return `${base}__${currentUserId()}`;
+}
+
 function load<T>(key: string, fallback: () => T): T {
   if (typeof window === "undefined") return fallback();
   try {
-    const raw = window.localStorage.getItem(key);
+    const raw =
+      window.localStorage.getItem(key) ??
+      // migración: si el usuario aún no tiene carrito propio, hereda el carrito antiguo compartido
+      window.localStorage.getItem(key.split("__")[0] ?? key);
     if (!raw) return fallback();
     const parsed = JSON.parse(raw) as T;
     const fallbackVal = fallback();
@@ -137,26 +159,31 @@ type CartContextValue = {
 const CartContext = createContext<CartContextValue | null>(null);
 
 export function CartProvider({ children }: { children: ReactNode }) {
-  const [pos, setPos] = useState<PosCart>(() => load(POS_KEY, () => ({ ...DEFAULT_POS })));
-  const [quote, setQuote] = useState<QuoteCart>(() => load(QUOTE_KEY, defaultQuoteCart));
-  const [kit, setKit] = useState<KitCart>(() => load(KIT_KEY, defaultKitCart));
+  // Las claves se calculan al montar: siguen al usuario de la sesión activa.
+  const [posKey] = useState(() => userKey(POS_KEY));
+  const [quoteKey] = useState(() => userKey(QUOTE_KEY));
+  const [kitKey] = useState(() => userKey(KIT_KEY));
+
+  const [pos, setPos] = useState<PosCart>(() => load(posKey, () => ({ ...DEFAULT_POS })));
+  const [quote, setQuote] = useState<QuoteCart>(() => load(quoteKey, defaultQuoteCart));
+  const [kit, setKit] = useState<KitCart>(() => load(kitKey, defaultKitCart));
   const [kitRevision, setKitRevision] = useState(0);
 
   const hydratedPos = useRef(false);
   const hydratedQuote = useRef(false);
   const hydratedKit = useRef(false);
   useEffect(() => {
-    if (hydratedPos.current) localStorage.setItem(POS_KEY, JSON.stringify(pos));
+    if (hydratedPos.current) localStorage.setItem(posKey, JSON.stringify(pos));
     hydratedPos.current = true;
-  }, [pos]);
+  }, [pos, posKey]);
   useEffect(() => {
-    if (hydratedQuote.current) localStorage.setItem(QUOTE_KEY, JSON.stringify(quote));
+    if (hydratedQuote.current) localStorage.setItem(quoteKey, JSON.stringify(quote));
     hydratedQuote.current = true;
-  }, [quote]);
+  }, [quote, quoteKey]);
   useEffect(() => {
-    if (hydratedKit.current) localStorage.setItem(KIT_KEY, JSON.stringify(kit));
+    if (hydratedKit.current) localStorage.setItem(kitKey, JSON.stringify(kit));
     hydratedKit.current = true;
-  }, [kit]);
+  }, [kit, kitKey]);
 
   const setPosLines = useCallback((updater: SetStateAction<CartLine[]>) => {
     setPos((prev) => ({

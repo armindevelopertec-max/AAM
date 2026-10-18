@@ -36,6 +36,7 @@ export class ProductsService {
         category: createProductDto.category ?? 'General',
         costPrice: createProductDto.costPrice ?? createProductDto.price,
         regularPrice: createProductDto.regularPrice ?? createProductDto.price,
+        precioProveedor: createProductDto.precioProveedor ?? 0,
         price: createProductDto.price,
         stock: createProductDto.stock ?? 0,
       },

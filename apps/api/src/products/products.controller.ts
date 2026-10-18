@@ -24,6 +24,7 @@ import { AdjustStockDto } from './dto/adjust-stock.dto';
 import { JwtAuthGuard, Public } from '../auth/jwt-auth.guard';
 import { CurrentUser } from '../auth/current-user.decorator';
 import { FilesService } from '../files/files.service';
+import { AuditService } from '../audit/audit.service';
 
 @Controller('products')
 @UseGuards(JwtAuthGuard)
@@ -31,6 +32,7 @@ export class ProductsController {
   constructor(
     private readonly productsService: ProductsService,
     private readonly files: FilesService,
+    private readonly audit: AuditService,
   ) {}
 
   @Public()
@@ -56,11 +58,24 @@ export class ProductsController {
   }
 
   @Post()
-  create(
+  async create(
     @Body() createProductDto: CreateProductDto,
     @CurrentUser() user: User,
   ) {
-    return this.productsService.create(createProductDto, user.storeId);
+    const product = await this.productsService.create(
+      createProductDto,
+      user.storeId,
+    );
+    await this.audit.log({
+      storeId: user.storeId,
+      actorId: user.id,
+      actorName: user.name,
+      action: 'producto.creado',
+      entity: 'Product',
+      entityId: product.id,
+      details: { nombre: product.name, sku: product.sku },
+    });
+    return product;
   }
 
   @Get()
@@ -78,12 +93,26 @@ export class ProductsController {
   }
 
   @Patch(':id')
-  update(
+  async update(
     @Param('id') id: string,
     @Body() updateProductDto: UpdateProductDto,
     @CurrentUser() user: User,
   ) {
-    return this.productsService.update(id, updateProductDto, user.storeId);
+    const product = await this.productsService.update(
+      id,
+      updateProductDto,
+      user.storeId,
+    );
+    await this.audit.log({
+      storeId: user.storeId,
+      actorId: user.id,
+      actorName: user.name,
+      action: 'producto.editado',
+      entity: 'Product',
+      entityId: id,
+      details: { nombre: product.name, sku: product.sku },
+    });
+    return product;
   }
 
   @Patch(':id/stock')
@@ -120,7 +149,16 @@ export class ProductsController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string, @CurrentUser() user: User) {
-    return this.productsService.remove(id, user.storeId);
+  async remove(@Param('id') id: string, @CurrentUser() user: User) {
+    const result = await this.productsService.remove(id, user.storeId);
+    await this.audit.log({
+      storeId: user.storeId,
+      actorId: user.id,
+      actorName: user.name,
+      action: 'producto.eliminado',
+      entity: 'Product',
+      entityId: id,
+    });
+    return result;
   }
 }

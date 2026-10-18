@@ -15,7 +15,10 @@ import {
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { memoryStorage } from 'multer';
 import path from 'node:path';
+import type { User } from '@prisma/client';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { CurrentUser } from '../auth/current-user.decorator';
+import { AuditService } from '../audit/audit.service';
 import { CatalogoService } from './catalogo.service';
 import {
   CreateProductoDto,
@@ -24,7 +27,10 @@ import {
 
 @Controller('catalogo')
 export class CatalogoController {
-  constructor(private readonly catalogoService: CatalogoService) {}
+  constructor(
+    private readonly catalogoService: CatalogoService,
+    private readonly audit: AuditService,
+  ) {}
 
   @Get()
   getCatalogo(
@@ -60,14 +66,40 @@ export class CatalogoController {
 
   @Post('productos')
   @UseGuards(JwtAuthGuard)
-  createProducto(@Body() dto: CreateProductoDto) {
-    return this.catalogoService.createProducto(dto);
+  async createProducto(
+    @Body() dto: CreateProductoDto,
+    @CurrentUser() user: User,
+  ) {
+    const producto = await this.catalogoService.createProducto(dto);
+    await this.audit.log({
+      storeId: user.storeId,
+      actorId: user.id,
+      actorName: user.name,
+      action: 'catalogo.cctv.creado',
+      entity: 'ProductoCCTV',
+      details: { nombre: dto.nombre },
+    });
+    return producto;
   }
 
   @Patch('productos/:id')
   @UseGuards(JwtAuthGuard)
-  updateProducto(@Param('id') id: string, @Body() dto: UpdateProductoDto) {
-    return this.catalogoService.updateProducto(Number(id), dto);
+  async updateProducto(
+    @Param('id') id: string,
+    @Body() dto: UpdateProductoDto,
+    @CurrentUser() user: User,
+  ) {
+    const producto = await this.catalogoService.updateProducto(Number(id), dto);
+    await this.audit.log({
+      storeId: user.storeId,
+      actorId: user.id,
+      actorName: user.name,
+      action: 'catalogo.cctv.editado',
+      entity: 'ProductoCCTV',
+      entityId: id,
+      details: { nombre: dto.nombre },
+    });
+    return producto;
   }
 
   @Post('productos/:id/imagenes')
@@ -99,7 +131,19 @@ export class CatalogoController {
 
   @Delete('productos/:id')
   @UseGuards(JwtAuthGuard)
-  deleteProducto(@Param('id') id: string) {
-    return this.catalogoService.removeProducto(Number(id));
+  async deleteProducto(
+    @Param('id') id: string,
+    @CurrentUser() user: User,
+  ) {
+    const result = await this.catalogoService.removeProducto(Number(id));
+    await this.audit.log({
+      storeId: user.storeId,
+      actorId: user.id,
+      actorName: user.name,
+      action: 'catalogo.cctv.eliminado',
+      entity: 'ProductoCCTV',
+      entityId: id,
+    });
+    return result;
   }
 }

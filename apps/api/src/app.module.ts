@@ -14,6 +14,7 @@ import { ScrapingModule } from './scraping/scraping.module';
 import { VentaModule } from './venta/venta.module';
 import { PdfModule } from './pdf/pdf.module';
 import { KitsModule } from './kits/kits.module';
+import { AuditModule } from './audit/audit.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { KitsModule } from './kits/kits.module';
     VentaModule,
     PdfModule,
     KitsModule,
+    AuditModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import {
   getScrapedProducts,
   updateScrapedPrecio,
+  updateScrapedNombre,
   createScrapedProduct,
   uploadScrapedImages,
   deleteScrapedImage,
@@ -18,6 +19,7 @@ const emptyManual = () => ({
   sku: "",
   precioRegular: "",
   precioOferta: "",
+  precioProveedor: "",
   stockCantidad: "0",
   moneda: "BOB",
   unidad: "unidad",
@@ -93,6 +95,7 @@ export default function CatalogManager() {
         moneda: toStr(newProducto.moneda),
         precioRegular: toNum(newProducto.precioRegular),
         precioOferta: toNum(newProducto.precioOferta),
+        precioProveedor: toNum(newProducto.precioProveedor),
         stockCantidad: Math.floor(toNum(newProducto.stockCantidad)),
         unidad: newProducto.unidad,
         ...(esMetro
@@ -230,6 +233,18 @@ export default function CatalogManager() {
                 step="0.01"
                 value={newProducto.precioOferta}
                 onChange={(e) => setNewProducto((d) => ({ ...d, precioOferta: e.target.value }))}
+                className="rounded-md border border-neutral-300 px-2 py-1.5 dark:border-neutral-700 dark:bg-neutral-800"
+              />
+            </label>
+            <label className="flex flex-col gap-1 text-xs text-neutral-500 dark:text-neutral-400">
+              Precio proveedor
+              <input
+                type="number"
+                min="0"
+                step="0.01"
+                value={newProducto.precioProveedor}
+                onChange={(e) => setNewProducto((d) => ({ ...d, precioProveedor: e.target.value }))}
+                placeholder="Costo del proveedor"
                 className="rounded-md border border-neutral-300 px-2 py-1.5 dark:border-neutral-700 dark:bg-neutral-800"
               />
             </label>
@@ -413,9 +428,18 @@ export default function CatalogManager() {
                 )}
                 <div className="min-w-0 flex-1">
                   <div className="flex items-start justify-between gap-2">
-                    <h3 className="min-w-0 truncate text-sm font-medium sm:text-base">
-                      {item.datosCrudos.nombre}
-                    </h3>
+                    {expandedId === item._id ? (
+                      <NombreEditor
+                        product={item}
+                        onSaved={() => {
+                          void fetchData();
+                        }}
+                      />
+                    ) : (
+                      <h3 className="min-w-0 truncate text-sm font-medium sm:text-base">
+                        {item.datosCrudos.nombre}
+                      </h3>
+                    )}
                     <button
                       onClick={() =>
                         setExpandedId(expandedId === item._id ? null : item._id)
@@ -438,6 +462,11 @@ export default function CatalogManager() {
                     {item.datosCrudos.precioOferta > 0 && (
                       <span className="font-medium text-green-600 dark:text-green-400">
                         Oferta: {item.datosCrudos.precioOferta} {item.datosCrudos.moneda}
+                      </span>
+                    )}
+                    {(item.datosCrudos.precioProveedor ?? 0) > 0 && (
+                      <span className="font-medium text-orange-600 dark:text-orange-400">
+                        Prov: {item.datosCrudos.precioProveedor} {item.datosCrudos.moneda}
                       </span>
                     )}
                     {item.datosCrudos.unidad === "metro" &&
@@ -595,6 +624,61 @@ export default function CatalogManager() {
   );
 }
 
+function NombreEditor({
+  product,
+  onSaved,
+}: {
+  product: ScrapedProduct;
+  onSaved: () => void;
+}) {
+  const [nombre, setNombre] = useState(product.datosCrudos.nombre ?? "");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  async function handleSave() {
+    const limpio = nombre.trim();
+    if (!limpio) {
+      setError("El nombre no puede estar vacío");
+      return;
+    }
+    setLoading(true);
+    setError(null);
+    try {
+      await updateScrapedNombre(product._id, limpio);
+      onSaved();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Error al guardar");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  return (
+    <div className="flex min-w-0 flex-1 items-center gap-2">
+      <input
+        value={nombre}
+        onChange={(e) => {
+          setNombre(e.target.value);
+          setError(null);
+        }}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") void handleSave();
+        }}
+        placeholder="Nombre del producto"
+        className="min-w-0 flex-1 rounded-md border border-neutral-300 px-2 py-1 text-sm font-medium dark:border-neutral-700 dark:bg-neutral-800"
+      />
+      <button
+        onClick={() => void handleSave()}
+        disabled={loading}
+        className="flex-shrink-0 rounded-md bg-blue-600 px-3 py-1 text-xs font-medium text-white transition hover:bg-blue-700 disabled:opacity-50"
+      >
+        {loading ? "Guardando…" : "Guardar"}
+      </button>
+      {error && <span className="text-xs text-red-600 dark:text-red-400">{error}</span>}
+    </div>
+  );
+}
+
 function PrecioEditor({
   product,
   onSaved,
@@ -604,6 +688,9 @@ function PrecioEditor({
 }) {
   const [oferta, setOferta] = useState(String(product.datosCrudos.precioOferta ?? 0));
   const [regular, setRegular] = useState(String(product.datosCrudos.precioRegular ?? 0));
+  const [proveedor, setProveedor] = useState(
+    String(product.datosCrudos.precioProveedor ?? 0),
+  );
   const [stock, setStock] = useState(String(product.datosCrudos.stockCantidad ?? 0));
   const [precioMetro, setPrecioMetro] = useState(
     String(product.datosCrudos.precioMetro ?? 0),
@@ -619,6 +706,7 @@ function PrecioEditor({
       await updateScrapedPrecio(product._id, {
         precioOferta: parseFloat(oferta) || 0,
         precioRegular: parseFloat(regular) || 0,
+        precioProveedor: parseFloat(proveedor) || 0,
         stockCantidad: parseInt(stock, 10) || 0,
         ...(esPorMetro
           ? { precioMetro: parseFloat(precioMetro) || 0 }
@@ -636,7 +724,7 @@ function PrecioEditor({
   return (
     <div className="mb-4 rounded-lg border border-blue-200 bg-blue-50/40 p-3 dark:border-blue-900 dark:bg-blue-950/20">
       <p className="mb-2 text-sm font-medium">Precio y stock en el catálogo (Mongo)</p>
-      <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
+      <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-4">
         <label className="flex flex-col gap-1 text-xs text-neutral-500">
           Precio oferta (venta)
           <input
@@ -656,6 +744,17 @@ function PrecioEditor({
             min="0"
             value={regular}
             onChange={(e) => setRegular(e.target.value)}
+            className="rounded-md border border-neutral-300 px-2 py-1.5 dark:border-neutral-700 dark:bg-neutral-800"
+          />
+        </label>
+        <label className="flex flex-col gap-1 text-xs text-neutral-500">
+          Precio proveedor
+          <input
+            type="number"
+            step="0.01"
+            min="0"
+            value={proveedor}
+            onChange={(e) => setProveedor(e.target.value)}
             className="rounded-md border border-neutral-300 px-2 py-1.5 dark:border-neutral-700 dark:bg-neutral-800"
           />
         </label>

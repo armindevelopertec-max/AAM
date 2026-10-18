@@ -22,6 +22,7 @@ const inputClass =
 const labelClass = "text-sm text-neutral-600 dark:text-neutral-400";
 
 const roleLabels: Record<UserRole, string> = {
+  root: "Root",
   admin: "Administrador",
   ventas: "Ventas",
 };
@@ -30,9 +31,9 @@ type Tab = "usuarios" | "clientes";
 
 export default function UsersManager() {
   const { user } = useAuth();
-  const isAdmin = user?.role === "admin";
+  const isRoot = user?.role === "root";
 
-  const [tab, setTab] = useState<Tab>(isAdmin ? "usuarios" : "clientes");
+  const [tab, setTab] = useState<Tab>(isRoot ? "usuarios" : "clientes");
   const [users, setUsers] = useState<SystemUser[]>([]);
   const [clients, setClients] = useState<Client[]>([]);
   const [loading, setLoading] = useState(true);
@@ -51,7 +52,7 @@ export default function UsersManager() {
       setLoading(true);
       setError(null);
       try {
-        const [u, c] = isAdmin
+        const [u, c] = isRoot
           ? await Promise.all([getUsers(), getClients()])
           : [null, await getClients()];
         if (!active) return;
@@ -68,7 +69,7 @@ export default function UsersManager() {
     return () => {
       active = false;
     };
-  }, [isAdmin]);
+  }, [isRoot]);
 
   function switchTab(next: Tab) {
     setTab(next);
@@ -78,7 +79,7 @@ export default function UsersManager() {
     <div className="flex w-full flex-col gap-8">
       <div className="flex flex-col gap-4">
         <div className="flex flex-wrap items-center gap-2">
-          {isAdmin && (
+          {isRoot && (
             <button
               type="button"
               onClick={() => switchTab("usuarios")}
@@ -117,7 +118,7 @@ export default function UsersManager() {
       ) : tab === "usuarios" ? (
         <UsuariosSection
           users={users}
-          isAdmin={isAdmin}
+          isRoot={isRoot}
           modal={userModal}
           setModal={setUserModal}
           onUsersChange={setUsers}
@@ -138,13 +139,13 @@ export default function UsersManager() {
 
 function UsuariosSection(props: {
   users: SystemUser[];
-  isAdmin: boolean;
+  isRoot: boolean;
   modal: { mode: "create" } | { mode: "edit"; user: SystemUser } | null;
   setModal: (m: { mode: "create" } | { mode: "edit"; user: SystemUser } | null) => void;
   onUsersChange: (users: SystemUser[]) => void;
   onError: (e: string | null) => void;
 }) {
-  const { users, isAdmin, modal, setModal, onUsersChange, onError } = props;
+  const { users, isRoot, modal, setModal, onUsersChange, onError } = props;
 
   return (
     <section className="rounded-lg border border-neutral-200 bg-white p-6 dark:border-neutral-800 dark:bg-neutral-900">
@@ -199,9 +200,11 @@ function UsuariosSection(props: {
                   <td className="py-3 pr-4">
                     <span
                       className={`rounded-full px-2 py-0.5 text-xs font-medium ${
-                        u.role === "admin"
-                          ? "bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-200"
-                          : "bg-neutral-100 text-neutral-700 dark:bg-neutral-800 dark:text-neutral-200"
+                        u.role === "root"
+                          ? "bg-purple-100 text-purple-700 dark:bg-purple-900 dark:text-purple-200"
+                          : u.role === "admin"
+                            ? "bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-200"
+                            : "bg-neutral-100 text-neutral-700 dark:bg-neutral-800 dark:text-neutral-200"
                       }`}
                     >
                       {roleLabels[u.role] ?? u.role}
@@ -216,7 +219,7 @@ function UsuariosSection(props: {
                       >
                         Editar
                       </button>
-                      {isAdmin && (
+                      {isRoot && (
                         <button
                           onClick={async () => {
                             if (
@@ -262,7 +265,7 @@ function UserModal(props: {
 
   const [name, setName] = useState(editing?.name ?? "");
   const [email, setEmail] = useState(editing?.email ?? "");
-  const [role, setRole] = useState<UserRole>(editing?.role ?? "ventas");
+  const [role, setRole] = useState<UserRole>(editing?.role ?? "admin");
   const [alias, setAlias] = useState(editing?.alias ?? "");
   const [phone, setPhone] = useState(editing?.phone ?? "");
   const [password, setPassword] = useState("");

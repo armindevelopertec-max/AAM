@@ -15,11 +15,24 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { JwtAuthGuard } from './jwt-auth.guard';
 import { CurrentUser } from './current-user.decorator';
+import { AuditService } from '../audit/audit.service';
 import type { User } from '@prisma/client';
+
+/** Solo el rol root puede gestionar usuarios. */
+function assertRoot(user: User) {
+  if (user.role !== 'root') {
+    throw new ForbiddenException(
+      'Solo el rol root puede gestionar usuarios',
+    );
+  }
+}
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly audit: AuditService,
+  ) {}
 
   @Post('login')
   login(@Body() dto: LoginDto) {
@@ -35,48 +48,66 @@ export class AuthController {
   @Get('users')
   @UseGuards(JwtAuthGuard)
   listUsers(@CurrentUser() user: User) {
-    if (user.role !== 'admin') {
-      throw new ForbiddenException(
-        'Solo los administradores pueden ver los usuarios',
-      );
-    }
+    assertRoot(user);
     return this.authService.listUsers(user.storeId);
   }
 
   @Post('users')
   @UseGuards(JwtAuthGuard)
-  createUser(@CurrentUser() user: User, @Body() dto: CreateUserDto) {
-    if (user.role !== 'admin') {
-      throw new ForbiddenException(
-        'Solo los administradores pueden crear usuarios',
-      );
-    }
-    return this.authService.createUser(dto, user.storeId);
+  async createUser(@CurrentUser() user: User, @Body() dto: CreateUserDto) {
+    assertRoot(user);
+    const created = await this.authService.createUser(dto, user.storeId);
+    await this.audit.log({
+      storeId: user.storeId,
+      actorId: user.id,
+      actorName: user.name,
+      action: 'usuario.creado',
+      entity: 'User',
+      entityId: created.id,
+      details: { nombre: created.name, email: created.email, rol: created.role },
+    });
+    return created;
   }
 
   @Patch('users/:id')
   @UseGuards(JwtAuthGuard)
-  updateUser(
+  async updateUser(
     @Param('id') id: string,
     @CurrentUser() user: User,
     @Body() dto: UpdateUserDto,
   ) {
-    if (user.role !== 'admin') {
-      throw new ForbiddenException(
-        'Solo los administradores pueden editar usuarios',
-      );
-    }
-    return this.authService.updateUser(id, dto, user.storeId);
+    assertRoot(user);
+    const updated = await this.authService.updateUser(id, dto, user.storeId);
+    await this.audit.log({
+      storeId: user.storeId,
+      actorId: user.id,
+      actorName: user.name,
+      action: 'usuario.editado',
+      entity: 'User',
+      entityId: id,
+      details: { nombre: updated.name, email: updated.email, rol: updated.role },
+    });
+    return updated;
   }
 
   @Delete('users/:id')
   @UseGuards(JwtAuthGuard)
-  deleteUser(@Param('id') id: string, @CurrentUser() user: User) {
-    if (user.role !== 'admin') {
-      throw new ForbiddenException(
-        'Solo los administradores pueden eliminar usuarios',
-      );
-    }
-    return this.authService.deleteUser(id, user.storeId, user.id);
+  async deleteUser(@Param('id') id: string, @CurrentUser() user: User) {
+    assertRoot(user);
+    const result = await this.authService.deleteUser(
+      id,
+      user.storeId,
+      user.id,
+      user.role,
+    );
+    await this.audit.log({
+      storeId: user.storeId,
+      actorId: user.id,
+      actorName: user.name,
+      action: 'usuario.eliminado',
+      entity: 'User',
+      entityId: id,
+    });
+    return result;
   }
 }

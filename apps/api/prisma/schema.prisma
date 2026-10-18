@@ -66,6 +66,7 @@ model Product {
   category     String   @default("General")
   costPrice    Float
   regularPrice Float    @default(0)
+  precioProveedor Float @default(0)
   price        Float
   stock        Int      @default(0)
   imageKey     String?
@@ -194,4 +195,22 @@ model KitItem {
 
   @@index([kitId])
   @@index([productId, fuente])
+}
+
+model AuditLog {
+  id        String   @id @default(uuid())
+  storeId   String
+  actorId   String?
+  actorName String
+  // Acción con formato "categoria.detalle" (ej. venta.creada, usuario.editado)
+  action    String
+  entity    String
+  entityId  String?
+  // Detalle en JSON serializado (texto libre para no perder flexibilidad)
+  details   String?
+  createdAt DateTime @default(now())
+
+  @@index([storeId, createdAt])
+  @@index([storeId, actorId])
+  @@index([storeId, action])
 }

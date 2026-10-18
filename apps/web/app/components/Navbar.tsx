@@ -6,20 +6,27 @@ import { usePathname } from "next/navigation";
 import { useAuth } from "./AuthProvider";
 import { useTheme } from "./ThemeProvider";
 
-const links = [
+type NavLink = { href: string; label: string; roles?: string[] };
+
+const links: NavLink[] = [
   { href: "/", label: "Dashboard" },
   { href: "/pos", label: "POS" },
   { href: "/quotes", label: "Cotizaciones" },
   { href: "/kits", label: "Kits" },
   { href: "/seguimiento", label: "Seguimiento" },
   { href: "/products", label: "Catálogo" },
-  { href: "/users", label: "Usuarios" },
+  { href: "/users", label: "Usuarios", roles: ["root"] },
+  { href: "/auditoria", label: "Auditoría", roles: ["root", "admin"] },
 ];
 
 export default function Navbar() {
   const { user, logout } = useAuth();
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+
+  const visibleLinks = links.filter(
+    (link) => !link.roles || (user !== null && link.roles.includes(user.role)),
+  );
 
   return (
     <header className="sticky top-0 z-10 border-b border-neutral-200 bg-white/80 backdrop-blur dark:border-neutral-800 dark:bg-neutral-900/80">
@@ -29,7 +36,7 @@ export default function Navbar() {
             SEGTECAM
           </Link>
           <div className="hidden items-center gap-6 md:flex">
-            {links.map((link) => {
+            {visibleLinks.map((link) => {
                 const active = pathname === link.href;
                 return (
                   <Link
@@ -79,7 +86,7 @@ export default function Navbar() {
       {open && (
         <div className="border-t border-neutral-200 px-6 py-4 md:hidden dark:border-neutral-800">
           <div className="flex flex-col gap-3">
-            {links.map((link) => {
+            {visibleLinks.map((link) => {
                 const active = pathname === link.href;
                 return (
                   <Link

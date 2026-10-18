@@ -24,8 +24,10 @@ import { CurrentUser } from '../auth/current-user.decorator';
 import { SaveScrapedProductsDto } from './dto/save-scraped-products.dto';
 import { ImportToPostgresDto } from './dto/import-to-postgres.dto';
 import { PatchPrecioDto } from './dto/patch-precio.dto';
+import { PatchProductoDto } from './dto/patch-product.dto';
 import { CreateManualProductDto } from './dto/create-manual-product.dto';
 import { FilesService } from '../files/files.service';
+import { AuditService } from '../audit/audit.service';
 import { Public } from '../auth/jwt-auth.guard';
 
 @Controller('scraping')
@@ -34,6 +36,7 @@ export class ScrapingController {
   constructor(
     private readonly scrapingService: ScrapingService,
     private readonly files: FilesService,
+    private readonly audit: AuditService,
   ) {}
 
   @Post('save')
@@ -42,8 +45,21 @@ export class ScrapingController {
   }
 
   @Post('manual')
-  createManual(@Body() dto: CreateManualProductDto) {
-    return this.scrapingService.createManual(dto);
+  async createManual(
+    @Body() dto: CreateManualProductDto,
+    @CurrentUser() user: User,
+  ) {
+    const producto = await this.scrapingService.createManual(dto);
+    await this.audit.log({
+      storeId: user.storeId,
+      actorId: user.id,
+      actorName: user.name,
+      action: 'catalogo.manual.creado',
+      entity: 'ScrapedProduct',
+      entityId: String(producto._id),
+      details: { nombre: producto.datosCrudos.nombre },
+    });
+    return producto;
   }
 
   @Get('products')
@@ -97,8 +113,46 @@ export class ScrapingController {
   }
 
   @Patch('products/:id/precio')
-  updatePrecio(@Param('id') id: string, @Body() dto: PatchPrecioDto) {
-    return this.scrapingService.updatePrecios(id, dto);
+  async updatePrecio(
+    @Param('id') id: string,
+    @Body() dto: PatchPrecioDto,
+    @CurrentUser() user: User,
+  ) {
+    const producto = await this.scrapingService.updatePrecios(id, dto);
+    await this.audit.log({
+      storeId: user.storeId,
+      actorId: user.id,
+      actorName: user.name,
+      action: 'catalogo.precio',
+      entity: 'ScrapedProduct',
+      entityId: id,
+      details: {
+        nombre: producto.datosCrudos.nombre,
+        precioRegular: producto.datosCrudos.precioRegular,
+        precioProveedor: producto.datosCrudos.precioProveedor,
+        stockCantidad: producto.datosCrudos.stockCantidad,
+      },
+    });
+    return producto;
+  }
+
+  @Patch('products/:id')
+  async updateProducto(
+    @Param('id') id: string,
+    @Body() dto: PatchProductoDto,
+    @CurrentUser() user: User,
+  ) {
+    const producto = await this.scrapingService.updateProducto(id, dto);
+    await this.audit.log({
+      storeId: user.storeId,
+      actorId: user.id,
+      actorName: user.name,
+      action: 'catalogo.nombre',
+      entity: 'ScrapedProduct',
+      entityId: id,
+      details: { nombre: producto.datosCrudos.nombre },
+    });
+    return producto;
   }
 
   @Post('products/:id/images')

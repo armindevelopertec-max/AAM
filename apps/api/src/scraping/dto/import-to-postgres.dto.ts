@@ -26,6 +26,11 @@ export class ImportToPostgresDto {
   @IsOptional()
   @IsNumber()
   @Min(0)
+  precioProveedor?: number;
+
+  @IsOptional()
+  @IsNumber()
+  @Min(0)
   price?: number;
 
   @IsOptional()

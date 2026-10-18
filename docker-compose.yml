@@ -7,7 +7,8 @@ services:
       POSTGRES_PASSWORD: pos
       POSTGRES_DB: pos
     ports:
-      - "5434:5432"
+      # Puerto del host parametrizado para evitar conflictos (ver README §1)
+      - "${AAM_DB_PORT:-5434}:5432"
     volumes:
       - db-data:/var/lib/postgresql/data
     healthcheck:

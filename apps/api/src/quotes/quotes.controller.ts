@@ -16,15 +16,36 @@ import { CreateQuoteDto } from './dto/create-quote.dto';
 import { UpdateQuoteStatusDto } from './dto/update-quote-status.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { CurrentUser } from '../auth/current-user.decorator';
+import { AuditService } from '../audit/audit.service';
 
 @Controller('quotes')
 @UseGuards(JwtAuthGuard)
 export class QuotesController {
-  constructor(private readonly quotesService: QuotesService) {}
+  constructor(
+    private readonly quotesService: QuotesService,
+    private readonly audit: AuditService,
+  ) {}
 
   @Post()
-  create(@Body() createQuoteDto: CreateQuoteDto, @CurrentUser() user: User) {
-    return this.quotesService.create(createQuoteDto, user.storeId, user.name);
+  async create(
+    @Body() createQuoteDto: CreateQuoteDto,
+    @CurrentUser() user: User,
+  ) {
+    const quote = await this.quotesService.create(
+      createQuoteDto,
+      user.storeId,
+      user.name,
+    );
+    await this.audit.log({
+      storeId: user.storeId,
+      actorId: user.id,
+      actorName: user.name,
+      action: 'cotizacion.creada',
+      entity: 'Quote',
+      entityId: quote.id,
+      details: { numero: quote.number, total: quote.total },
+    });
+    return quote;
   }
 
   @Get()
@@ -66,8 +87,26 @@ export class QuotesController {
   }
 
   @Post(':id/convert')
-  convertToSale(@Param('id') id: string, @CurrentUser() user: User) {
-    return this.quotesService.convertToSale(id, user.storeId, user.name);
+  async convertToSale(@Param('id') id: string, @CurrentUser() user: User) {
+    const result = await this.quotesService.convertToSale(
+      id,
+      user.storeId,
+      user.name,
+    );
+    await this.audit.log({
+      storeId: user.storeId,
+      actorId: user.id,
+      actorName: user.name,
+      action: 'cotizacion.convertida',
+      entity: 'Quote',
+      entityId: id,
+      details: {
+        ventaId: result.sale.id,
+        numeroVenta: result.sale.number,
+        total: result.sale.total,
+      },
+    });
+    return result;
   }
 
   @Post(':id/pdf')

@@ -14,15 +14,36 @@ import { SalesService } from './sales.service';
 import { CreateSaleDto } from './dto/create-sale.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { CurrentUser } from '../auth/current-user.decorator';
+import { AuditService } from '../audit/audit.service';
 
 @Controller('sales')
 @UseGuards(JwtAuthGuard)
 export class SalesController {
-  constructor(private readonly salesService: SalesService) {}
+  constructor(
+    private readonly salesService: SalesService,
+    private readonly audit: AuditService,
+  ) {}
 
   @Post()
-  create(@Body() createSaleDto: CreateSaleDto, @CurrentUser() user: User) {
-    return this.salesService.create(createSaleDto, user.storeId, user.name);
+  async create(
+    @Body() createSaleDto: CreateSaleDto,
+    @CurrentUser() user: User,
+  ) {
+    const sale = await this.salesService.create(
+      createSaleDto,
+      user.storeId,
+      user.name,
+    );
+    await this.audit.log({
+      storeId: user.storeId,
+      actorId: user.id,
+      actorName: user.name,
+      action: 'venta.creada',
+      entity: 'Sale',
+      entityId: sale.id,
+      details: { numero: sale.number, total: sale.total },
+    });
+    return sale;
   }
 
   @Get()

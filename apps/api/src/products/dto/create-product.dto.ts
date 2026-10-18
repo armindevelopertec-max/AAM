@@ -26,6 +26,11 @@ export class CreateProductDto {
   regularPrice?: number;
 
   @IsOptional()
+  @IsNumber({ allowInfinity: false, allowNaN: false })
+  @Min(0)
+  precioProveedor?: number;
+
+  @IsOptional()
   @IsString()
   @MaxLength(50)
   sku?: string;

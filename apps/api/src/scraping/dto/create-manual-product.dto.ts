@@ -42,6 +42,11 @@ export class CreateManualProductDto {
   @IsOptional()
   @IsNumber({ allowInfinity: false, allowNaN: false })
   @Min(0)
+  precioProveedor?: number;
+
+  @IsOptional()
+  @IsNumber({ allowInfinity: false, allowNaN: false })
+  @Min(0)
   precioMetro?: number;
 
   @IsOptional()

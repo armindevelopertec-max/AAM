@@ -14,7 +14,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { JwtPayload } from './jwt-auth.guard';
 
-export const USER_ROLES = ['admin', 'ventas'] as const;
+export const USER_ROLES = ['root', 'admin', 'ventas'] as const;
 
 @Injectable()
 export class AuthService {
@@ -78,6 +78,19 @@ export class AuthService {
       throw new BadRequestException('Rol no válido');
     }
 
+    if (
+      target.role === 'root' &&
+      dto.role !== undefined &&
+      dto.role !== 'root'
+    ) {
+      const rootCount = await this.prisma.user.count({
+        where: { storeId: callerStoreId, role: 'root' },
+      });
+      if (rootCount <= 1) {
+        throw new BadRequestException('No puedes cambiar el rol del último root');
+      }
+    }
+
     if (dto.email) {
       const normalized = dto.email.trim().toLowerCase();
       const existing = await this.prisma.user.findUnique({
@@ -112,7 +125,12 @@ export class AuthService {
     return this.toSafe(updated);
   }
 
-  async deleteUser(id: string, callerStoreId: string, callerUserId: string) {
+  async deleteUser(
+    id: string,
+    callerStoreId: string,
+    callerUserId: string,
+    callerRole?: string,
+  ) {
     if (id === callerUserId) {
       throw new BadRequestException('No puedes eliminar tu propio usuario');
     }
@@ -122,7 +140,8 @@ export class AuthService {
       throw new NotFoundException('Usuario no encontrado');
     }
 
-    if (target.role === 'admin') {
+    // El root puede eliminar al último administrador; otros roles no.
+    if (target.role === 'admin' && callerRole !== 'root') {
       const adminCount = await this.prisma.user.count({
         where: { storeId: callerStoreId, role: 'admin' },
       });
@@ -130,6 +149,15 @@ export class AuthService {
         throw new BadRequestException(
           'No puedes eliminar el último administrador',
         );
+      }
+    }
+
+    if (target.role === 'root') {
+      const rootCount = await this.prisma.user.count({
+        where: { storeId: callerStoreId, role: 'root' },
+      });
+      if (rootCount <= 1) {
+        throw new BadRequestException('No puedes eliminar el último root');
       }
     }
 

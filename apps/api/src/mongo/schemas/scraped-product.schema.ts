@@ -29,9 +29,11 @@ export class ScrapedProduct {
   datosCrudos!: {
     idExterno: number;
     nombre: string;
+    nombreEditado?: boolean;
     sku: string;
     precioRegular: number;
     precioOferta: number;
+    precioProveedor?: number;
     precioMetro?: number;
     unidad?: string;
     metros?: number;

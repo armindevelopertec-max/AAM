@@ -22,6 +22,7 @@ import { UpdateKitDto } from './dto/update-kit.dto';
 import { JwtAuthGuard, Public } from '../auth/jwt-auth.guard';
 import { CurrentUser } from '../auth/current-user.decorator';
 import { FilesService } from '../files/files.service';
+import { AuditService } from '../audit/audit.service';
 
 @Controller('kits')
 @UseGuards(JwtAuthGuard)
@@ -29,6 +30,7 @@ export class KitsController {
   constructor(
     private readonly kitsService: KitsService,
     private readonly files: FilesService,
+    private readonly audit: AuditService,
   ) {}
 
   @Public()
@@ -64,22 +66,54 @@ export class KitsController {
   }
 
   @Post()
-  create(@Body() createKitDto: CreateKitDto, @CurrentUser() user: User) {
-    return this.kitsService.create(createKitDto, user.storeId);
+  async create(
+    @Body() createKitDto: CreateKitDto,
+    @CurrentUser() user: User,
+  ) {
+    const kit = await this.kitsService.create(createKitDto, user.storeId);
+    await this.audit.log({
+      storeId: user.storeId,
+      actorId: user.id,
+      actorName: user.name,
+      action: 'kit.creado',
+      entity: 'Kit',
+      entityId: kit.id,
+      details: { nombre: kit.name },
+    });
+    return kit;
   }
 
   @Patch(':id')
-  update(
+  async update(
     @Param('id') id: string,
     @Body() updateKitDto: UpdateKitDto,
     @CurrentUser() user: User,
   ) {
-    return this.kitsService.update(id, updateKitDto, user.storeId);
+    const kit = await this.kitsService.update(id, updateKitDto, user.storeId);
+    await this.audit.log({
+      storeId: user.storeId,
+      actorId: user.id,
+      actorName: user.name,
+      action: 'kit.editado',
+      entity: 'Kit',
+      entityId: id,
+      details: { nombre: kit.name },
+    });
+    return kit;
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string, @CurrentUser() user: User) {
-    return this.kitsService.remove(id, user.storeId);
+  async remove(@Param('id') id: string, @CurrentUser() user: User) {
+    const result = await this.kitsService.remove(id, user.storeId);
+    await this.audit.log({
+      storeId: user.storeId,
+      actorId: user.id,
+      actorName: user.name,
+      action: 'kit.eliminado',
+      entity: 'Kit',
+      entityId: id,
+    });
+    return result;
   }
 
   @Post(':id/image')
