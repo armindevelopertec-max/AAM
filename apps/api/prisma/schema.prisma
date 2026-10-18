@@ -118,6 +118,8 @@ model SaleItem {
   quantity  Int
   unitPrice Float
   subtotal  Float
+  // Precio de proveedor vigente al momento de vender (snapshot)
+  precioProveedor Float @default(0)
 
   @@index([saleId])
   @@index([productId, fuente])
@@ -158,6 +160,8 @@ model QuoteItem {
   unitPrice     Float
   originalPrice Float  @default(0)
   subtotal      Float
+  // Precio de proveedor vigente al momento de cotizar (snapshot)
+  precioProveedor Float @default(0)
 
   @@index([quoteId])
   @@index([productId, fuente])
@@ -190,6 +194,8 @@ model KitItem {
   quantity      Int
   unitPrice     Float
   originalPrice Float  @default(0)
+  // Precio de proveedor vigente al momento de armar el kit (snapshot)
+  precioProveedor Float @default(0)
   moneda        String @default("BOB")
   unidad        String?
 

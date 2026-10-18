@@ -206,6 +206,11 @@ export default function ProductCatalog({
                           </small>
                         )}
                       </span>
+                      {(product.precioProveedor ?? 0) > 0 && (
+                        <span className="mt-0.5 block text-[11px] font-semibold text-amber-600 dark:text-amber-400">
+                          Prov: {formatMoney(product.precioProveedor!, product.moneda)}
+                        </span>
+                      )}
                       {product.unidad === "metro" && product.metros ? (
                         <span className="block text-[10px] text-neutral-400">
                           Rollo de {product.metros} m

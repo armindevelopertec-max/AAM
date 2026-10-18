@@ -38,6 +38,7 @@ export default function PosManager() {
             unitPrice: product.price,
             originalPrice: product.regularPrice || product.price,
             costPrice: product.costPrice,
+            precioProveedor: product.precioProveedor ?? 0,
             imageUrl: product.imageUrl,
             unidad: product.unidad ?? null,
           },

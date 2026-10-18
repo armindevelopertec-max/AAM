@@ -475,6 +475,7 @@ export default function SeguimientoManager({
           unitPrice: item.unitPrice,
           originalPrice: item.originalPrice,
           costPrice: 0,
+          precioProveedor: item.precioProveedor ?? 0,
           imageUrl: null,
         };
         return line;
@@ -502,6 +503,7 @@ export default function SeguimientoManager({
           unitPrice: item.unitPrice,
           originalPrice: item.unitPrice,
           costPrice: 0,
+          precioProveedor: item.precioProveedor ?? 0,
           imageUrl: null,
         };
         return line;
@@ -765,6 +767,11 @@ export default function SeguimientoManager({
                                 {item.sku && (
                                   <span className="hidden shrink-0 font-mono text-xs text-neutral-400 sm:inline">
                                     {item.sku}
+                                  </span>
+                                )}
+                                {(item.precioProveedor ?? 0) > 0 && (
+                                  <span className="shrink-0 rounded-full bg-amber-100 px-1.5 py-px text-[10px] font-semibold text-amber-700 dark:bg-amber-900 dark:text-amber-300">
+                                    Prov: {formatMoney(item.precioProveedor!)}
                                   </span>
                                 )}
                               </span>

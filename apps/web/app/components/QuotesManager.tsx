@@ -38,6 +38,7 @@ export default function QuotesManager() {
             unitPrice: product.price,
             originalPrice: product.regularPrice || product.price,
             costPrice: product.costPrice,
+            precioProveedor: product.precioProveedor ?? 0,
             imageUrl: product.imageUrl,
             isInstall: false,
             unidad: product.unidad ?? null,

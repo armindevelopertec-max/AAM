@@ -15,6 +15,7 @@ export interface VentaProducto {
   categoria: string;
   precioVenta: number | null;
   precioRegular: number | null;
+  precioProveedor: number | null;
   moneda: string;
   stock: number | null;
   enStock: boolean;
@@ -163,6 +164,8 @@ export class VentaService {
     const unidad = (d.unidad as string | null | undefined) ?? null;
     const metros = (d.metros as number | null | undefined) ?? null;
     const precioMetro = (d.precioMetro as number | null | undefined) ?? null;
+    const precioProveedor = (d.precioProveedor as number | null | undefined) ??
+      null;
 
     // Producto vendido por metro (cable/rollo): el precio de venta es por metro.
     const esPorMetro =
@@ -195,6 +198,7 @@ export class VentaService {
       categoria: (doc as Record<string, unknown>).categoriaScrape as string,
       precioVenta,
       precioRegular: precioRegularFinal,
+      precioProveedor,
       moneda: (d.moneda as string) ?? 'BOB',
       stock: typeof stockCantidad === 'number' ? stockCantidad : null,
       enStock:

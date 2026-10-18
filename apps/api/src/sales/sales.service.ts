@@ -62,6 +62,7 @@ export class SalesService {
           quantity: item.quantity,
           unitPrice,
           subtotal: lineSubtotal,
+          precioProveedor: 0,
         });
         continue;
       }
@@ -116,6 +117,9 @@ export class SalesService {
         quantity: item.quantity,
         unitPrice,
         subtotal: lineSubtotal,
+        // Snapshot del precio de proveedor del catálogo al momento de vender
+        precioProveedor:
+          typeof d.precioProveedor === 'number' ? d.precioProveedor : 0,
       });
     }
 

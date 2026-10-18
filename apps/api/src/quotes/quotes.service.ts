@@ -66,6 +66,7 @@ export class QuotesService {
           quantity: item.quantity,
           unitPrice,
           originalPrice: unitPrice,
+          precioProveedor: 0,
           subtotal: lineSubtotal,
         });
         continue;
@@ -105,6 +106,9 @@ export class QuotesService {
         quantity: item.quantity,
         unitPrice,
         originalPrice,
+        // Snapshot del precio de proveedor del catálogo al momento de cotizar
+        precioProveedor:
+          typeof d.precioProveedor === 'number' ? d.precioProveedor : 0,
         subtotal: lineSubtotal,
       });
     }

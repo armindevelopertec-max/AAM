@@ -1,0 +1,8 @@
+-- AlterTable
+ALTER TABLE "KitItem" ADD COLUMN     "precioProveedor" DOUBLE PRECISION NOT NULL DEFAULT 0;
+
+-- AlterTable
+ALTER TABLE "QuoteItem" ADD COLUMN     "precioProveedor" DOUBLE PRECISION NOT NULL DEFAULT 0;
+
+-- AlterTable
+ALTER TABLE "SaleItem" ADD COLUMN     "precioProveedor" DOUBLE PRECISION NOT NULL DEFAULT 0;

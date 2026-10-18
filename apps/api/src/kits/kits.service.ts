@@ -174,6 +174,7 @@ export class KitsService {
       quantity: number;
       unitPrice: number;
       originalPrice: number;
+      precioProveedor: number;
       moneda: string;
       unidad: string | null;
     }[] = [];
@@ -197,6 +198,7 @@ export class KitsService {
           quantity: item.quantity,
           unitPrice,
           originalPrice: unitPrice,
+          precioProveedor: 0,
           moneda: 'BOB',
           unidad: null,
         });
@@ -230,6 +232,9 @@ export class KitsService {
         quantity: item.quantity,
         unitPrice,
         originalPrice,
+        // Snapshot del precio de proveedor del catálogo al momento de armar el kit
+        precioProveedor:
+          typeof d.precioProveedor === 'number' ? d.precioProveedor : 0,
         moneda: d.moneda ?? 'BOB',
         unidad: d.unidad ?? null,
       });

@@ -63,6 +63,8 @@ export type SaleItem = {
   sku: string;
   quantity: number;
   unitPrice: number;
+  /** Precio de proveedor vigente al momento de vender */
+  precioProveedor?: number;
   subtotal: number;
 };
 
@@ -88,6 +90,8 @@ export type QuoteItem = {
   quantity: number;
   unitPrice: number;
   originalPrice: number;
+  /** Precio de proveedor vigente al momento de cotizar */
+  precioProveedor?: number;
   subtotal: number;
 };
 
@@ -126,6 +130,8 @@ export type KitItem = {
   quantity: number;
   unitPrice: number;
   originalPrice: number;
+  /** Precio de proveedor vigente al momento de armar el kit */
+  precioProveedor?: number;
   moneda: string;
   unidad: string | null;
 };
@@ -444,6 +450,7 @@ export type VentaProducto = {
   categoria: string;
   precioVenta: number | null;
   precioRegular: number | null;
+  precioProveedor: number | null;
   moneda: string;
   stock: number | null;
   enStock: boolean;
@@ -490,6 +497,7 @@ export function ventaProductoToProduct(vp: VentaProducto): Product {
     category: vp.categoria,
     costPrice: vp.precioRegular ?? 0,
     regularPrice: vp.precioRegular ?? 0,
+    precioProveedor: vp.precioProveedor ?? 0,
     price: vp.precioVenta ?? 0,
     stock: vp.stock ?? 0,
     imageUrl: vp.imagenUrl,

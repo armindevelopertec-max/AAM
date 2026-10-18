@@ -12,6 +12,8 @@ export type CartLine = {
   unitPrice: number;
   originalPrice: number;
   costPrice: number;
+  /** Precio de proveedor del catálogo (informativo, no afecta los cálculos) */
+  precioProveedor?: number;
   imageUrl: string | null;
   isInstall?: boolean;
   unidad?: string | null;
@@ -189,6 +191,11 @@ export default function CartDrawer({
                         <p className="truncate text-xs font-medium leading-tight">
                           {line.name}
                         </p>
+                        {(line.precioProveedor ?? 0) > 0 && (
+                          <p className="mt-0.5 text-[10px] font-semibold text-amber-600 dark:text-amber-400">
+                            Prov: {formatMoney(line.precioProveedor!, line.moneda)}
+                          </p>
+                        )}
                         <div className="mt-1 flex items-center gap-1.5">
                           <button
                             onClick={() =>

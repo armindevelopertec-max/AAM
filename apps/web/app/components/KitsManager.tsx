@@ -29,6 +29,7 @@ type SeedData = {
     quantity: number;
     unitPrice: number;
     originalPrice: number;
+    precioProveedor?: number;
     unidad?: string | null;
   }>;
 };
@@ -44,6 +45,7 @@ function buildLinesFromSeed(seed: SeedData): CartLine[] {
     unitPrice: item.unitPrice,
     originalPrice: item.originalPrice,
     costPrice: 0,
+    precioProveedor: item.precioProveedor ?? 0,
     imageUrl: null,
     isInstall: item.productId == null,
     unidad: item.unidad ?? null,
@@ -154,6 +156,7 @@ export default function KitsManager() {
           quantity: item.quantity,
           unitPrice: item.unitPrice,
           originalPrice: "originalPrice" in item ? item.originalPrice : item.unitPrice,
+          precioProveedor: "precioProveedor" in item ? item.precioProveedor : 0,
         }));
         const sessionLines = buildLinesFromSeed({ items });
         const resolved = await resolveImages(sessionLines);
@@ -205,6 +208,7 @@ export default function KitsManager() {
             unitPrice: product.price,
             originalPrice: product.regularPrice || product.price,
             costPrice: product.costPrice,
+            precioProveedor: product.precioProveedor ?? 0,
             imageUrl: product.imageUrl,
             unidad: product.unidad ?? null,
           },
@@ -274,6 +278,10 @@ export default function KitsManager() {
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {kits.map((item) => {
             const collage = collages[item.id] ?? [];
+            const costoProveedor = item.items.reduce(
+              (s, it) => s + (it.precioProveedor ?? 0) * it.quantity,
+              0,
+            );
             return (
               <div
                 key={item.id}
@@ -326,6 +334,11 @@ export default function KitsManager() {
                     )}{" "}
                     ítems
                   </p>
+                  {costoProveedor > 0 && (
+                    <p className="text-xs font-semibold text-amber-600 dark:text-amber-400">
+                      Costo proveedor: {formatMoney(costoProveedor)}
+                    </p>
+                  )}
                   <div className="mt-auto flex flex-wrap items-end justify-between gap-2 pt-2">
                     <span className="text-base font-bold text-green-600 dark:text-green-400">
                       {formatMoney(kitTotal(item), item.items[0]?.moneda ?? "BOB")}
