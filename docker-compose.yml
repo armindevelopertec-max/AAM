@@ -1,6 +1,6 @@
 services:
   db:
-    image: postgres:16-alpine
+    image: docker.io/library/postgres:16-alpine
     container_name: saas-pos-db
     environment:
       POSTGRES_USER: pos
@@ -18,7 +18,7 @@ services:
       retries: 12
 
   mongodb:
-    image: mongo:7
+    image: docker.io/library/mongo:7
     container_name: saas-pos-mongo
     environment:
       MONGO_INITDB_ROOT_USERNAME: pos
@@ -34,7 +34,9 @@ services:
       retries: 12
 
   minio:
-    image: minio/minio
+    # Imagen oficial de MinIO (release 2025-10-15). El repo docker.io/minio/minio
+    # fue eliminado y quay.io/minio/minio quedó restringido (2025/2026).
+    image: docker.io/alpine/minio:RELEASE.2025-10-15T17-29-55Z
     container_name: saas-pos-minio
     command: server /data --console-address ":9001"
     environment:
@@ -46,7 +48,12 @@ services:
     volumes:
       - minio-data:/data
     healthcheck:
-      test: ["CMD", "mc", "ready", "local"]
+      # wget (no mc) porque la imagen alpine/minio no incluye el cliente mc
+      test:
+        [
+          "CMD-SHELL",
+          "wget -q -O /dev/null http://localhost:9000/minio/health/live || exit 1",
+        ]
       interval: 5s
       timeout: 5s
       retries: 12

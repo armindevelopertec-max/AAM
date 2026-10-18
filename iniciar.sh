@@ -2,7 +2,7 @@
 # =====================================================
 #  AAM - Iniciar todos los servicios (PM2)
 #  - Contenedores (PostgreSQL, MongoDB, MinIO)
-#  - Cloudflared Tunnel
+#  - Cloudflared Tunnel (servicio systemd)
 #  - Backend NestJS (pm2)
 #  - Frontend Next.js (pm2)
 # =====================================================
@@ -11,7 +11,6 @@ set -e
 ROOT="$(cd "$(dirname "$0")" && pwd)"
 API_DIR="$ROOT/apps/api"
 WEB_DIR="$ROOT/apps/web"
-LOG_DIR="$ROOT/.logs"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
@@ -22,15 +21,16 @@ fail()  { echo -e "\e[1;31m[ERROR]\e[0m $1"; exit 1; }
 need_build() { [ ! -f "$1/.next/BUILD_ID" ]; }
 
 # --------------------------------------------
-# 1) Verificar Cloudflared
+# 1) Cloudflared (servicio systemd, arranca en el boot)
 # --------------------------------------------
 info "Verificando Cloudflared..."
-if pgrep -f "cloudflared.*config.yml" > /dev/null 2>&1; then
+if systemctl is-active --quiet cloudflared-aam.service; then
     ok "Cloudflared ya está corriendo"
 else
-    info "Iniciando Cloudflared..."
-    cloudflared --config /home/arminserver/.cloudflared/config.yml tunnel run 9c10117d-e974-4194-8bc8-32f772aea14e > /tmp/cloudflared.log 2>&1 &
-    sleep 2
+    info "Iniciando Cloudflared (servicio systemd)..."
+    sudo systemctl start cloudflared-aam.service || fail "No se pudo iniciar cloudflared"
+    sleep 3
+    systemctl is-active --quiet cloudflared-aam.service || fail "cloudflared no quedó activo"
     ok "Cloudflared iniciado"
 fi
 
