@@ -609,6 +609,54 @@ export async function downloadSalePdf(id: string): Promise<string> {
   return URL.createObjectURL(blob);
 }
 
+export async function downloadQuoteExcel(id: string): Promise<string> {
+  const token = getToken();
+  const res = await fetch(`${API_URL}/quotes/${id}/excel`, {
+    headers: token ? { Authorization: `Bearer ${token}` } : {},
+  });
+  if (!res.ok) {
+    throw new Error("No se pudo descargar el Excel");
+  }
+  const blob = await res.blob();
+  return URL.createObjectURL(blob);
+}
+
+export async function downloadQuoteXml(id: string): Promise<string> {
+  const token = getToken();
+  const res = await fetch(`${API_URL}/quotes/${id}/xml`, {
+    headers: token ? { Authorization: `Bearer ${token}` } : {},
+  });
+  if (!res.ok) {
+    throw new Error("No se pudo descargar el XML");
+  }
+  const blob = await res.blob();
+  return URL.createObjectURL(blob);
+}
+
+export async function downloadSaleExcel(id: string): Promise<string> {
+  const token = getToken();
+  const res = await fetch(`${API_URL}/sales/${id}/excel`, {
+    headers: token ? { Authorization: `Bearer ${token}` } : {},
+  });
+  if (!res.ok) {
+    throw new Error("No se pudo descargar el Excel");
+  }
+  const blob = await res.blob();
+  return URL.createObjectURL(blob);
+}
+
+export async function downloadSaleXml(id: string): Promise<string> {
+  const token = getToken();
+  const res = await fetch(`${API_URL}/sales/${id}/xml`, {
+    headers: token ? { Authorization: `Bearer ${token}` } : {},
+  });
+  if (!res.ok) {
+    throw new Error("No se pudo descargar el XML");
+  }
+  const blob = await res.blob();
+  return URL.createObjectURL(blob);
+}
+
 // --- Kits ---
 
 export type KitItemInput = {

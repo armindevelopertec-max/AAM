@@ -13,6 +13,8 @@ import { CreateQuoteDto } from './dto/create-quote.dto';
 import { PENDING_STATUSES } from './quote-statuses';
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const sharp = require('sharp');
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const XLSX = require('xlsx');
 
 @Injectable()
 export class QuotesService {
@@ -377,5 +379,77 @@ export class QuotesService {
       return d.precioRegular;
     }
     return null;
+  }
+
+  async generateExcel(id: string, storeId: string): Promise<Buffer> {
+    const quote = await this.findOne(id, storeId);
+    const data: any[] = quote.items.map((item, index) => ({
+      '#': index + 1,
+      'SKU': item.sku,
+      'Producto': item.name,
+      'Cantidad': item.quantity,
+      'P. Unitario': item.unitPrice,
+      'Subtotal': item.subtotal,
+    }));
+
+    data.push({ '#': '', 'SKU': '', 'Producto': '', 'Cantidad': '', 'P. Unitario': 'Subtotal:', 'Subtotal': quote.subtotal });
+    if (quote.discount > 0) {
+      data.push({ '#': '', 'SKU': '', 'Producto': '', 'Cantidad': '', 'P. Unitario': 'Descuento:', 'Subtotal': -quote.discount });
+    }
+    data.push({ '#': '', 'SKU': '', 'Producto': '', 'Cantidad': '', 'P. Unitario': 'Total:', 'Subtotal': quote.total });
+
+    const ws = XLSX.utils.json_to_sheet(data);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Cotizacion');
+    ws['!cols'] = [
+      { wch: 5 }, { wch: 15 }, { wch: 40 }, { wch: 10 },
+      { wch: 15 }, { wch: 15 },
+    ];
+    const buffer = XLSX.write(wb, { type: 'buffer', bookType: 'xlsx' });
+    return buffer as Buffer;
+  }
+
+  async generateXml(id: string, storeId: string): Promise<string> {
+    const quote = await this.findOne(id, storeId);
+    return this.generateXmlBase(quote);
+  }
+
+  private generateXmlBase(quote: Awaited<ReturnType<typeof this.findOne>>): string {
+    let itemsXml = '';
+    for (const item of quote.items) {
+      itemsXml += `
+      <item>
+        <sku>${this.escapeXml(item.sku)}</sku>
+        <name>${this.escapeXml(item.name)}</name>
+        <quantity>${item.quantity}</quantity>
+        <unitPrice>${item.unitPrice}</unitPrice>
+        <subtotal>${item.subtotal}</subtotal>
+      </item>`;
+    }
+
+    return `<?xml version="1.0" encoding="UTF-8"?>
+<quote>
+  <number>${this.escapeXml(quote.number)}</number>
+  <clientName>${this.escapeXml(quote.clientName)}</clientName>
+  <createdBy>${this.escapeXml(quote.createdBy ?? '')}</createdBy>
+  <createdAt>${quote.createdAt.toISOString()}</createdAt>
+  <validDays>${quote.validDays}</validDays>
+  <expiresAt>${quote.expiresAt.toISOString()}</expiresAt>
+  <status>${quote.status}</status>
+  <items>${itemsXml}
+  </items>
+  <subtotal>${quote.subtotal}</subtotal>
+  <discount>${quote.discount}</discount>
+  <total>${quote.total}</total>
+</quote>`;
+  }
+
+  private escapeXml(str: string): string {
+    return str
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&apos;');
   }
 }

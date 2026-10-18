@@ -97,4 +97,44 @@ export class QuotesController {
       res.status(404).json({ error: 'PDF no encontrado' });
     }
   }
+
+  @Get(':id/excel')
+  async downloadExcel(
+    @Param('id') id: string,
+    @CurrentUser() user: User,
+    @Res() res: Response,
+  ) {
+    try {
+      const buffer = await this.quotesService.generateExcel(id, user.storeId);
+      const quote = await this.quotesService.findOne(id, user.storeId);
+      res.set({
+        'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        'Content-Disposition': `attachment; filename="${quote.number}.xlsx"`,
+        'Cache-Control': 'no-store',
+      });
+      res.end(buffer);
+    } catch (err) {
+      res.status(404).json({ error: 'Excel no encontrado' });
+    }
+  }
+
+  @Get(':id/xml')
+  async downloadXml(
+    @Param('id') id: string,
+    @CurrentUser() user: User,
+    @Res() res: Response,
+  ) {
+    try {
+      const quote = await this.quotesService.findOne(id, user.storeId);
+      const xml = await this.quotesService.generateXml(id, user.storeId);
+      res.set({
+        'Content-Type': 'application/xml',
+        'Content-Disposition': `attachment; filename="${quote.number}.xml"`,
+        'Cache-Control': 'no-store',
+      });
+      res.end(xml);
+    } catch (err) {
+      res.status(404).json({ error: 'XML no encontrado' });
+    }
+  }
 }

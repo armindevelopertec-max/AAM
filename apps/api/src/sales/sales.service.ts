@@ -12,6 +12,8 @@ import { CreateSaleDto } from './dto/create-sale.dto';
 
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const sharp = require('sharp');
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const XLSX = require('xlsx');
 
 @Injectable()
 export class SalesService {
@@ -324,5 +326,88 @@ export class SalesService {
       return d.precioRegular;
     }
     return null;
+  }
+
+  async generateExcel(id: string, storeId: string): Promise<Buffer> {
+    const sale = await this.findOne(id, storeId);
+
+    let clientName = 'Cliente general';
+    if (sale.clientId) {
+      const client = await this.prisma.client.findUnique({
+        where: { id: sale.clientId },
+      });
+      clientName = client?.name ?? 'Cliente general';
+    }
+
+    const data: any[] = sale.items.map((item, index) => ({
+      '#': index + 1,
+      'SKU': item.sku,
+      'Producto': item.name,
+      'Cantidad': item.quantity,
+      'P. Unitario': item.unitPrice,
+      'Subtotal': item.subtotal,
+    }));
+
+    data.push({ '#': '', 'SKU': '', 'Producto': '', 'Cantidad': '', 'P. Unitario': 'Subtotal:', 'Subtotal': sale.subtotal });
+    if (sale.discount > 0) {
+      data.push({ '#': '', 'SKU': '', 'Producto': '', 'Cantidad': '', 'P. Unitario': 'Descuento:', 'Subtotal': -sale.discount });
+    }
+    data.push({ '#': '', 'SKU': '', 'Producto': '', 'Cantidad': '', 'P. Unitario': 'Total:', 'Subtotal': sale.total });
+
+    const ws = XLSX.utils.json_to_sheet(data);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Venta');
+    ws['!cols'] = [
+      { wch: 5 }, { wch: 15 }, { wch: 40 }, { wch: 10 },
+      { wch: 15 }, { wch: 15 },
+    ];
+    const buffer = XLSX.write(wb, { type: 'buffer', bookType: 'xlsx' });
+    return buffer as Buffer;
+  }
+
+  async generateXml(id: string, storeId: string): Promise<string> {
+    const sale = await this.findOne(id, storeId);
+
+    let clientName = 'Cliente general';
+    if (sale.clientId) {
+      const client = await this.prisma.client.findUnique({
+        where: { id: sale.clientId },
+      });
+      clientName = client?.name ?? 'Cliente general';
+    }
+
+    let itemsXml = '';
+    for (const item of sale.items) {
+      itemsXml += `
+      <item>
+        <sku>${this.escapeXml(item.sku)}</sku>
+        <name>${this.escapeXml(item.name)}</name>
+        <quantity>${item.quantity}</quantity>
+        <unitPrice>${item.unitPrice}</unitPrice>
+        <subtotal>${item.subtotal}</subtotal>
+      </item>`;
+    }
+
+    return `<?xml version="1.0" encoding="UTF-8"?>
+<sale>
+  <number>${this.escapeXml(sale.number)}</number>
+  <clientName>${this.escapeXml(clientName)}</clientName>
+  <createdBy>${this.escapeXml(sale.createdBy ?? '')}</createdBy>
+  <createdAt>${sale.createdAt.toISOString()}</createdAt>
+  <items>${itemsXml}
+  </items>
+  <subtotal>${sale.subtotal}</subtotal>
+  <discount>${sale.discount}</discount>
+  <total>${sale.total}</total>
+</sale>`;
+  }
+
+  private escapeXml(str: string): string {
+    return str
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&apos;');
   }
 }

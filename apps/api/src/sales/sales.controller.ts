@@ -77,4 +77,44 @@ export class SalesController {
       res.status(404).json({ error: 'PDF no encontrado' });
     }
   }
+
+  @Get(':id/excel')
+  async downloadExcel(
+    @Param('id') id: string,
+    @CurrentUser() user: User,
+    @Res() res: Response,
+  ) {
+    try {
+      const buffer = await this.salesService.generateExcel(id, user.storeId);
+      const sale = await this.salesService.findOne(id, user.storeId);
+      res.set({
+        'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        'Content-Disposition': `attachment; filename="${sale.number}.xlsx"`,
+        'Cache-Control': 'no-store',
+      });
+      res.end(buffer);
+    } catch (err) {
+      res.status(404).json({ error: 'Excel no encontrado' });
+    }
+  }
+
+  @Get(':id/xml')
+  async downloadXml(
+    @Param('id') id: string,
+    @CurrentUser() user: User,
+    @Res() res: Response,
+  ) {
+    try {
+      const sale = await this.salesService.findOne(id, user.storeId);
+      const xml = await this.salesService.generateXml(id, user.storeId);
+      res.set({
+        'Content-Type': 'application/xml',
+        'Content-Disposition': `attachment; filename="${sale.number}.xml"`,
+        'Cache-Control': 'no-store',
+      });
+      res.end(xml);
+    } catch (err) {
+      res.status(404).json({ error: 'XML no encontrado' });
+    }
+  }
 }

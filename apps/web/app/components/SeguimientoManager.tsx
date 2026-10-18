@@ -8,8 +8,12 @@ import {
   formatMoney,
   generateQuotePdf,
   downloadQuotePdf,
+  downloadQuoteExcel,
+  downloadQuoteXml,
   generateSalePdf,
   downloadSalePdf,
+  downloadSaleExcel,
+  downloadSaleXml,
   updateQuoteStatus,
   convertQuoteToSale,
   getProductImage,
@@ -147,6 +151,28 @@ function XIcon(props: IconProps) {
       <circle cx="12" cy="12" r="10" />
       <line x1="15" y1="9" x2="9" y2="15" />
       <line x1="9" y1="9" x2="15" y2="15" />
+    </IconBase>
+  );
+}
+
+function ExcelIcon(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+      <polyline points="14 2 14 8 20 8" />
+      <line x1="8" y1="13" x2="16" y2="13" />
+      <line x1="8" y1="17" x2="16" y2="17" />
+    </IconBase>
+  );
+}
+
+function XmlIcon(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+      <polyline points="14 2 14 8 20 8" />
+      <path d="M9 13l-2 2 2 2" />
+      <path d="M15 13l2 2-2 2" />
     </IconBase>
   );
 }
@@ -523,6 +549,50 @@ export default function SeguimientoManager({
     }
   }
 
+  async function handleQuoteExcel(quoteId: string) {
+    setError(null);
+    try {
+      const blobUrl = await downloadQuoteExcel(quoteId);
+      window.open(blobUrl, "_blank");
+      setTimeout(() => URL.revokeObjectURL(blobUrl), 60000);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Error al exportar Excel");
+    }
+  }
+
+  async function handleQuoteXml(quoteId: string) {
+    setError(null);
+    try {
+      const blobUrl = await downloadQuoteXml(quoteId);
+      window.open(blobUrl, "_blank");
+      setTimeout(() => URL.revokeObjectURL(blobUrl), 60000);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Error al exportar XML");
+    }
+  }
+
+  async function handleSaleExcel(saleId: string) {
+    setError(null);
+    try {
+      const blobUrl = await downloadSaleExcel(saleId);
+      window.open(blobUrl, "_blank");
+      setTimeout(() => URL.revokeObjectURL(blobUrl), 60000);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Error al exportar Excel");
+    }
+  }
+
+  async function handleSaleXml(saleId: string) {
+    setError(null);
+    try {
+      const blobUrl = await downloadSaleXml(saleId);
+      window.open(blobUrl, "_blank");
+      setTimeout(() => URL.revokeObjectURL(blobUrl), 60000);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Error al exportar XML");
+    }
+  }
+
   async function handleConvert(quoteId: string) {
     setError(null);
     try {
@@ -739,6 +809,20 @@ export default function SeguimientoManager({
                         Generar PDF
                       </button>
                       <button
+                        onClick={() => handleQuoteExcel(quote.id)}
+                        className="inline-flex items-center gap-1.5 rounded-lg border border-green-300 px-3 py-1.5 text-sm font-medium text-green-700 transition hover:bg-green-50 dark:border-green-700 dark:text-green-400 dark:hover:bg-green-950"
+                      >
+                        <ExcelIcon className="h-4 w-4" />
+                        Excel
+                      </button>
+                      <button
+                        onClick={() => handleQuoteXml(quote.id)}
+                        className="inline-flex items-center gap-1.5 rounded-lg border border-orange-300 px-3 py-1.5 text-sm font-medium text-orange-700 transition hover:bg-orange-50 dark:border-orange-700 dark:text-orange-400 dark:hover:bg-orange-950"
+                      >
+                        <XmlIcon className="h-4 w-4" />
+                        XML
+                      </button>
+                      <button
                         onClick={() => loadQuoteToCart(quote)}
                         className="inline-flex items-center gap-1.5 rounded-lg border border-amber-300 px-3 py-1.5 text-sm font-semibold text-amber-700 transition hover:bg-amber-50 dark:border-amber-700 dark:text-amber-400 dark:hover:bg-amber-950"
                       >
@@ -899,6 +983,20 @@ export default function SeguimientoManager({
                       >
                         <PdfIcon className="h-4 w-4" />
                         Descargar PDF
+                      </button>
+                      <button
+                        onClick={() => handleSaleExcel(sale.id)}
+                        className="inline-flex items-center gap-1.5 rounded-lg border border-green-300 px-3 py-1.5 text-sm font-medium text-green-700 transition hover:bg-green-50 dark:border-green-700 dark:text-green-400 dark:hover:bg-green-950"
+                      >
+                        <ExcelIcon className="h-4 w-4" />
+                        Excel
+                      </button>
+                      <button
+                        onClick={() => handleSaleXml(sale.id)}
+                        className="inline-flex items-center gap-1.5 rounded-lg border border-orange-300 px-3 py-1.5 text-sm font-medium text-orange-700 transition hover:bg-orange-50 dark:border-orange-700 dark:text-orange-400 dark:hover:bg-orange-950"
+                      >
+                        <XmlIcon className="h-4 w-4" />
+                        XML
                       </button>
                       <button
                         onClick={() => setExpandedSaleId(expandedSaleId === sale.id ? null : sale.id)}
