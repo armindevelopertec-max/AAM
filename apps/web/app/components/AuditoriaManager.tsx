@@ -65,7 +65,7 @@ function Detalle({ details }: { details: string | null }) {
 }
 
 const selectClass =
-  "rounded-md border border-neutral-300 px-3 py-2 text-sm dark:border-neutral-700 dark:bg-neutral-800";
+  "w-full rounded-md border border-neutral-300 px-3 py-2.5 text-sm dark:border-neutral-700 dark:bg-neutral-800 sm:w-auto sm:py-2";
 
 export default function AuditoriaManager() {
   const [entries, setEntries] = useState<AuditEntry[]>([]);
@@ -110,7 +110,7 @@ export default function AuditoriaManager() {
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex flex-wrap items-center gap-3">
+      <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
         <select
           value={actorId}
           onChange={(e) => {
@@ -158,57 +158,83 @@ export default function AuditoriaManager() {
           No hay registros de auditoría todavía.
         </p>
       ) : (
-        <div className="overflow-x-auto rounded-lg border border-neutral-200 dark:border-neutral-800">
-          <table className="w-full text-left text-sm">
-            <thead className="border-b border-neutral-200 bg-neutral-50 text-xs uppercase text-neutral-500 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-400">
-              <tr>
-                <th className="px-4 py-3">Fecha</th>
-                <th className="px-4 py-3">Usuario</th>
-                <th className="px-4 py-3">Acción</th>
-                <th className="px-4 py-3">Detalle</th>
-              </tr>
-            </thead>
-            <tbody>
-              {entries.map((e) => (
-                <tr
-                  key={e.id}
-                  className="border-b border-neutral-100 last:border-0 dark:border-neutral-800"
-                >
-                  <td className="whitespace-nowrap px-4 py-3 text-neutral-500 dark:text-neutral-400">
-                    {formatFecha(e.createdAt)}
-                  </td>
-                  <td className="whitespace-nowrap px-4 py-3 font-medium">
-                    {e.actorName}
-                  </td>
-                  <td className="whitespace-nowrap px-4 py-3">
+        <>
+          {/* Móvil: tarjetas */}
+          <div className="flex flex-col gap-2 sm:hidden">
+            {entries.map((e) => (
+              <div
+                key={e.id}
+                className="rounded-lg border border-neutral-200 bg-white p-3 dark:border-neutral-800 dark:bg-neutral-900"
+              >
+                <div className="flex items-start justify-between gap-2">
+                  <span className="text-xs font-semibold text-neutral-700 dark:text-neutral-300">
                     {actionLabels[e.action] ?? e.action}
-                  </td>
-                  <td className="px-4 py-3 text-neutral-600 dark:text-neutral-400">
-                    <Detalle details={e.details} />
-                  </td>
+                  </span>
+                  <span className="shrink-0 text-[11px] text-neutral-400">
+                    {formatFecha(e.createdAt)}
+                  </span>
+                </div>
+                <p className="mt-1 text-sm font-medium">{e.actorName}</p>
+                <div className="mt-1.5 text-xs leading-relaxed text-neutral-600 dark:text-neutral-400">
+                  <Detalle details={e.details} />
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Tablet / escritorio: tabla */}
+          <div className="hidden overflow-x-auto rounded-lg border border-neutral-200 sm:block dark:border-neutral-800">
+            <table className="w-full text-left text-sm">
+              <thead className="border-b border-neutral-200 bg-neutral-50 text-xs uppercase text-neutral-500 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-400">
+                <tr>
+                  <th className="px-4 py-3">Fecha</th>
+                  <th className="px-4 py-3">Usuario</th>
+                  <th className="px-4 py-3">Acción</th>
+                  <th className="px-4 py-3">Detalle</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody>
+                {entries.map((e) => (
+                  <tr
+                    key={e.id}
+                    className="border-b border-neutral-100 last:border-0 dark:border-neutral-800"
+                  >
+                    <td className="whitespace-nowrap px-4 py-3 text-neutral-500 dark:text-neutral-400">
+                      {formatFecha(e.createdAt)}
+                    </td>
+                    <td className="whitespace-nowrap px-4 py-3 font-medium">
+                      {e.actorName}
+                    </td>
+                    <td className="whitespace-nowrap px-4 py-3">
+                      {actionLabels[e.action] ?? e.action}
+                    </td>
+                    <td className="px-4 py-3 text-neutral-600 dark:text-neutral-400">
+                      <Detalle details={e.details} />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </>
       )}
 
       {totalPages > 1 && (
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between gap-2">
           <button
             onClick={() => setPage((p) => Math.max(1, p - 1))}
             disabled={page <= 1}
-            className="rounded-md border border-neutral-300 px-3 py-1.5 text-sm transition hover:border-neutral-400 disabled:opacity-40 dark:border-neutral-700 dark:hover:border-neutral-500"
+            className="flex-1 rounded-md border border-neutral-300 px-3 py-2.5 text-sm transition hover:border-neutral-400 disabled:opacity-40 sm:flex-none sm:py-1.5 dark:border-neutral-700 dark:hover:border-neutral-500"
           >
             Anterior
           </button>
-          <span className="text-sm text-neutral-500 dark:text-neutral-400">
+          <span className="shrink-0 text-sm text-neutral-500 dark:text-neutral-400">
             Página {page} de {totalPages}
           </span>
           <button
             onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
             disabled={page >= totalPages}
-            className="rounded-md border border-neutral-300 px-3 py-1.5 text-sm transition hover:border-neutral-400 disabled:opacity-40 dark:border-neutral-700 dark:hover:border-neutral-500"
+            className="flex-1 rounded-md border border-neutral-300 px-3 py-2.5 text-sm transition hover:border-neutral-400 disabled:opacity-40 sm:flex-none sm:py-1.5 dark:border-neutral-700 dark:hover:border-neutral-500"
           >
             Siguiente
           </button>
