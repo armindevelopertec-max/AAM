@@ -150,11 +150,21 @@ export default function ProductCatalog({
             return (
               <div
                 key={product.id}
-                className={`flex flex-col overflow-hidden rounded-xl border transition ${
+                onClick={() => {
+                  // En móvil toda la tarjeta agrega al carrito (el botón "+" está oculto)
+                  if (available <= 0) return;
+                  if (
+                    typeof window !== "undefined" &&
+                    window.matchMedia("(max-width: 639px)").matches
+                  ) {
+                    onAdd(product);
+                  }
+                }}
+                className={`flex flex-col overflow-hidden border transition max-sm:cursor-pointer max-sm:active:scale-[0.98] ${
                   available <= 0
                     ? "border-neutral-200 opacity-50 dark:border-neutral-800"
                     : "border-neutral-200 hover:border-blue-400 dark:border-neutral-800 dark:hover:border-blue-600"
-                } bg-white dark:bg-neutral-900`}
+                } rounded-xl bg-white dark:bg-neutral-900`}
               >
                 {product.imageUrl ? (
                   <img
@@ -220,7 +230,7 @@ export default function ProductCatalog({
                     <button
                       onClick={() => onAdd(product)}
                       disabled={available <= 0}
-                      className="rounded-lg bg-blue-500 px-2.5 py-1.5 text-sm font-bold text-white transition hover:bg-blue-600 disabled:cursor-not-allowed disabled:opacity-40"
+                      className="hidden rounded-lg bg-blue-500 px-2.5 py-1.5 text-sm font-bold text-white transition hover:bg-blue-600 disabled:cursor-not-allowed disabled:opacity-40 sm:block"
                     >
                       +
                     </button>
