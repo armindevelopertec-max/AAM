@@ -57,18 +57,6 @@ export default function DashboardPage() {
       sub: "requieren reabastecimiento",
       href: "/products",
     },
-    {
-      label: "Valor de inventario (costo)",
-      value: formatMoney(data.products.inventoryValue, currency),
-      sub: `${data.products.total} productos`,
-      href: "/products",
-    },
-    {
-      label: "Valor de inventario (venta)",
-      value: formatMoney(data.products.stockValue, currency),
-      sub: `${data.clients.total} clientes`,
-      href: "/users",
-    },
   ];
 
   return (
@@ -92,60 +80,6 @@ export default function DashboardPage() {
             <p className="mt-1 text-xs text-neutral-500 dark:text-neutral-400">{stat.sub}</p>
           </Link>
         ))}
-      </section>
-
-      <section className="grid gap-8 lg:grid-cols-2">
-        <div className="rounded-lg border border-neutral-200 bg-white p-6 dark:border-neutral-800 dark:bg-neutral-900">
-          <div className="mb-4 flex items-center justify-between">
-            <h2 className="text-lg font-semibold">Últimas ventas</h2>
-            <Link href="/pos" className="text-sm text-neutral-500 transition hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white">
-              Ver
-            </Link>
-          </div>
-          {data.recentSales.length === 0 ? (
-            <p className="text-sm text-neutral-500 dark:text-neutral-400">No hay ventas.</p>
-          ) : (
-            <ul className="flex flex-col divide-y divide-neutral-100 dark:divide-neutral-800">
-              {data.recentSales.map((sale) => (
-                <li key={sale.id} className="flex items-center justify-between gap-3 py-2">
-                  <div className="min-w-0">
-                    <span className="font-mono text-sm font-medium">{sale.number}</span>
-                    <span className="ml-2 text-sm text-neutral-500 dark:text-neutral-400">
-                      {sale.items.length} ítems
-                    </span>
-                  </div>
-                  <span className="font-medium">{formatMoney(sale.total, currency)}</span>
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
-
-        <div className="rounded-lg border border-neutral-200 bg-white p-6 dark:border-neutral-800 dark:bg-neutral-900">
-          <div className="mb-4 flex items-center justify-between">
-            <h2 className="text-lg font-semibold">Últimas cotizaciones</h2>
-            <Link href="/quotes" className="text-sm text-neutral-500 transition hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white">
-              Ver
-            </Link>
-          </div>
-          {data.recentQuotes.length === 0 ? (
-            <p className="text-sm text-neutral-500 dark:text-neutral-400">No hay cotizaciones.</p>
-          ) : (
-            <ul className="flex flex-col divide-y divide-neutral-100 dark:divide-neutral-800">
-              {data.recentQuotes.map((quote) => (
-                <li key={quote.id} className="flex items-center justify-between gap-3 py-2">
-                  <div className="min-w-0">
-                    <span className="font-mono text-sm font-medium">{quote.number}</span>
-                    <span className="ml-2 text-sm text-neutral-500 dark:text-neutral-400">
-                      {quote.clientName}
-                    </span>
-                  </div>
-                  <span className="font-medium">{formatMoney(quote.total, currency)}</span>
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
       </section>
 
       <section className="rounded-lg border border-neutral-200 bg-white p-6 dark:border-neutral-800 dark:bg-neutral-900">
