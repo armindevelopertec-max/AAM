@@ -81,7 +81,14 @@ export default function SalesManager({
                               </span>
                             </td>
                             <td className="py-2 pr-4">{item.quantity}</td>
-                            <td className="py-2 pr-4">{formatMoney(item.unitPrice)}</td>
+                            <td className="py-2 pr-4">
+                              {formatMoney(item.unitPrice)}
+                              {(item.precioProveedor ?? 0) > 0 && (
+                                <span className="block text-[11px] font-semibold text-amber-600 dark:text-amber-400">
+                                  Prov: {formatMoney(item.precioProveedor!)}
+                                </span>
+                              )}
+                            </td>
                             <td className="py-2 pr-3 text-right">{formatMoney(item.subtotal)}</td>
                           </tr>
                         ))}

@@ -11,7 +11,7 @@ import {
   type SetStateAction,
 } from "react";
 import type { CartLine } from "./CartDrawer";
-import type { Kit } from "../lib/api";
+import { getVentaProductos, type Kit, type VentaProducto } from "../lib/api";
 
 export type PosCart = {
   lines: CartLine[];
@@ -231,6 +231,44 @@ export function CartProvider({ children }: { children: ReactNode }) {
       lines: typeof updater === "function" ? updater(prev.lines) : updater,
     }));
   }, []);
+
+  /**
+   * Las líneas guardadas antes de que existiera el precio de proveedor no lo
+   * traen. Al montar, una sola vez, se rellenan desde el catálogo (por SKU)
+   * para que el carrito también muestre "Prov:".
+   */
+  const provHealed = useRef(false);
+  useEffect(() => {
+    if (provHealed.current) return;
+    provHealed.current = true;
+    const needsProv = (l: CartLine) =>
+      l.precioProveedor == null && !l.isInstall && l.productId > 0 && !!l.sku;
+    const pending = [...pos.lines, ...quote.lines, ...kit.lines].filter(needsProv);
+    if (pending.length === 0) return;
+    const skus = [...new Set(pending.map((l) => l.sku))];
+    void Promise.all(
+      skus.map((sku) =>
+        getVentaProductos({ buscar: sku, limit: 20 })
+          .then((r) => [sku, r.products] as const)
+          .catch(() => [sku, [] as VentaProducto[]] as const),
+      ),
+    ).then((results) => {
+      const bySku = new Map(results);
+      const fill = (lines: CartLine[]) =>
+        lines.map((line) => {
+          if (!needsProv(line)) return line;
+          const match = bySku.get(line.sku)?.find(
+            (p) => p.sku === line.sku && (!line.fuente || p.fuente === line.fuente),
+          );
+          return match
+            ? { ...line, precioProveedor: match.precioProveedor ?? 0 }
+            : line;
+        });
+      setPosLines(fill);
+      setQuoteLines(fill);
+      setKitLines(fill);
+    });
+  }, [pos.lines, quote.lines, kit.lines, setPosLines, setQuoteLines, setKitLines]);
 
   const setKitName = useCallback((value: string) => {
     setKit((prev) => ({ ...prev, name: value }));
