@@ -757,13 +757,13 @@ export default function SeguimientoManager({
                           return (
                             <li
                               key={`${item.productId ?? "svc"}-${item.sku ?? item.name}-${idx}`}
-                              className="flex items-center justify-between gap-3 py-2 text-sm"
+                              className="flex flex-col gap-1 py-2 text-sm sm:flex-row sm:items-center sm:justify-between sm:gap-3"
                             >
-                              <span className="flex min-w-0 items-center gap-2">
+                              <span className="flex min-w-0 flex-wrap items-center gap-2">
                                 <span className="flex h-6 shrink-0 items-center rounded-md bg-neutral-100 px-1.5 font-mono text-xs font-bold text-neutral-600 dark:bg-neutral-800 dark:text-neutral-300">
                                   ×{item.quantity}
                                 </span>
-                                <span className="truncate">{item.name}</span>
+                                <span className="min-w-0 truncate">{item.name}</span>
                                 {item.sku && (
                                   <span className="hidden shrink-0 font-mono text-xs text-neutral-400 sm:inline">
                                     {item.sku}
@@ -775,7 +775,7 @@ export default function SeguimientoManager({
                                   </span>
                                 )}
                               </span>
-                              <span className="flex shrink-0 items-center gap-2">
+                              <span className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1 sm:shrink-0 sm:justify-end">
                                 {hasDiscount && (
                                   <>
                                     <span className="text-xs text-neutral-400 line-through">
