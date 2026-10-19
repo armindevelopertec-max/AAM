@@ -770,7 +770,7 @@ export default function SeguimientoManager({
                                   </span>
                                 )}
                                 {(item.precioProveedor ?? 0) > 0 && (
-                                  <span className="shrink-0 rounded-full bg-amber-100 px-1.5 py-px text-[10px] font-semibold text-amber-700 dark:bg-amber-900 dark:text-amber-300">
+                                  <span className="shrink-0 rounded-full bg-orange-100 px-1.5 py-px text-[10px] font-semibold text-orange-700 dark:bg-orange-900 dark:text-orange-300">
                                     Prov: {formatMoney(item.precioProveedor!)}
                                   </span>
                                 )}
@@ -1050,7 +1050,7 @@ export default function SeguimientoManager({
                                 <td className="py-2 pr-4">
                                   {formatMoney(item.unitPrice)}
                                   {(item.precioProveedor ?? 0) > 0 && (
-                                    <span className="block text-[11px] font-semibold text-amber-600 dark:text-amber-400">
+                                    <span className="block text-[11px] font-semibold text-orange-600 dark:text-orange-400">
                                       Prov: {formatMoney(item.precioProveedor!)}
                                     </span>
                                   )}

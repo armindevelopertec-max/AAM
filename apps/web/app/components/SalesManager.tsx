@@ -84,7 +84,7 @@ export default function SalesManager({
                             <td className="py-2 pr-4">
                               {formatMoney(item.unitPrice)}
                               {(item.precioProveedor ?? 0) > 0 && (
-                                <span className="block text-[11px] font-semibold text-amber-600 dark:text-amber-400">
+                                <span className="block text-[11px] font-semibold text-orange-600 dark:text-orange-400">
                                   Prov: {formatMoney(item.precioProveedor!)}
                                 </span>
                               )}

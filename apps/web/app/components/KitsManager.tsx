@@ -335,7 +335,7 @@ export default function KitsManager() {
                     ítems
                   </p>
                   {costoProveedor > 0 && (
-                    <p className="text-xs font-semibold text-amber-600 dark:text-amber-400">
+                    <p className="text-xs font-semibold text-orange-600 dark:text-orange-400">
                       Costo proveedor: {formatMoney(costoProveedor)}
                     </p>
                   )}

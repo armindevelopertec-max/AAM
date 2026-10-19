@@ -90,7 +90,7 @@ export default function ProductCatalog({
 
   return (
     <section>
-      <div className="flex flex-wrap items-center gap-3">
+      <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
         <input
           type="search"
           value={query}
@@ -98,7 +98,22 @@ export default function ProductCatalog({
           placeholder="Buscar producto, SKU o categoría…"
           className="min-w-0 flex-1 rounded-lg border border-neutral-300 bg-white px-4 py-2.5 text-sm outline-none focus:border-blue-500 dark:border-neutral-700 dark:bg-neutral-900"
         />
-        <div className="flex flex-wrap gap-2">
+        {/* Móvil: selector nativo (una sola línea) */}
+        <select
+          value={activeCategory}
+          onChange={(e) => setActiveCategory(e.target.value)}
+          aria-label="Filtrar por categoría"
+          className="w-full rounded-lg border border-neutral-300 bg-white px-3 py-2.5 text-sm font-semibold text-neutral-700 outline-none focus:border-blue-500 sm:hidden dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-300"
+        >
+          <option value="all">Todos ({total})</option>
+          {categories.map((cat) => (
+            <option key={cat} value={cat}>
+              {cat}
+            </option>
+          ))}
+        </select>
+        {/* Tablet / escritorio: píldoras */}
+        <div className="hidden flex-wrap gap-2 sm:flex">
           <button
             onClick={() => setActiveCategory("all")}
             className={`whitespace-nowrap rounded-full border px-4 py-1.5 text-xs font-semibold transition ${
@@ -150,11 +165,21 @@ export default function ProductCatalog({
             return (
               <div
                 key={product.id}
-                className={`flex flex-col overflow-hidden rounded-xl border transition ${
+                onClick={() => {
+                  // En móvil toda la tarjeta agrega al carrito (el botón "+" está oculto)
+                  if (available <= 0) return;
+                  if (
+                    typeof window !== "undefined" &&
+                    window.matchMedia("(max-width: 639px)").matches
+                  ) {
+                    onAdd(product);
+                  }
+                }}
+                className={`flex flex-col overflow-hidden border transition max-sm:cursor-pointer max-sm:active:scale-[0.98] ${
                   available <= 0
                     ? "border-neutral-200 opacity-50 dark:border-neutral-800"
                     : "border-neutral-200 hover:border-blue-400 dark:border-neutral-800 dark:hover:border-blue-600"
-                } bg-white dark:bg-neutral-900`}
+                } rounded-xl bg-white dark:bg-neutral-900`}
               >
                 {product.imageUrl ? (
                   <img
@@ -207,7 +232,7 @@ export default function ProductCatalog({
                         )}
                       </span>
                       {(product.precioProveedor ?? 0) > 0 && (
-                        <span className="mt-0.5 block text-[11px] font-semibold text-amber-600 dark:text-amber-400">
+                        <span className="mt-0.5 block text-[11px] font-semibold text-orange-600 dark:text-orange-400">
                           Prov: {formatMoney(product.precioProveedor!, product.moneda)}
                         </span>
                       )}
@@ -220,7 +245,7 @@ export default function ProductCatalog({
                     <button
                       onClick={() => onAdd(product)}
                       disabled={available <= 0}
-                      className="rounded-lg bg-blue-500 px-2.5 py-1.5 text-sm font-bold text-white transition hover:bg-blue-600 disabled:cursor-not-allowed disabled:opacity-40"
+                      className="hidden rounded-lg bg-blue-500 px-2.5 py-1.5 text-sm font-bold text-white transition hover:bg-blue-600 disabled:cursor-not-allowed disabled:opacity-40 sm:block"
                     >
                       +
                     </button>
