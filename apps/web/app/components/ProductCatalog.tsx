@@ -90,7 +90,7 @@ export default function ProductCatalog({
 
   return (
     <section>
-      <div className="flex flex-wrap items-center gap-3">
+      <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
         <input
           type="search"
           value={query}
@@ -98,7 +98,22 @@ export default function ProductCatalog({
           placeholder="Buscar producto, SKU o categoría…"
           className="min-w-0 flex-1 rounded-lg border border-neutral-300 bg-white px-4 py-2.5 text-sm outline-none focus:border-blue-500 dark:border-neutral-700 dark:bg-neutral-900"
         />
-        <div className="flex flex-wrap gap-2">
+        {/* Móvil: selector nativo (una sola línea) */}
+        <select
+          value={activeCategory}
+          onChange={(e) => setActiveCategory(e.target.value)}
+          aria-label="Filtrar por categoría"
+          className="w-full rounded-lg border border-neutral-300 bg-white px-3 py-2.5 text-sm font-semibold text-neutral-700 outline-none focus:border-blue-500 sm:hidden dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-300"
+        >
+          <option value="all">Todos ({total})</option>
+          {categories.map((cat) => (
+            <option key={cat} value={cat}>
+              {cat}
+            </option>
+          ))}
+        </select>
+        {/* Tablet / escritorio: píldoras */}
+        <div className="hidden flex-wrap gap-2 sm:flex">
           <button
             onClick={() => setActiveCategory("all")}
             className={`whitespace-nowrap rounded-full border px-4 py-1.5 text-xs font-semibold transition ${
