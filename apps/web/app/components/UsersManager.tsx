@@ -148,12 +148,12 @@ function UsuariosSection(props: {
   const { users, isRoot, modal, setModal, onUsersChange, onError } = props;
 
   return (
-    <section className="rounded-lg border border-neutral-200 bg-white p-6 dark:border-neutral-800 dark:bg-neutral-900">
+    <section className="rounded-lg border border-neutral-200 bg-white p-4 sm:p-6 dark:border-neutral-800 dark:bg-neutral-900">
       <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <h3 className="text-base font-semibold">Usuarios del sistema</h3>
         <button
           onClick={() => setModal({ mode: "create" })}
-          className="rounded-md bg-neutral-900 px-4 py-2 text-white transition hover:bg-neutral-700 dark:bg-white dark:text-neutral-900 dark:hover:bg-neutral-200"
+          className="w-full rounded-md bg-neutral-900 px-4 py-2.5 text-white transition hover:bg-neutral-700 sm:w-auto sm:py-2 dark:bg-white dark:text-neutral-900 dark:hover:bg-neutral-200"
         >
           Agregar usuario
         </button>
@@ -176,79 +176,150 @@ function UsuariosSection(props: {
           No hay usuarios del sistema.
         </p>
       ) : (
-        <div className="overflow-x-auto">
-          <table className="w-full text-left text-sm">
-            <thead>
-              <tr className="border-b border-neutral-200 dark:border-neutral-800">
-                <th className="py-2 pr-4 font-medium">ID</th>
-                <th className="py-2 pr-4 font-medium">Nombre</th>
-                <th className="py-2 pr-4 font-medium">Email</th>
-                <th className="py-2 pr-4 font-medium">Rol</th>
-                <th className="py-2 pr-4 font-medium">WhatsApp</th>
-                <th className="py-2 text-right font-medium">Acciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              {users.map((u) => (
-                <tr
-                  key={u.id}
-                  className="border-b border-neutral-100 last:border-0 dark:border-neutral-800"
-                >
-                  <td className="py-3 pr-4 text-neutral-500 dark:text-neutral-400">{u.id}</td>
-                  <td className="py-3 pr-4">{u.name}</td>
-                  <td className="py-3 pr-4">{u.email}</td>
-                  <td className="py-3 pr-4">
-                    <span
-                      className={`rounded-full px-2 py-0.5 text-xs font-medium ${
-                        u.role === "root"
-                          ? "bg-purple-100 text-purple-700 dark:bg-purple-900 dark:text-purple-200"
-                          : u.role === "admin"
-                            ? "bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-200"
-                            : "bg-neutral-100 text-neutral-700 dark:bg-neutral-800 dark:text-neutral-200"
-                      }`}
+        <>
+          {/* Móvil: tarjetas */}
+          <div className="flex flex-col gap-2 sm:hidden">
+            {users.map((u) => (
+              <div
+                key={u.id}
+                className="rounded-lg border border-neutral-200 bg-neutral-50 p-3 dark:border-neutral-800 dark:bg-neutral-800/50"
+              >
+                <div className="flex items-start justify-between gap-2">
+                  <div className="min-w-0">
+                    <p className="truncate text-sm font-medium">{u.name}</p>
+                    <p className="truncate text-xs text-neutral-500 dark:text-neutral-400">
+                      {u.email}
+                    </p>
+                  </div>
+                  <span
+                    className={`shrink-0 rounded-full px-2 py-0.5 text-xs font-medium ${
+                      u.role === "root"
+                        ? "bg-purple-100 text-purple-700 dark:bg-purple-900 dark:text-purple-200"
+                        : u.role === "admin"
+                          ? "bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-200"
+                          : "bg-neutral-100 text-neutral-700 dark:bg-neutral-800 dark:text-neutral-200"
+                    }`}
+                  >
+                    {roleLabels[u.role] ?? u.role}
+                  </span>
+                </div>
+                <p className="mt-1 text-xs text-neutral-500 dark:text-neutral-400">
+                  WhatsApp: {u.phone || "—"}
+                </p>
+                <div className="mt-2 flex gap-4 border-t border-neutral-200 pt-2 dark:border-neutral-700">
+                  <button
+                    onClick={() => setModal({ mode: "edit", user: u })}
+                    className="py-1 text-sm text-neutral-600 transition hover:text-neutral-400 dark:text-neutral-400"
+                  >
+                    Editar
+                  </button>
+                  {isRoot && (
+                    <button
+                      onClick={async () => {
+                        if (
+                          !window.confirm(`¿Eliminar al usuario "${u.name}"?`)
+                        )
+                          return;
+                        try {
+                          await deleteUser(u.id);
+                          onUsersChange(await getUsers());
+                        } catch (err) {
+                          onError(
+                            err instanceof Error
+                              ? err.message
+                              : "Error desconocido",
+                          );
+                        }
+                      }}
+                      className="py-1 text-sm text-red-600 transition hover:text-red-400 dark:text-red-400"
                     >
-                      {roleLabels[u.role] ?? u.role}
-                    </span>
-                  </td>
-                  <td className="py-3 pr-4">{u.phone || "—"}</td>
-                  <td className="py-3 text-right">
-                    <div className="flex justify-end gap-3">
-                      <button
-                        onClick={() => setModal({ mode: "edit", user: u })}
-                        className="text-neutral-600 transition hover:text-neutral-400 dark:text-neutral-400"
-                      >
-                        Editar
-                      </button>
-                      {isRoot && (
-                        <button
-                          onClick={async () => {
-                            if (
-                              !window.confirm(
-                                `¿Eliminar al usuario "${u.name}"?`,
-                              )
-                            )
-                              return;
-                            try {
-                              await deleteUser(u.id);
-                              onUsersChange(await getUsers());
-                            } catch (err) {
-                              onError(
-                                err instanceof Error ? err.message : "Error desconocido",
-                              );
-                            }
-                          }}
-                          className="text-red-600 transition hover:text-red-400 dark:text-red-400"
-                        >
-                          Eliminar
-                        </button>
-                      )}
-                    </div>
-                  </td>
+                      Eliminar
+                    </button>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Tablet / escritorio: tabla */}
+          <div className="hidden overflow-x-auto sm:block">
+            <table className="w-full text-left text-sm">
+              <thead>
+                <tr className="border-b border-neutral-200 dark:border-neutral-800">
+                  <th className="hidden py-2 pr-4 font-medium lg:table-cell">ID</th>
+                  <th className="py-2 pr-4 font-medium">Nombre</th>
+                  <th className="py-2 pr-4 font-medium">Email</th>
+                  <th className="py-2 pr-4 font-medium">Rol</th>
+                  <th className="py-2 pr-4 font-medium">WhatsApp</th>
+                  <th className="py-2 text-right font-medium">Acciones</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody>
+                {users.map((u) => (
+                  <tr
+                    key={u.id}
+                    className="border-b border-neutral-100 last:border-0 dark:border-neutral-800"
+                  >
+                    <td className="hidden py-3 pr-4 text-neutral-500 lg:table-cell dark:text-neutral-400">
+                      {u.id}
+                    </td>
+                    <td className="py-3 pr-4">{u.name}</td>
+                    <td className="py-3 pr-4">{u.email}</td>
+                    <td className="py-3 pr-4">
+                      <span
+                        className={`rounded-full px-2 py-0.5 text-xs font-medium ${
+                          u.role === "root"
+                            ? "bg-purple-100 text-purple-700 dark:bg-purple-900 dark:text-purple-200"
+                            : u.role === "admin"
+                              ? "bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-200"
+                              : "bg-neutral-100 text-neutral-700 dark:bg-neutral-800 dark:text-neutral-200"
+                        }`}
+                      >
+                        {roleLabels[u.role] ?? u.role}
+                      </span>
+                    </td>
+                    <td className="py-3 pr-4">{u.phone || "—"}</td>
+                    <td className="py-3 text-right">
+                      <div className="flex justify-end gap-3">
+                        <button
+                          onClick={() => setModal({ mode: "edit", user: u })}
+                          className="text-neutral-600 transition hover:text-neutral-400 dark:text-neutral-400"
+                        >
+                          Editar
+                        </button>
+                        {isRoot && (
+                          <button
+                            onClick={async () => {
+                              if (
+                                !window.confirm(
+                                  `¿Eliminar al usuario "${u.name}"?`,
+                                )
+                              )
+                                return;
+                              try {
+                                await deleteUser(u.id);
+                                onUsersChange(await getUsers());
+                              } catch (err) {
+                                onError(
+                                  err instanceof Error
+                                    ? err.message
+                                    : "Error desconocido",
+                                );
+                              }
+                            }}
+                            className="text-red-600 transition hover:text-red-400 dark:text-red-400"
+                          >
+                            Eliminar
+                          </button>
+                        )}
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </>
       )}
     </section>
   );
@@ -309,7 +380,7 @@ function UserModal(props: {
       onClick={onClose}
     >
       <div
-        className="w-full max-w-lg rounded-lg border border-neutral-200 bg-white p-6 shadow-xl dark:border-neutral-800 dark:bg-neutral-900"
+        className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-lg border border-neutral-200 bg-white p-4 shadow-xl sm:p-6 dark:border-neutral-800 dark:bg-neutral-900"
         onClick={(e) => e.stopPropagation()}
       >
         <h2 className="mb-4 text-lg font-semibold">
@@ -397,7 +468,7 @@ function UserModal(props: {
               className={inputClass}
             />
           </div>
-          <div className="flex justify-end gap-3 sm:col-span-2">
+          <div className="flex gap-3 sm:col-span-2 sm:justify-end [&>button]:flex-1 sm:[&>button]:flex-none">
             <button
               type="button"
               onClick={onClose}
@@ -502,12 +573,12 @@ function ClientesSection(props: {
   }
 
   return (
-    <section className="rounded-lg border border-neutral-200 bg-white p-6 dark:border-neutral-800 dark:bg-neutral-900">
+    <section className="rounded-lg border border-neutral-200 bg-white p-4 sm:p-6 dark:border-neutral-800 dark:bg-neutral-900">
       <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <h3 className="text-base font-semibold">Clientes de la tienda</h3>
         <button
           onClick={openModal}
-          className="rounded-md bg-neutral-900 px-4 py-2 text-white transition hover:bg-neutral-700 dark:bg-white dark:text-neutral-900 dark:hover:bg-neutral-200"
+          className="w-full rounded-md bg-neutral-900 px-4 py-2.5 text-white transition hover:bg-neutral-700 sm:w-auto sm:py-2 dark:bg-white dark:text-neutral-900 dark:hover:bg-neutral-200"
         >
           Agregar cliente
         </button>
@@ -519,7 +590,7 @@ function ClientesSection(props: {
           onClick={() => setModal(false)}
         >
           <div
-            className="w-full max-w-lg rounded-lg border border-neutral-200 bg-white p-6 shadow-xl dark:border-neutral-800 dark:bg-neutral-900"
+            className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-lg border border-neutral-200 bg-white p-4 shadow-xl sm:p-6 dark:border-neutral-800 dark:bg-neutral-900"
             onClick={(e) => e.stopPropagation()}
           >
             <h2 className="mb-4 text-lg font-semibold">Agregar cliente</h2>
@@ -573,7 +644,7 @@ function ClientesSection(props: {
                   className={inputClass}
                 />
               </div>
-              <div className="flex justify-end gap-3 sm:col-span-2">
+              <div className="flex gap-3 sm:col-span-2 sm:justify-end [&>button]:flex-1 sm:[&>button]:flex-none">
                 <button
                   type="button"
                   onClick={() => setModal(false)}
@@ -598,27 +669,112 @@ function ClientesSection(props: {
         <p className="text-sm text-neutral-500 dark:text-neutral-400">
           No hay clientes.</p>
       ) : (
-        <div className="overflow-x-auto">
-          <table className="w-full text-left text-sm">
-            <thead>
-              <tr className="border-b border-neutral-200 dark:border-neutral-800">
-                <th className="py-2 pr-4 font-medium">ID</th>
-                <th className="py-2 pr-4 font-medium">Nombre</th>
-                <th className="py-2 pr-4 font-medium">Email</th>
-                <th className="py-2 pr-4 font-medium">Teléfono</th>
-                <th className="py-2 pr-4 font-medium">CI</th>
-                <th className="py-2 text-right font-medium">Acciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              {clients.map((client) => (
-                <tr
-                  key={client.id}
-                  className="border-b border-neutral-100 last:border-0 dark:border-neutral-800"
-                >
-                  <td className="py-3 pr-4 text-neutral-500 dark:text-neutral-400">
-                    {client.id}
-                  </td>
+        <>
+          {/* Móvil: tarjetas */}
+          <div className="flex flex-col gap-2 sm:hidden">
+            {clients.map((client) => (
+              <div
+                key={client.id}
+                className="rounded-lg border border-neutral-200 bg-neutral-50 p-3 dark:border-neutral-800 dark:bg-neutral-800/50"
+              >
+                {editingId === client.id ? (
+                  <div className="flex flex-col gap-2">
+                    <input
+                      type="text"
+                      value={editName}
+                      onChange={(e) => setEditName(e.target.value)}
+                      placeholder="Nombre"
+                      className="w-full rounded-md border border-neutral-300 px-2 py-2 text-sm dark:border-neutral-700 dark:bg-neutral-900"
+                    />
+                    <input
+                      type="email"
+                      value={editEmail}
+                      onChange={(e) => setEditEmail(e.target.value)}
+                      placeholder="Email"
+                      className="w-full rounded-md border border-neutral-300 px-2 py-2 text-sm dark:border-neutral-700 dark:bg-neutral-900"
+                    />
+                    <input
+                      type="tel"
+                      value={editPhone}
+                      onChange={(e) => setEditPhone(e.target.value)}
+                      placeholder="Teléfono"
+                      className="w-full rounded-md border border-neutral-300 px-2 py-2 text-sm dark:border-neutral-700 dark:bg-neutral-900"
+                    />
+                    <input
+                      type="text"
+                      value={editCi}
+                      onChange={(e) => setEditCi(e.target.value)}
+                      placeholder="CI"
+                      className="w-full rounded-md border border-neutral-300 px-2 py-2 text-sm dark:border-neutral-700 dark:bg-neutral-900"
+                    />
+                    <div className="flex justify-end gap-3">
+                      <button
+                        onClick={() => handleSave(client.id)}
+                        className="py-1 text-sm text-green-600 transition hover:text-green-400 dark:text-green-400"
+                      >
+                        Guardar
+                      </button>
+                      <button
+                        onClick={() => setEditingId(null)}
+                        className="py-1 text-sm text-neutral-600 transition hover:text-neutral-400 dark:text-neutral-400"
+                      >
+                        Cancelar
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <>
+                    <p className="truncate text-sm font-medium">
+                      {client.name}
+                    </p>
+                    <p className="truncate text-xs text-neutral-500 dark:text-neutral-400">
+                      {client.email || "—"}
+                    </p>
+                    <p className="mt-1 text-xs text-neutral-500 dark:text-neutral-400">
+                      Tel: {client.phone || "—"} · CI: {client.ci || "—"}
+                    </p>
+                    <div className="mt-2 flex gap-4 border-t border-neutral-200 pt-2 dark:border-neutral-700">
+                      <button
+                        onClick={() => startEdit(client)}
+                        className="py-1 text-sm text-neutral-600 transition hover:text-neutral-400 dark:text-neutral-400"
+                      >
+                        Editar
+                      </button>
+                      <button
+                        onClick={() => handleDelete(client.id)}
+                        className="py-1 text-sm text-red-600 transition hover:text-red-400 dark:text-red-400"
+                      >
+                        Eliminar
+                      </button>
+                    </div>
+                  </>
+                )}
+              </div>
+            ))}
+          </div>
+
+          {/* Tablet / escritorio: tabla */}
+          <div className="hidden overflow-x-auto sm:block">
+            <table className="w-full text-left text-sm">
+              <thead>
+                <tr className="border-b border-neutral-200 dark:border-neutral-800">
+                  <th className="hidden py-2 pr-4 font-medium lg:table-cell">ID</th>
+                  <th className="py-2 pr-4 font-medium">Nombre</th>
+                  <th className="py-2 pr-4 font-medium">Email</th>
+                  <th className="py-2 pr-4 font-medium">Teléfono</th>
+                  <th className="py-2 pr-4 font-medium">CI</th>
+                  <th className="py-2 text-right font-medium">Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                {clients.map((client) => (
+                  <tr
+                    key={client.id}
+                    className="border-b border-neutral-100 last:border-0 dark:border-neutral-800"
+                  >
+                    <td className="hidden py-3 pr-4 text-neutral-500 lg:table-cell dark:text-neutral-400">
+                      {client.id}
+                    </td>
                   <td className="py-3 pr-4">
                     {editingId === client.id ? (
                       <input
@@ -704,7 +860,8 @@ function ClientesSection(props: {
               ))}
             </tbody>
           </table>
-        </div>
+          </div>
+        </>
       )}
     </section>
   );
