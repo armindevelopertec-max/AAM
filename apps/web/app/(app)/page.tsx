@@ -57,18 +57,6 @@ export default function DashboardPage() {
       sub: "requieren reabastecimiento",
       href: "/products",
     },
-    {
-      label: "Valor de inventario (costo)",
-      value: formatMoney(data.products.inventoryValue, currency),
-      sub: `${data.products.total} productos`,
-      href: "/products",
-    },
-    {
-      label: "Valor de inventario (venta)",
-      value: formatMoney(data.products.stockValue, currency),
-      sub: `${data.clients.total} clientes`,
-      href: "/users",
-    },
   ];
 
   return (
