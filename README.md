@@ -6,6 +6,8 @@ desde tiendas en línea.
 
 | Capa          | Tecnología                              | Puerto |
 |---------------|-----------------------------------------|--------|
+> **Flujo de trabajo (ramas, commits y deploy):** ver [`FLUJO_DE_TRABAJO.md`](FLUJO_DE_TRABAJO.md).
+
 | Frontend      | Next.js 16 (`apps/web`)                 | 3000   |
 | Backend       | NestJS 11 (`apps/api`)                  | 3001   |
 | PostgreSQL    | `postgres:16-alpine` (datos POS)        | 5434   |

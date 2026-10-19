@@ -34,9 +34,8 @@ services:
       retries: 12
 
   minio:
-    # Imagen oficial de MinIO (release 2025-10-15). El repo docker.io/minio/minio
-    # fue eliminado y quay.io/minio/minio quedó restringido (2025/2026).
-    image: docker.io/alpine/minio:RELEASE.2025-10-15T17-29-55Z
+    # Usar la imagen ya existente en local para evitar descargas
+    image: quay.io/minio/minio:latest
     container_name: saas-pos-minio
     command: server /data --console-address ":9001"
     environment:
@@ -48,11 +47,10 @@ services:
     volumes:
       - minio-data:/data
     healthcheck:
-      # wget (no mc) porque la imagen alpine/minio no incluye el cliente mc
       test:
         [
           "CMD-SHELL",
-          "wget -q -O /dev/null http://localhost:9000/minio/health/live || exit 1",
+          "curl -fsS -o /dev/null http://localhost:9000/minio/health/live || exit 1",
         ]
       interval: 5s
       timeout: 5s
