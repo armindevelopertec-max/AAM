@@ -207,7 +207,7 @@ export default function ProductCatalog({
                         )}
                       </span>
                       {(product.precioProveedor ?? 0) > 0 && (
-                        <span className="mt-0.5 block text-[11px] font-semibold text-amber-600 dark:text-amber-400">
+                        <span className="mt-0.5 block text-[11px] font-semibold text-orange-600 dark:text-orange-400">
                           Prov: {formatMoney(product.precioProveedor!, product.moneda)}
                         </span>
                       )}

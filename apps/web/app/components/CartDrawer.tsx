@@ -192,7 +192,7 @@ export default function CartDrawer({
                           {line.name}
                         </p>
                         {(line.precioProveedor ?? 0) > 0 && (
-                          <p className="mt-0.5 text-[10px] font-semibold text-amber-600 dark:text-amber-400">
+                          <p className="mt-0.5 text-[10px] font-semibold text-orange-600 dark:text-orange-400">
                             Prov: {formatMoney(line.precioProveedor!, line.moneda)}
                           </p>
                         )}
