@@ -34,8 +34,10 @@ services:
       retries: 12
 
   minio:
-    # Usar la imagen ya existente en local para evitar descargas
-    image: quay.io/minio/minio:latest
+    # Usar la imagen ya existente en local para evitar descargas.
+    # quay.io/minio/minio y docker.io/minio/minio ya no permiten pulls anónimos,
+    # por eso se fija la copia local disponible (misma imagen oficial de MinIO).
+    image: docker.io/alpine/minio:RELEASE.2025-10-15T17-29-55Z
     container_name: saas-pos-minio
     command: server /data --console-address ":9001"
     environment:
@@ -47,10 +49,11 @@ services:
     volumes:
       - minio-data:/data
     healthcheck:
+      # La imagen ubi9-micro no incluye curl; wget sí está disponible.
       test:
         [
           "CMD-SHELL",
-          "curl -fsS -o /dev/null http://localhost:9000/minio/health/live || exit 1",
+          "wget -q -O /dev/null http://localhost:9000/minio/health/live || exit 1",
         ]
       interval: 5s
       timeout: 5s

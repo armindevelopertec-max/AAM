@@ -41,13 +41,20 @@ info "Levantando contenedores..."
 cd "$ROOT"
 podman-compose up -d 2>&1 | tail -3 || fail "No se pudieron iniciar los contenedores"
 
-for i in $(seq 1 30); do
-    status=$(podman inspect --format '{{.State.Health.Status}}' saas-pos-db saas-pos-mongo saas-pos-minio 2>/dev/null | grep -vc healthy || true)
-    if [ "$status" = "0" ] && [ -n "$(podman ps -q -f name=saas-pos-db)" ]; then
+for i in $(seq 1 60); do
+    bad=0
+    for c in saas-pos-db saas-pos-mongo saas-pos-minio; do
+        if ! podman ps -q -f name="^${c}$" | grep -q .; then
+            bad=1; break
+        fi
+        h=$(podman inspect --format '{{.State.Health.Status}}' "$c" 2>/dev/null || echo "unknown")
+        [ "$h" = "healthy" ] || { bad=1; break; }
+    done
+    if [ "$bad" -eq 0 ]; then
         ok "Contenedores healthy"
         break
     fi
-    [ "$i" = "30" ] && fail "Contenedores no quedaron healthy"
+    [ "$i" = "60" ] && fail "Contenedores no quedaron healthy (revisa: podman ps -a)"
     sleep 2
 done
 
@@ -67,12 +74,12 @@ pm2 delete aam-backend 2>/dev/null || true
 info "Iniciando aam-backend en pm2..."
 cd "$API_DIR" && pm2 start dist/src/main.js --name aam-backend
 
-for i in $(seq 1 15); do
+for i in $(seq 1 120); do
     if curl -sf -o /dev/null http://localhost:3001/catalogo 2>/dev/null; then
         ok "Backend listo"
         break
     fi
-    [ "$i" = "15" ] && fail "Backend no respondió a tiempo"
+    [ "$i" = "120" ] && fail "Backend no respondió a tiempo (revisa: pm2 logs aam-backend)"
     sleep 1
 done
 
@@ -91,12 +98,12 @@ pm2 delete aam-frontend 2>/dev/null || true
 info "Iniciando aam-frontend en pm2..."
 cd "$WEB_DIR" && pm2 start npm --name aam-frontend -- start -- -H 0.0.0.0 -p 3000
 
-for i in $(seq 1 20); do
+for i in $(seq 1 60); do
     if curl -sf -o /dev/null http://localhost:3000 2>/dev/null; then
         ok "Frontend listo"
         break
     fi
-    [ "$i" = "20" ] && fail "Frontend no respondió a tiempo"
+    [ "$i" = "60" ] && fail "Frontend no respondió a tiempo (revisa: pm2 logs aam-frontend)"
     sleep 1
 done
 
