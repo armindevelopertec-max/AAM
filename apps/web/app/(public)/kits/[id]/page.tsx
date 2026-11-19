@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
-import { getPublicKitServer, getProductImageServer, type Kit, type KitItem } from "../../../lib/api";
+import { getProductImageServer, SERVER_API_URL, type Kit, type KitItem } from "../../../lib/api";
 import PublicKitDetail from "../../components/PublicKitDetail";
 
 async function fetchItemImages(items: KitItem[]): Promise<Record<string, string>> {
@@ -32,7 +32,7 @@ export default async function PublicKitDetailPage({ params }: { params: Promise<
 
   let kit: Kit;
   try {
-    const apiUrl = `${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:3001'}/public/kits/${id}`;
+    const apiUrl = `${SERVER_API_URL}/public/kits/${id}`;
     console.log('[PublicKitDetailPage] Fetching from:', apiUrl);
     const res = await fetch(apiUrl, {
       headers: { 'Content-Type': 'application/json' },

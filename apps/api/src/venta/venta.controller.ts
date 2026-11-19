@@ -1,5 +1,5 @@
 import { Controller, Get, Query, UseGuards } from '@nestjs/common';
-import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { JwtAuthGuard, Public } from '../auth/jwt-auth.guard';
 import { VentaService } from './venta.service';
 
 @Controller('venta')
@@ -26,6 +26,7 @@ export class VentaController {
     });
   }
 
+  @Public()
   @Get('imagen')
   getImagen(
     @Query('fuente') fuente?: string,

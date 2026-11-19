@@ -1119,6 +1119,31 @@ export function formatMoney(value: number, currency = "BOB"): string {
 
 // --- Public API (no auth required) ---
 
+/**
+ * URL absoluta del backend para llamadas desde Server Components.
+ * El proxy `/api` (next.config.ts -> localhost:3001) solo existe en el
+ * navegador, por lo que en SSR hay que llamar al backend directamente.
+ */
+export const SERVER_API_URL =
+  process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:3001";
+
+export async function getProductImageServer(
+  fuente: string | null,
+  idExterno: number,
+): Promise<{ imageUrl: string | null }> {
+  const params = new URLSearchParams();
+  params.set("fuente", fuente ?? "");
+  params.set("idExterno", String(idExterno));
+  const res = await fetch(
+    `${SERVER_API_URL}/venta/imagen?${params.toString()}`,
+    { headers: { "Content-Type": "application/json" }, cache: "no-store" },
+  );
+  if (!res.ok) {
+    throw new Error(`Error ${res.status} al obtener la imagen del producto`);
+  }
+  return res.json();
+}
+
 export interface PublicStoreInfo {
   name: string;
   currency: string;

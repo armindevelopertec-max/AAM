@@ -60,6 +60,19 @@ export class PublicService {
     return this.kitsService.findAllPublic();
   }
 
+  async getPublicKit(id: string) {
+    const store = await this.prisma.store.findFirst({
+      orderBy: { createdAt: 'asc' },
+      select: { id: true },
+    });
+
+    if (!store) {
+      return null;
+    }
+
+    return this.kitsService.findOne(id, store.id);
+  }
+
   async submitContactForm(input: ContactFormInput): Promise<{ success: boolean; message: string }> {
     // TODO: Implementar envío de email o guardado en BD
     console.log('Nuevo contacto:', input);
