@@ -30,7 +30,7 @@ export const revalidate = 0;
 export default async function PublicKitDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
 
-  let kit: Kit;
+  let kit: Kit | null = null;
   try {
     const apiUrl = `${SERVER_API_URL}/public/kits/${id}`;
     console.log('[PublicKitDetailPage] Fetching from:', apiUrl);
@@ -39,15 +39,21 @@ export default async function PublicKitDetailPage({ params }: { params: Promise<
       cache: 'no-store',
     });
     console.log('[PublicKitDetailPage] Response status:', res.status);
-    if (!res.ok) {
-      const text = await res.text();
-      console.error('[PublicKitDetailPage] Error response:', text);
-      notFound();
+    if (res.ok) {
+      const data = (await res.json()) as Kit;
+      kit = data;
+      console.log('[PublicKitDetailPage] Kit fetched:', data.name);
+    } else {
+      console.error('[PublicKitDetailPage] Error response:', await res.text());
     }
-    kit = await res.json();
-    console.log('[PublicKitDetailPage] Kit fetched:', kit.name);
   } catch (err) {
     console.error('[PublicKitDetailPage] Error:', err);
+  }
+
+  // notFound() debe quedar fuera del try/catch: dentro, su excepcion
+  // NEXT_NOT_FOUND se capturaba y la pagina respondia 200 con el HTML
+  // de "no encontrado" en vez de un 404 real.
+  if (!kit) {
     notFound();
   }
 
