@@ -15,6 +15,7 @@ import { VentaModule } from './venta/venta.module';
 import { PdfModule } from './pdf/pdf.module';
 import { KitsModule } from './kits/kits.module';
 import { AuditModule } from './audit/audit.module';
+import { PublicModule } from './public/public.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { AuditModule } from './audit/audit.module';
     PdfModule,
     KitsModule,
     AuditModule,
+    PublicModule,
   ],
   controllers: [AppController],
   providers: [AppService],

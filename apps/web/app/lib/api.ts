@@ -1116,3 +1116,68 @@ export function formatMoney(value: number, currency = "BOB"): string {
     return `${value.toFixed(2)} ${symbol}`.trim();
   }
 }
+
+// --- Public API (no auth required) ---
+
+/**
+ * URL absoluta del backend para llamadas desde Server Components.
+ * El proxy `/api` (next.config.ts -> localhost:3001) solo existe en el
+ * navegador, por lo que en SSR hay que llamar al backend directamente.
+ */
+export const SERVER_API_URL =
+  process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:3001";
+
+export async function getProductImageServer(
+  fuente: string | null,
+  idExterno: number,
+): Promise<{ imageUrl: string | null }> {
+  const params = new URLSearchParams();
+  params.set("fuente", fuente ?? "");
+  params.set("idExterno", String(idExterno));
+  const res = await fetch(
+    `${SERVER_API_URL}/venta/imagen?${params.toString()}`,
+    { headers: { "Content-Type": "application/json" }, cache: "no-store" },
+  );
+  if (!res.ok) {
+    throw new Error(`Error ${res.status} al obtener la imagen del producto`);
+  }
+  return res.json();
+}
+
+export interface PublicStoreInfo {
+  name: string;
+  currency: string;
+  phone?: string;
+  email?: string;
+  address?: string;
+  description?: string;
+  subtitle?: string;
+}
+
+export interface ContactFormInput {
+  name: string;
+  email: string;
+  phone?: string;
+  message: string;
+  type: 'instalacion' | 'cotizacion' | 'otro';
+}
+
+export interface ContactFormResponse {
+  success: boolean;
+  message: string;
+}
+
+export async function getPublicStoreInfo(): Promise<PublicStoreInfo> {
+  return request('/public/store');
+}
+
+export async function getPublicKits(): Promise<Kit[]> {
+  return request('/public/kits');
+}
+
+export async function submitContactForm(input: ContactFormInput): Promise<ContactFormResponse> {
+  return request('/public/contact', {
+    method: 'POST',
+    body: JSON.stringify(input),
+  });
+}

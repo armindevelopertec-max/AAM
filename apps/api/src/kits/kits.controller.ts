@@ -55,6 +55,12 @@ export class KitsController {
     }
   }
 
+  @Public()
+  @Get('public')
+  findAllPublic() {
+    return this.kitsService.findAllPublic();
+  }
+
   @Get()
   findAll(@CurrentUser() user: User) {
     return this.kitsService.findAll(user.storeId);
