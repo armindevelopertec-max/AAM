@@ -15,10 +15,10 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
     }
   }, [user, loading, router]);
 
-  if (loading) {
-    return null;
-  }
-
+  // No se bloquea el render mientras `loading` es true: AuthProvider arranca
+  // con loading=true, asi que devolver null aqui dejaba el HTML del sitio
+  // publico vacio (sin <h1>, <nav>, <footer>...) hasta que hidrataba el
+  // cliente. La redireccion de usuarios con sesion sigue siendo por effect.
   return (
     <div className="flex min-h-full flex-1 flex-col">
       <PublicNavbar />
